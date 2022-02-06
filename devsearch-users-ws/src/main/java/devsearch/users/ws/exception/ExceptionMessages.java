@@ -8,7 +8,7 @@ public enum ExceptionMessages {
     NO_RECORD_FOUND_WITH_THIS_ID("Record with provided id is not found", "exc_004"),
     NO_RECORD_FOUND_WITH_THIS_USERNAME("Record with provided username is not found", "exc_005"),
     NO_RECORD_FOUND_WITH_THIS_EMAIL("Record with provided email is not found", "exc_006"),
-    INVALID_FIELD("Field is missing or not valid. Please check documentation for required fields.", "exc_006"),
+    INVALID_FIELD("Field is missing or not valid. Please check documentation for required fields.", "exc_007"),
     INTERNAL_SERVER_ERROR("Internal Server Error", ""),
     AUTHENTICATION_FAILED("Authentication failed", ""),
     COULD_NOT_CREATE_RECORD("Could not create record", ""),
