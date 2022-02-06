@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class UserEntity implements Serializable{
+public class UserEntity implements Serializable {
 
     private static final long serialVersionUID = 6023605726818532743L;
 
@@ -20,6 +20,9 @@ public class UserEntity implements Serializable{
 
     @Column(nullable = false, unique = true)
     private String publicId;
+
+    @Column(nullable = false, unique = true, length = 50)
+    private String username;
 
     @Column(nullable = false, length = 50)
     private String firstName;
@@ -34,50 +37,58 @@ public class UserEntity implements Serializable{
     private String encryptedPassword;
 
     public long getId() {
-        return id;
+	return id;
     }
 
     public void setId(long id) {
-        this.id = id;
+	this.id = id;
     }
 
     public String getPublicId() {
-        return publicId;
+	return publicId;
     }
 
     public void setPublicId(String publicId) {
-        this.publicId = publicId;
+	this.publicId = publicId;
+    }
+
+    public String getUsername() {
+	return username;
+    }
+
+    public void setUsername(String username) {
+	this.username = username;
     }
 
     public String getFirstName() {
-        return firstName;
+	return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+	this.firstName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+	return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+	this.lastName = lastName;
     }
 
     public String getEmail() {
-        return email;
+	return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+	this.email = email;
     }
 
     public String getEncryptedPassword() {
-        return encryptedPassword;
+	return encryptedPassword;
     }
 
     public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
+	this.encryptedPassword = encryptedPassword;
     }
 }
