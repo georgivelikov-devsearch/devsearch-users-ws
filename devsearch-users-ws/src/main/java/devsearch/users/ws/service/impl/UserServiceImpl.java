@@ -64,8 +64,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(String publicId, UserDto userDto) throws UsersRestApiException {
-	// TODO Auto-generated method stub
-	return null;
+	UserEntity userEntity = userRepository.findByPublicId(publicId);
+	if (userEntity == null) {
+	    throw new UsersRestApiException();
+	}
+
+	userEntity.setUsername(userDto.getUsername());
+	userEntity.setFirstName(userDto.getFirstName());
+	userEntity.setLastName(userDto.getLastName());
+
+	UserEntity updatedUserEntity = userRepository.save(userEntity);
+
+	return modelMapper.map(updatedUserEntity, UserDto.class);
     }
 
     @Override

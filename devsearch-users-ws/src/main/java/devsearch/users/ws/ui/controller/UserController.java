@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -73,6 +74,16 @@ public class UserController {
 	UserDto createdUser = userService.createUser(userDto);
 
 	return modelMapper.map(createdUser, UserResponse.class);
+    }
+
+    @PutMapping(path = "/{id}")
+    public UserResponse updateUser(@PathVariable String publicId, @RequestBody UserDetailsRequestModel userDetails)
+	    throws UsersRestApiException {
+	UserDto userDto = modelMapper.map(userDetails, UserDto.class);
+
+	UserDto updatedUser = userService.updateUser(publicId, userDto);
+
+	return modelMapper.map(updatedUser, UserResponse.class);
     }
 
     @DeleteMapping(path = "/{publicId}")
