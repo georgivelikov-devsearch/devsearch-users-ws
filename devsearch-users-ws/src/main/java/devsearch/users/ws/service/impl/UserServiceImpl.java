@@ -65,28 +65,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(String publicId, UserDto userDto) throws UsersRestApiException {
-	UserEntity userEntity = userRepository.findByPublicId(publicId);
-	if (userEntity == null) {
-	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
-	}
-
-	userEntity.setUsername(userDto.getUsername());
-	userEntity.setFirstName(userDto.getFirstName());
-	userEntity.setLastName(userDto.getLastName());
-	userEntity.setEmail(userDto.getEmail());
-
-	UserEntity updatedUserEntity = null;
-	try {
-	    updatedUserEntity = userRepository.save(userEntity);
-	} catch (Exception ex) {
-	    throw new UsersRestApiException(ExceptionMessages.INVALID_FIELD, ex.getMessage());
-	}
-
-	return modelMapper.map(updatedUserEntity, UserDto.class);
-    }
-
-    @Override
     public UserDto createUser(UserDto userDto) throws UsersRestApiException {
 	if (userRepository.findByUsername(userDto.getUsername()) != null) {
 	    throw new UsersRestApiException(ExceptionMessages.RECORD_ALREADY_EXISTS_WITH_THIS_USERNAME);
@@ -117,6 +95,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	return modelMapper.map(storedUserEntity, UserDto.class);
+    }
+
+    @Override
+    public UserDto updateUser(String publicId, UserDto userDto) throws UsersRestApiException {
+	UserEntity userEntity = userRepository.findByPublicId(publicId);
+	if (userEntity == null) {
+	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
+	}
+
+	userEntity.setUsername(userDto.getUsername());
+	userEntity.setFirstName(userDto.getFirstName());
+	userEntity.setLastName(userDto.getLastName());
+	userEntity.setEmail(userDto.getEmail());
+
+	UserEntity updatedUserEntity = null;
+	try {
+	    updatedUserEntity = userRepository.save(userEntity);
+	} catch (Exception ex) {
+	    throw new UsersRestApiException(ExceptionMessages.INVALID_FIELD, ex.getMessage());
+	}
+
+	return modelMapper.map(updatedUserEntity, UserDto.class);
     }
 
     @Override
