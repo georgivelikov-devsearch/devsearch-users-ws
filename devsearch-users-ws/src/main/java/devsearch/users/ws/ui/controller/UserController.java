@@ -20,9 +20,6 @@ import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.shared.utils.Mapper;
 import devsearch.users.ws.ui.model.request.UserDetailsRequestModel;
 import devsearch.users.ws.ui.model.response.UserResponse;
-import devsearch.users.ws.ui.model.response.operations.OperationName;
-import devsearch.users.ws.ui.model.response.operations.OperationResult;
-import devsearch.users.ws.ui.model.response.operations.OperationStatusRest;
 
 @RestController
 @RequestMapping("users")
@@ -87,19 +84,7 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public OperationStatusRest deleteUser(@PathVariable String id) {
-	OperationStatusRest returnValue = new OperationStatusRest();
-
-	try {
-	    userService.deleteUser(id);
-	    returnValue.setOperationName(OperationName.DELETE.name());
-	    returnValue.setOperationResult(OperationResult.SUCCESS.name());
-	} catch (UsersRestApiException ex) {
-	    returnValue.setOperationName(OperationName.DELETE.name());
-	    returnValue.setOperationResult(OperationResult.ERROR.name());
-	    returnValue.setExceptionMessage(ex.getMessage());
-	}
-
-	return returnValue;
+    public void deleteUser(@PathVariable String id) throws UsersRestApiException {
+	userService.deleteUser(id);
     }
 }
