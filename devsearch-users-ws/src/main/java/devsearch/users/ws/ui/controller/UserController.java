@@ -76,7 +76,7 @@ public class UserController {
 	return modelMapper.map(createdUser, UserResponse.class);
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{publicId}")
     public UserResponse updateUser(@PathVariable String publicId, @RequestBody UserDetailsRequestModel userDetails)
 	    throws UsersRestApiException {
 	UserDto userDto = modelMapper.map(userDetails, UserDto.class);
