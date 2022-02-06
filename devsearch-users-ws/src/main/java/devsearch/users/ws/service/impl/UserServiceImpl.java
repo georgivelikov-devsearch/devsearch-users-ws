@@ -79,11 +79,11 @@ public class UserServiceImpl implements UserService {
 	UserEntity updatedUserEntity = null;
 	try {
 	    updatedUserEntity = userRepository.save(userEntity);
-
-	    return modelMapper.map(updatedUserEntity, UserDto.class);
 	} catch (Exception ex) {
 	    throw new UsersRestApiException(ExceptionMessages.INVALID_FIELD, ex.getMessage());
 	}
+
+	return modelMapper.map(updatedUserEntity, UserDto.class);
     }
 
     @Override
@@ -112,11 +112,11 @@ public class UserServiceImpl implements UserService {
 	UserEntity storedUserEntity = null;
 	try {
 	    storedUserEntity = userRepository.save(userEntity);
-
-	    return modelMapper.map(storedUserEntity, UserDto.class);
 	} catch (Exception ex) {
 	    throw new UsersRestApiException(ExceptionMessages.INVALID_FIELD, ex.getMessage());
 	}
+
+	return modelMapper.map(storedUserEntity, UserDto.class);
     }
 
     @Override
