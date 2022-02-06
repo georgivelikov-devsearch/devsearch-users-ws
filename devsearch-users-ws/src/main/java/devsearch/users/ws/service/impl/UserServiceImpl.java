@@ -75,9 +75,14 @@ public class UserServiceImpl implements UserService {
 	userEntity.setLastName(userDto.getLastName());
 	userEntity.setEmail(userDto.getEmail());
 
-	UserEntity updatedUserEntity = userRepository.save(userEntity);
+	UserEntity updatedUserEntity = null;
+	try {
+	    updatedUserEntity = userRepository.save(userEntity);
 
-	return modelMapper.map(updatedUserEntity, UserDto.class);
+	    return modelMapper.map(updatedUserEntity, UserDto.class);
+	} catch (Exception ex) {
+	    throw new UsersRestApiException(ExceptionMessages.INVALID_FIELD, ex.getMessage());
+	}
     }
 
     @Override
@@ -106,11 +111,11 @@ public class UserServiceImpl implements UserService {
 	UserEntity storedUserEntity = null;
 	try {
 	    storedUserEntity = userRepository.save(userEntity);
-	} catch (Exception ex) {
-	    throw new UsersRestApiException(ex.getMessage());
-	}
 
-	return modelMapper.map(storedUserEntity, UserDto.class);
+	    return modelMapper.map(storedUserEntity, UserDto.class);
+	} catch (Exception ex) {
+	    throw new UsersRestApiException(ExceptionMessages.INVALID_FIELD, ex.getMessage());
+	}
     }
 
     @Override

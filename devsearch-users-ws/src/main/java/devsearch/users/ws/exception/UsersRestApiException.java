@@ -14,6 +14,11 @@ public class UsersRestApiException extends Exception {
 	super(message.getExceptionMessage());
     }
 
+    public UsersRestApiException(ExceptionMessages message, String sourceExceptionMessage) {
+	super(message.getExceptionMessage());
+	this.sourceExceptionMessage = sourceExceptionMessage;
+    }
+
     public UsersRestApiException(String message, String sourceExceptionMessage) {
 	super(message);
 	this.sourceExceptionMessage = sourceExceptionMessage;
