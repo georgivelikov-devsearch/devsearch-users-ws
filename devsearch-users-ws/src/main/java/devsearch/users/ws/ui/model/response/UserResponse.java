@@ -8,11 +8,11 @@ public class UserResponse {
     private String lastName;
     private String email;
 
-    public String getUserId() {
+    public String getPublicId() {
 	return publicId;
     }
 
-    public void setUserId(String publicId) {
+    public void setPublicId(String publicId) {
 	this.publicId = publicId;
     }
 

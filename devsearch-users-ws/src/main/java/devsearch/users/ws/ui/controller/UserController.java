@@ -30,8 +30,8 @@ public class UserController {
     }
 
     @GetMapping(path = "/{publicId}")
-    public UserResponse getUser(@PathVariable String userId) throws UsersRestApiException {
-	UserDto userDto = userService.getUserByPublicId(userId);
+    public UserResponse getUser(@PathVariable String publicId) throws UsersRestApiException {
+	UserDto userDto = userService.getUserByPublicId(publicId);
 
 	return modelMapper.map(userDto, UserResponse.class);
     }

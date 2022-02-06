@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserService {
 	try {
 	    storedUserEntity = userRepository.save(userEntity);
 	} catch (Exception ex) {
+	    System.out.println(ex.getMessage());
 	    throw new UsersRestApiException();
 	}
 

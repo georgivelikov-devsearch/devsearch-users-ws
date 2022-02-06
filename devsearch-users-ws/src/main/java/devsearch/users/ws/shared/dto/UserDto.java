@@ -27,7 +27,7 @@ public class UserDto {
 	this.publicId = publicId;
     }
 
-    public String getUserame() {
+    public String getUsername() {
 	return username;
     }
 
