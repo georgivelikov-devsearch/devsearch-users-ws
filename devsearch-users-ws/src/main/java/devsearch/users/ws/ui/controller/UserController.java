@@ -91,7 +91,7 @@ public class UserController {
 	OperationStatusRest returnValue = new OperationStatusRest();
 
 	try {
-	    userService.deleteUser(publicId);
+	    userService.deleteUser(id);
 	    returnValue.setOperationName(OperationName.DELETE.name());
 	    returnValue.setOperationResult(OperationResult.SUCCESS.name());
 	} catch (UsersRestApiException ex) {
