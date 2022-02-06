@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import devsearch.users.ws.exception.ExceptionMessages;
 import devsearch.users.ws.exception.UsersRestApiException;
 import devsearch.users.ws.io.entity.UserEntity;
 import devsearch.users.ws.io.repository.UserRepository;
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
 	UserEntity userEntity = userRepository.findByPublicId(publicId);
 
 	if (userEntity == null) {
-	    throw new UsersRestApiException();
+	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}
 
 	return modelMapper.map(userEntity, UserDto.class);
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
 	UserEntity userEntity = userRepository.findByUsername(username);
 
 	if (userEntity == null) {
-	    throw new UsersRestApiException();
+	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_USERNAME);
 	}
 
 	return modelMapper.map(userEntity, UserDto.class);
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
 	UserEntity userEntity = userRepository.findByEmail(email);
 
 	if (userEntity == null) {
-	    throw new UsersRestApiException();
+	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_EMAIL);
 	}
 
 	return modelMapper.map(userEntity, UserDto.class);
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(String publicId, UserDto userDto) throws UsersRestApiException {
 	UserEntity userEntity = userRepository.findByPublicId(publicId);
 	if (userEntity == null) {
-	    throw new UsersRestApiException();
+	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}
 
 	userEntity.setUsername(userDto.getUsername());
@@ -81,8 +82,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) throws UsersRestApiException {
+	if (userRepository.findByUsername(userDto.getUsername()) != null) {
+	    throw new UsersRestApiException(ExceptionMessages.RECORD_ALREADY_EXISTS_WITH_THIS_USERNAME);
+	}
+
 	if (userRepository.findByEmail(userDto.getEmail()) != null) {
-	    throw new UsersRestApiException();
+	    throw new UsersRestApiException(ExceptionMessages.RECORD_ALREADY_EXISTS_WITH_THIS_EMAIL);
 	}
 
 //	for (int i = 0; i < userDto.getAddresses().size(); i++) {
@@ -102,8 +107,7 @@ public class UserServiceImpl implements UserService {
 	try {
 	    storedUserEntity = userRepository.save(userEntity);
 	} catch (Exception ex) {
-	    System.out.println(ex.getMessage());
-	    throw new UsersRestApiException();
+	    throw new UsersRestApiException(ex.getMessage());
 	}
 
 	return modelMapper.map(storedUserEntity, UserDto.class);
@@ -113,7 +117,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String publicId) throws UsersRestApiException {
 	UserEntity userEntity = userRepository.findByPublicId(publicId);
 	if (userEntity == null) {
-	    throw new UsersRestApiException();
+	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}
 
 	userRepository.delete(userEntity);
