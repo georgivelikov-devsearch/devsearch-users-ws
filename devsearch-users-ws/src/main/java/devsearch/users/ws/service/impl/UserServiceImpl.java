@@ -126,7 +126,11 @@ public class UserServiceImpl implements UserService {
 	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}
 
-	userRepository.delete(userEntity);
+	try {
+	    userRepository.delete(userEntity);
+	} catch (Exception ex) {
+	    throw new UsersRestApiException(ExceptionMessages.COULD_NOT_DELETE_RECORD, ex.getMessage());
+	}
     }
 
     @Override

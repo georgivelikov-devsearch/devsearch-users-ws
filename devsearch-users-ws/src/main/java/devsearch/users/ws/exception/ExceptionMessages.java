@@ -10,11 +10,11 @@ public enum ExceptionMessages {
     NO_RECORD_FOUND_WITH_THIS_USERNAME("Record with provided username is not found", "exc_005"),
     NO_RECORD_FOUND_WITH_THIS_EMAIL("Record with provided email is not found", "exc_006"),
     INVALID_FIELD("Field is missing or not valid. Please check documentation for required fields.", "exc_007"),
-    AUTHENTICATION_FAILED("Authentication failed", ""),
-    COULD_NOT_CREATE_RECORD("Could not create record", ""),
-    COULD_NOT_UPDATE_RECORD("Could not update record", ""),
-    COULD_NOT_DELETE_RECORD("Could not delete record", ""),
-    EMAIL_ADDRESS_NOT_VERIFIED("Email address could not be verified", "");
+    AUTHENTICATION_FAILED("Authentication failed", "exc_008"),
+    COULD_NOT_CREATE_RECORD("Could not create record", "exc_009"),
+    COULD_NOT_UPDATE_RECORD("Could not update record", "exc_010"),
+    COULD_NOT_DELETE_RECORD("Could not delete record", "exc_011"),
+    EMAIL_ADDRESS_NOT_VERIFIED("Email address could not be verified", "exc_012");
 
     private String exceptionMessage;
     private String exceptionCode;
