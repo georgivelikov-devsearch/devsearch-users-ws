@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DevsearchUsersWsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DevsearchUsersWsApplication.class, args);
-	}
+    public static void main(String[] args) {
+	SpringApplication.run(DevsearchUsersWsApplication.class, args);
+    }
 
 }
