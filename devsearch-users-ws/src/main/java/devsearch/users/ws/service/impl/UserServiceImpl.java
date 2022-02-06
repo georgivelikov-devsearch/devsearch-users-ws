@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
 	try {
 	    storedUserEntity = userRepository.save(userEntity);
 	} catch (Exception ex) {
-	    throw new UsersRestApiException(ExceptionMessages.INVALID_FIELD, ex.getMessage());
+	    throw new UsersRestApiException(ExceptionMessages.CREATE_USER_FAILED, ex.getMessage());
 	}
 
 	return modelMapper.map(storedUserEntity, UserDto.class);
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
 	try {
 	    updatedUserEntity = userRepository.save(userEntity);
 	} catch (Exception ex) {
-	    throw new UsersRestApiException(ExceptionMessages.INVALID_FIELD, ex.getMessage());
+	    throw new UsersRestApiException(ExceptionMessages.UPDATE_USER_RECORD, ex.getMessage());
 	}
 
 	return modelMapper.map(updatedUserEntity, UserDto.class);
@@ -129,7 +129,7 @@ public class UserServiceImpl implements UserService {
 	try {
 	    userRepository.delete(userEntity);
 	} catch (Exception ex) {
-	    throw new UsersRestApiException(ExceptionMessages.COULD_NOT_DELETE_RECORD, ex.getMessage());
+	    throw new UsersRestApiException(ExceptionMessages.DELETE_USER_FAILED, ex.getMessage());
 	}
     }
 
