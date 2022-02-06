@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
 	try {
 	    updatedUserEntity = userRepository.save(userEntity);
 	} catch (Exception ex) {
-	    throw new UsersRestApiException(ExceptionMessages.UPDATE_RECORD_RECORD, ex.getMessage());
+	    throw new UsersRestApiException(ExceptionMessages.UPDATE_RECORD_FAILED, ex.getMessage());
 	}
 
 	return modelMapper.map(updatedUserEntity, UserDto.class);

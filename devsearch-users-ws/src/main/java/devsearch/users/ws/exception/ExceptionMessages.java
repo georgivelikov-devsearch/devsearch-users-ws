@@ -12,7 +12,7 @@ public enum ExceptionMessages {
     CREATE_RECORD_FAILED(
 	    "Could not create record. Field is missing or not valid. Please check documentation for required fields.",
 	    "exc_007"),
-    UPDATE_RECORD_RECORD(
+    UPDATE_RECORD_FAILED(
 	    "Could not update record. Field is missing or not valid. Please check documentation for required fields.",
 	    "exc_008"),
     DELETE_RECORD_FAILED("Could not delete record", "exc_009"),
