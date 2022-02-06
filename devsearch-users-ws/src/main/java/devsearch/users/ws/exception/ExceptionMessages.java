@@ -2,6 +2,7 @@ package devsearch.users.ws.exception;
 
 public enum ExceptionMessages {
 
+    INTERNAL_SERVER_ERROR("Internal Server Error", "exc_000"),
     RECORD_ALREADY_EXISTS_WITH_THIS_ID("Record with this id already exists", "exc_001"),
     RECORD_ALREADY_EXISTS_WITH_THIS_USERNAME("Record with this username already exists", "exc_002"),
     RECORD_ALREADY_EXISTS_WITH_THIS_EMAIL("Record with this email already exists", "exc_003"),
@@ -9,7 +10,6 @@ public enum ExceptionMessages {
     NO_RECORD_FOUND_WITH_THIS_USERNAME("Record with provided username is not found", "exc_005"),
     NO_RECORD_FOUND_WITH_THIS_EMAIL("Record with provided email is not found", "exc_006"),
     INVALID_FIELD("Field is missing or not valid. Please check documentation for required fields.", "exc_007"),
-    INTERNAL_SERVER_ERROR("Internal Server Error", ""),
     AUTHENTICATION_FAILED("Authentication failed", ""),
     COULD_NOT_CREATE_RECORD("Could not create record", ""),
     COULD_NOT_UPDATE_RECORD("Could not update record", ""),
