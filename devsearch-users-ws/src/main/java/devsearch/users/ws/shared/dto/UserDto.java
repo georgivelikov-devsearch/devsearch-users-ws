@@ -4,6 +4,7 @@ public class UserDto {
 
     private long id;
     private String publicId;
+    private String username;
     private String firstName;
     private String lastName;
     private String email;
@@ -24,6 +25,14 @@ public class UserDto {
 
     public void setPublicId(String publicId) {
 	this.publicId = publicId;
+    }
+
+    public String getUserame() {
+	return username;
+    }
+
+    public void setUsername(String username) {
+	this.username = username;
     }
 
     public String getFirstName() {
