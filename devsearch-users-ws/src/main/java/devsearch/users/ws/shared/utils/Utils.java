@@ -14,9 +14,9 @@ public class Utils {
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm z";
     private static final DateFormat DATE_FORMATTER = new SimpleDateFormat(DATE_FORMAT);
     private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    private final Random RANDOM = new SecureRandom();
+    private static final Random RANDOM = new SecureRandom();
 
-    public String generatePublicId(int length) {
+    public static String generatePublicId(int length) {
 	return generateRandomString(length);
     }
 
@@ -35,7 +35,7 @@ public class Utils {
 	return DATE_FORMATTER.format(date);
     }
 
-    private String generateRandomString(int length) {
+    private static String generateRandomString(int length) {
 	StringBuilder returnValue = new StringBuilder();
 
 	for (int i = 0; i < length; i++) {

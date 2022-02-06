@@ -15,9 +15,9 @@ public interface UserService {
 
     // public UserDto getUserForLogin(String email) throws UsersRestApiException;
 
-    public UserDto updateUser(String publicId, UserDto user) throws UsersRestApiException;
+    public UserDto updateUser(String publicId, UserDto userDto) throws UsersRestApiException;
 
-    public UserDto createUser(UserDto user) throws UsersRestApiException;
+    public UserDto createUser(UserDto userDto) throws UsersRestApiException;
 
     public void deleteUser(String publicId) throws UsersRestApiException;
 
