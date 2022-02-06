@@ -39,9 +39,9 @@ public class UserController {
 	return "UserController is working!";
     }
 
-    @GetMapping(path = "/{publicId}")
-    public UserResponse getUser(@PathVariable String publicId) throws UsersRestApiException {
-	UserDto userDto = userService.getUserByPublicId(publicId);
+    @GetMapping(path = "/{id}")
+    public UserResponse getUser(@PathVariable String id) throws UsersRestApiException {
+	UserDto userDto = userService.getUserByPublicId(id);
 
 	return modelMapper.map(userDto, UserResponse.class);
     }
@@ -76,18 +76,18 @@ public class UserController {
 	return modelMapper.map(createdUser, UserResponse.class);
     }
 
-    @PutMapping(path = "/{publicId}")
-    public UserResponse updateUser(@PathVariable String publicId, @RequestBody UserDetailsRequestModel userDetails)
+    @PutMapping(path = "/{id}")
+    public UserResponse updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails)
 	    throws UsersRestApiException {
 	UserDto userDto = modelMapper.map(userDetails, UserDto.class);
 
-	UserDto updatedUser = userService.updateUser(publicId, userDto);
+	UserDto updatedUser = userService.updateUser(id, userDto);
 
 	return modelMapper.map(updatedUser, UserResponse.class);
     }
 
-    @DeleteMapping(path = "/{publicId}")
-    public OperationStatusRest deleteUser(@PathVariable String publicId) {
+    @DeleteMapping(path = "/{id}")
+    public OperationStatusRest deleteUser(@PathVariable String id) {
 	OperationStatusRest returnValue = new OperationStatusRest();
 
 	try {

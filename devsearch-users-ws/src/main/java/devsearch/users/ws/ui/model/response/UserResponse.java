@@ -2,18 +2,18 @@ package devsearch.users.ws.ui.model.response;
 
 public class UserResponse {
 
-    private String publicId;
+    private String id;
     private String username;
     private String firstName;
     private String lastName;
     private String email;
 
-    public String getPublicId() {
-	return publicId;
+    public String getId() {
+	return id;
     }
 
-    public void setPublicId(String publicId) {
-	this.publicId = publicId;
+    public void setId(String id) {
+	this.id = id;
     }
 
     public String getUsername() {
