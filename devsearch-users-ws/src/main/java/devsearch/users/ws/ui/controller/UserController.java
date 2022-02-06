@@ -1,17 +1,21 @@
 package devsearch.users.ws.ui.controller;
 
-import org.modelmapper.ModelMapper;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import devsearch.users.ws.exception.UsersRestApiException;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.UserDto;
+import devsearch.users.ws.shared.utils.Mapper;
 import devsearch.users.ws.ui.model.request.UserDetailsRequestModel;
 import devsearch.users.ws.ui.model.response.UserResponse;
 
@@ -22,7 +26,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private Mapper modelMapper;
 
     @GetMapping(path = "/status")
     public String welcome() {
@@ -34,6 +39,28 @@ public class UserController {
 	UserDto userDto = userService.getUserByPublicId(publicId);
 
 	return modelMapper.map(userDto, UserResponse.class);
+    }
+
+    @GetMapping()
+    public List<UserResponse> getUsers(@RequestParam(value = "page", defaultValue = "1") int page,
+	    @RequestParam(value = "limit", defaultValue = "20") int limit) throws UsersRestApiException {
+	List<UserResponse> returnValue = new ArrayList<>();
+
+	// In the Repository implementation pagination starts with '0', but in UI
+	// usually pages start from 1, 2, 3 etc. So UI will send the number of the page,
+	// which should be reduced by 1
+	if (page > 0) {
+	    page -= 1;
+	}
+
+	List<UserDto> users = userService.getUsers(page, limit);
+
+	for (UserDto userDto : users) {
+	    UserResponse userRest = modelMapper.map(userDto, UserResponse.class);
+	    returnValue.add(userRest);
+	}
+
+	return returnValue;
     }
 
     @PostMapping

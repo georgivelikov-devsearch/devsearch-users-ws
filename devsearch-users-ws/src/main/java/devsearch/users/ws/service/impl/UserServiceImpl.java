@@ -1,9 +1,12 @@
 package devsearch.users.ws.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import devsearch.users.ws.exception.UsersRestApiException;
@@ -11,6 +14,7 @@ import devsearch.users.ws.io.entity.UserEntity;
 import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.UserDto;
+import devsearch.users.ws.shared.utils.Mapper;
 import devsearch.users.ws.shared.utils.Utils;
 
 @Service
@@ -22,7 +26,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private Mapper modelMapper;
 
     @Override
     public UserDto getUserByPublicId(String publicId) throws UsersRestApiException {
@@ -101,8 +106,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getUsers(int page, int limit) throws UsersRestApiException {
-	// TODO Auto-generated method stub
-	return null;
+	List<UserDto> returnValue = new ArrayList<>();
+	Pageable pageableRequest = PageRequest.of(page, limit);
+	Page<UserEntity> userPage = userRepository.findAll(pageableRequest);
+	List<UserEntity> users = userPage.getContent();
+
+	for (UserEntity userEntity : users) {
+	    UserDto userDto = modelMapper.map(userEntity, UserDto.class);
+	    returnValue.add(userDto);
+	}
+
+	return returnValue;
     }
 
 }
