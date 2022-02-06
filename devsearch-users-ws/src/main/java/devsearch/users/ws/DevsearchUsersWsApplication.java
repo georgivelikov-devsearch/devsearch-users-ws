@@ -10,4 +10,8 @@ public class DevsearchUsersWsApplication {
 	SpringApplication.run(DevsearchUsersWsApplication.class, args);
     }
 
+//    @Bean
+//    public BCryptPasswordEncoder bCryptPosswordEncoder() {
+//	return new BCryptPasswordEncoder();
+//    }
 }

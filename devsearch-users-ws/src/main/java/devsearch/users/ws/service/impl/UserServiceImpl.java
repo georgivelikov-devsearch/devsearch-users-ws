@@ -20,8 +20,8 @@ import devsearch.users.ws.shared.utils.Utils;
 @Service
 public class UserServiceImpl implements UserService {
 
-    // @Autowired
-    // BCryptPasswordEncoder bCryptpasswordEncoder;
+//    @Autowired
+//    BCryptPasswordEncoder bCryptpasswordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -100,8 +100,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String publicId) throws UsersRestApiException {
-	// TODO Auto-generated method stub
+	UserEntity userEntity = userRepository.findByPublicId(publicId);
+	if (userEntity == null) {
+	    throw new UsersRestApiException();
+	}
 
+	userRepository.delete(userEntity);
     }
 
     @Override

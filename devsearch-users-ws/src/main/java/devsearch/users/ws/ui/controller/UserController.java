@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,9 @@ import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.shared.utils.Mapper;
 import devsearch.users.ws.ui.model.request.UserDetailsRequestModel;
 import devsearch.users.ws.ui.model.response.UserResponse;
+import devsearch.users.ws.ui.model.response.operations.OperationName;
+import devsearch.users.ws.ui.model.response.operations.OperationResult;
+import devsearch.users.ws.ui.model.response.operations.OperationStatusRest;
 
 @RestController
 @RequestMapping("users")
@@ -69,5 +73,22 @@ public class UserController {
 	UserDto createdUser = userService.createUser(userDto);
 
 	return modelMapper.map(createdUser, UserResponse.class);
+    }
+
+    @DeleteMapping(path = "/{publicId}")
+    public OperationStatusRest deleteUser(@PathVariable String publicId) {
+	OperationStatusRest returnValue = new OperationStatusRest();
+
+	try {
+	    userService.deleteUser(publicId);
+	    returnValue.setOperationName(OperationName.DELETE.name());
+	    returnValue.setOperationResult(OperationResult.SUCCESS.name());
+	} catch (UsersRestApiException ex) {
+	    returnValue.setOperationName(OperationName.DELETE.name());
+	    returnValue.setOperationResult(OperationResult.ERROR.name());
+	    returnValue.setExceptionMessage(ex.getMessage());
+	}
+
+	return returnValue;
     }
 }
