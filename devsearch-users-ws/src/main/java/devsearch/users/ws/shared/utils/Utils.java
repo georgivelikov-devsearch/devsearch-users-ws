@@ -1,8 +1,6 @@
 package devsearch.users.ws.shared.utils;
 
 import java.security.SecureRandom;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -11,8 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Utils {
 
-    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm z";
-    private static final DateFormat DATE_FORMATTER = new SimpleDateFormat(DATE_FORMAT);
     private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final Random RANDOM = new SecureRandom();
 
@@ -32,7 +28,7 @@ public class Utils {
     }
 
     public static String getDateString(Date date) {
-	return DATE_FORMATTER.format(date);
+	return Constants.DATE_FORMATTER.format(date);
     }
 
     private static String generateRandomString(int length) {
