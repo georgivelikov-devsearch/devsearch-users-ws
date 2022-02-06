@@ -27,11 +27,9 @@ public class UserEntity implements Serializable {
     private String username;
 
     @Column(nullable = false, length = 50)
-    @Size(min = 1, max = 50)
     private String firstName;
 
     @Column(nullable = false, length = 50)
-    @Size(min = 1, max = 50)
     private String lastName;
 
     @Column(nullable = false, unique = true)
