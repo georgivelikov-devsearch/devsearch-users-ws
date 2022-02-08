@@ -49,7 +49,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     // Spring default login url is '/login'. You could change it by adding custom
     // url - '/users/login'
-
     private AuthenticationFilter getAuthenticationFilter(String url) throws Exception {
 	final AuthenticationFilter filter = new AuthenticationFilter(authenticationManager());
 	if (url != null) {
