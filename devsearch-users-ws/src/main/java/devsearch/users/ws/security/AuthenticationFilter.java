@@ -1,4 +1,4 @@
-package devsearch.users.ws.service;
+package devsearch.users.ws.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,8 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import devsearch.users.ws.SpringApplicationContext;
 import devsearch.users.ws.exception.UsersRestApiException;
-import devsearch.users.ws.security.SecurityConstants;
-import devsearch.users.ws.security.UserPrincipal;
+import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.ui.model.request.UserLoginRequestModel;
 import io.jsonwebtoken.Jwts;
