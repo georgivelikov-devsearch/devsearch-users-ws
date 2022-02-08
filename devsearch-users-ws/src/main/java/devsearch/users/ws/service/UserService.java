@@ -2,10 +2,12 @@ package devsearch.users.ws.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import devsearch.users.ws.exception.UsersRestApiException;
 import devsearch.users.ws.shared.dto.UserDto;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     public UserDto getUserByPublicId(String publicId) throws UsersRestApiException;
 
@@ -13,7 +15,7 @@ public interface UserService {
 
     public UserDto getUserByEmail(String email) throws UsersRestApiException;
 
-    // public UserDto getUserForLogin(String email) throws UsersRestApiException;
+    public UserDto getUserForLogin(String username) throws UsersRestApiException;
 
     public UserDto updateUser(String publicId, UserDto userDto) throws UsersRestApiException;
 

@@ -6,7 +6,8 @@ public class SecurityConstants {
     public static final String TOKER_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
     public static final String SIGN_UP_URL = "/users";
-    public static final String STATUS_URL = "/status";
+    public static final String STATUS_URL = "/users/status";
+    public static final String LOGIN_URL = "/users/login";
     private static final String tokenSecret = "jf9i4jgu83nfl0"; // Must be unique
     // private static String tokenSecret = null;
 

@@ -3,16 +3,21 @@ package devsearch.users.ws.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import devsearch.users.ws.exception.ExceptionMessages;
 import devsearch.users.ws.exception.UsersRestApiException;
 import devsearch.users.ws.io.entity.UserEntity;
 import devsearch.users.ws.io.repository.UserRepository;
+import devsearch.users.ws.security.UserPrincipal;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.shared.utils.Constants;
@@ -22,14 +27,38 @@ import devsearch.users.ws.shared.utils.Utils;
 @Service
 public class UserServiceImpl implements UserService {
 
-//    @Autowired
-//    BCryptPasswordEncoder bCryptpasswordEncoder;
+    @Autowired
+    BCryptPasswordEncoder bCryptpasswordEncoder;
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private Mapper modelMapper;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	UserEntity userEntity = userRepository.findByUsername(username);
+
+	if (userEntity == null) {
+	    throw new UsernameNotFoundException(username);
+	}
+
+	return new UserPrincipal(userEntity);
+    }
+
+    @Override
+    public UserDto getUserForLogin(String username) throws UsersRestApiException {
+	UserEntity userEntity = userRepository.findByUsername(username);
+	if (userEntity == null) {
+	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_USERNAME);
+	}
+
+	UserDto userDto = new UserDto();
+	// TODO Model Mapper is not initialized here, but BeanUtils is enough, check?
+	BeanUtils.copyProperties(userEntity, userDto);
+	return userDto;
+    }
 
     @Override
     public UserDto getUserByPublicId(String publicId) throws UsersRestApiException {
@@ -147,5 +176,4 @@ public class UserServiceImpl implements UserService {
 
 	return returnValue;
     }
-
 }
