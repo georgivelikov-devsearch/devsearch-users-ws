@@ -36,6 +36,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private Mapper modelMapper;
 
+    @Autowired
+    private Utils utils;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 	UserEntity userEntity = userRepository.findByUsername(username);
@@ -103,18 +106,10 @@ public class UserServiceImpl implements UserService {
 	    throw new UsersRestApiException(ExceptionMessages.RECORD_ALREADY_EXISTS_WITH_THIS_EMAIL);
 	}
 
-//	for (int i = 0; i < userDto.getAddresses().size(); i++) {
-//	    AddressDto addressDto = userDto.getAddresses().get(i);
-//	    addressDto.setUserDetails(userDto);
-//	    addressDto.setAddressId(utils.generatePublicId(30));
-//	    userDto.getAddresses().set(i, addressDto);
-//	}
-
 	UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
 
-	userEntity.setPublicId(Utils.generatePublicId(Constants.PUBLIC_ID_LENGTH));
-	userEntity.setEncryptedPassword(userDto.getPassword());
-	// userEntity.setEncryptedPassword(bCryptpasswordEncoder.encode(userDto.getPassword()));
+	userEntity.setPublicId(utils.generatePublicId(Constants.PUBLIC_ID_LENGTH));
+	userEntity.setEncryptedPassword(bCryptpasswordEncoder.encode(userDto.getPassword()));
 
 	UserEntity storedUserEntity = null;
 	try {
