@@ -26,6 +26,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+	// Both authorization and authentication filters are needed for basic JWT
 	http.csrf()
 		.disable()
 		.authorizeRequests()
