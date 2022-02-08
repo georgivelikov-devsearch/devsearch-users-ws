@@ -37,6 +37,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		.authenticated()
 		.and()
 		.addFilter(getAuthenticationFilter(SecurityConstants.LOGIN_URL))
+		.addFilter(getAuthorizationFilter())
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // No session, no cookies
     }
@@ -48,7 +49,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     // Spring default login url is '/login'. You could change it by adding custom
     // url - '/users/login'
-    public AuthenticationFilter getAuthenticationFilter(String url) throws Exception {
+    private AuthenticationFilter getAuthenticationFilter(String url) throws Exception {
 	final AuthenticationFilter filter = new AuthenticationFilter(authenticationManager());
 	if (url != null) {
 	    filter.setFilterProcessesUrl(url);
@@ -57,8 +58,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	return filter;
     }
 
-    // Returns AuthenticationFilter with Spring default login url '/login'
-    public AuthenticationFilter getDefaultAuthenticationFilter() throws Exception {
-	return getAuthenticationFilter(null);
+    // Returns AuthorizationFilter. Both AuthenticationFilter and
+    // AuthorizationFilter are needed for JWT authentication
+    private AuthorizationFilter getAuthorizationFilter() throws Exception {
+	return new AuthorizationFilter(authenticationManager(), userRepository);
     }
 }
