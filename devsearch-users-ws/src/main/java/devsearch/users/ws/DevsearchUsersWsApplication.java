@@ -16,4 +16,9 @@ public class DevsearchUsersWsApplication {
     public BCryptPasswordEncoder bCryptPosswordEncoder() {
 	return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public SpringApplicationContext getSpringApplicationContext() {
+	return new SpringApplicationContext();
+    }
 }

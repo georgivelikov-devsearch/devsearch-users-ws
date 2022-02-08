@@ -36,6 +36,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		.anyRequest()
 		.authenticated()
 		.and()
+		.addFilter(getAuthenticationFilter(SecurityConstants.LOGIN_URL))
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // No session, no cookies
     }
