@@ -6,6 +6,6 @@ import java.text.SimpleDateFormat;
 public class Constants {
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm z";
     public static final DateFormat DATE_FORMATTER = new SimpleDateFormat(Constants.DATE_FORMAT);
-
     public static final int PUBLIC_ID_LENGTH = 30;
+    public static final String DEFAULT_ENCODING = "UTF-8";
 }
