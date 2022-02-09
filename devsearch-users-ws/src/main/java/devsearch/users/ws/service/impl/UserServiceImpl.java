@@ -28,7 +28,7 @@ import devsearch.users.ws.shared.utils.Utils;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    BCryptPasswordEncoder bCryptpasswordEncoder;
+    private BCryptPasswordEncoder bCryptpasswordEncoder;
 
     @Autowired
     private UserRepository userRepository;

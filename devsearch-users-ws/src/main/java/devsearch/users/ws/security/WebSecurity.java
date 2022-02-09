@@ -38,6 +38,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		.and()
 		.addFilter(getAuthenticationFilter(SecurityConstants.LOGIN_URL))
 		.addFilter(getAuthorizationFilter())
+		.exceptionHandling()
+		.accessDeniedHandler(new AccessDeniedHandlerImpl())
+		.authenticationEntryPoint(new AuthenticationEntryPointImpl())
+		.and()
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // No session, no cookies
     }

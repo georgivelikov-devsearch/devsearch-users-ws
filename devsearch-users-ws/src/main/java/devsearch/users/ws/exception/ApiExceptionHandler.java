@@ -22,7 +22,7 @@ public class ApiExceptionHandler {
 	DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
 	String dateStr = df.format(new Date());
 	ExceptionMessageRest exception = new ExceptionMessageRest(dateStr, getPath(request), getMethod(request),
-		ex.getMessage(), ex.getSourceExceptionMessage());
+		ex.getMessage(), ex.getExceptionCode(), ex.getSourceExceptionMessage());
 	return new ResponseEntity<>(exception, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -31,7 +31,7 @@ public class ApiExceptionHandler {
 	DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
 	String dateStr = df.format(new Date());
 	ExceptionMessageRest exception = new ExceptionMessageRest(dateStr, getPath(request), getMethod(request),
-		ex.getMessage());
+		ex.getMessage(), ExceptionMessages.INTERNAL_SERVER_ERROR.getExceptionCode());
 	return new ResponseEntity<>(exception, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

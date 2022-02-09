@@ -3,6 +3,7 @@ package devsearch.users.ws.exception;
 public class ExceptionMessageRest {
     private String timestamp;
     private String message;
+    private String code;
     private String additionalInformation;
     private String path;
     private String method;
@@ -11,16 +12,17 @@ public class ExceptionMessageRest {
 
     }
 
-    public ExceptionMessageRest(String timestamp, String path, String method, String message) {
+    public ExceptionMessageRest(String timestamp, String path, String method, String message, String code) {
 	this.timestamp = timestamp;
 	this.path = path;
-	this.setMethod(method);
+	this.method = method;
 	this.message = message;
+	this.code = code;
     }
 
-    public ExceptionMessageRest(String timestamp, String path, String method, String message,
+    public ExceptionMessageRest(String timestamp, String path, String method, String message, String code,
 	    String additionalInformation) {
-	this(timestamp, path, method, message);
+	this(timestamp, path, method, message, code);
 	this.additionalInformation = additionalInformation;
     }
 
@@ -38,6 +40,14 @@ public class ExceptionMessageRest {
 
     public void setMessage(String message) {
 	this.message = message;
+    }
+
+    public String getCode() {
+	return code;
+    }
+
+    public void setCode(String code) {
+	this.code = code;
     }
 
     public String getAdditionalInformation() {
@@ -63,5 +73,4 @@ public class ExceptionMessageRest {
     public void setMethod(String method) {
 	this.method = method;
     }
-
 }
