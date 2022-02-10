@@ -2,10 +2,14 @@ package devsearch.users.ws.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import devsearch.users.ws.io.entity.AuthorityEntity;
+import devsearch.users.ws.io.entity.RoleEntity;
 import devsearch.users.ws.io.entity.UserEntity;
 
 public class UserPrincipal implements UserDetails {
@@ -16,12 +20,6 @@ public class UserPrincipal implements UserDetails {
 
     public UserPrincipal(UserEntity userEntity) {
 	this.userEntity = userEntity;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-	// TODO Auto-generated method stub
-	return new ArrayList<>();
     }
 
     @Override
@@ -54,4 +52,25 @@ public class UserPrincipal implements UserDetails {
 	return true;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+	List<GrantedAuthority> authorities = new ArrayList<>();
+	List<AuthorityEntity> authorityEntities = new ArrayList<>();
+
+	Collection<RoleEntity> roles = userEntity.getRoles();
+	if (roles == null) {
+	    return authorities;
+	}
+
+	roles.forEach((role) -> {
+	    authorities.add(new SimpleGrantedAuthority(role.getName()));
+	    authorityEntities.addAll(role.getAuthorities());
+	});
+
+	authorityEntities.forEach((authorityEntity) -> {
+	    authorities.add(new SimpleGrantedAuthority(authorityEntity.getName()));
+	});
+
+	return authorities;
+    }
 }
