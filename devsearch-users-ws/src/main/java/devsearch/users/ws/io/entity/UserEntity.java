@@ -1,11 +1,13 @@
 package devsearch.users.ws.io.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -38,6 +40,9 @@ public class UserEntity implements Serializable {
 
     @Column(nullable = false)
     private String encryptedPassword;
+
+    @ManyToMany(mappedBy = "users")
+    private Collection<RoleEntity> roles;
 
     public long getId() {
 	return id;
@@ -93,5 +98,13 @@ public class UserEntity implements Serializable {
 
     public void setEncryptedPassword(String encryptedPassword) {
 	this.encryptedPassword = encryptedPassword;
+    }
+
+    public Collection<RoleEntity> getRoles() {
+	return roles;
+    }
+
+    public void setRoles(Collection<RoleEntity> roles) {
+	this.roles = roles;
     }
 }
