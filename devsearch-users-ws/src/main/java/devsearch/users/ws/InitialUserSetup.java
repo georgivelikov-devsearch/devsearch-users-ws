@@ -1,7 +1,7 @@
 package devsearch.users.ws;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -11,9 +11,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import devsearch.users.ws.io.entity.AuthorityEntity;
+import devsearch.users.ws.io.entity.ConfigEntity;
 import devsearch.users.ws.io.entity.RoleEntity;
 import devsearch.users.ws.io.entity.UserEntity;
 import devsearch.users.ws.io.repository.AuthorityRepository;
+import devsearch.users.ws.io.repository.ConfigRepository;
 import devsearch.users.ws.io.repository.RoleRepository;
 import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.shared.utils.AppConstants;
@@ -32,67 +34,82 @@ public class InitialUserSetup {
     private UserRepository userRepository;
 
     @Autowired
+    private ConfigRepository configRepository;
+
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private Utils utils;
 
-    private boolean adminCreated = true;
-
     @EventListener
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent ev) {
-
-	AuthorityEntity readAuthority = createAuthority("READ_AUTHORITY");
-	AuthorityEntity writeAuthority = createAuthority("WRITE_AUTHORITY");
-	AuthorityEntity deleteAuthority = createAuthority("DELETE_AUTHORITY");
-
-	RoleEntity roleUser = createRole("ROLE_USER", Arrays.asList(readAuthority, writeAuthority));
-	RoleEntity roleAdmin = createRole("ROLE_ADMIN", Arrays.asList(readAuthority, writeAuthority, deleteAuthority));
-
-	if (adminCreated) {
+	ConfigEntity initialSetupConfigured = configRepository.findByName(AdminConstants.INITIAL_SETUP_CONFIG);
+	if (initialSetupConfigured != null && Boolean.valueOf(initialSetupConfigured.getValue())) {
 	    return;
 	}
 
-	createAdmin(Arrays.asList(roleAdmin));
+	initialSetupConfigured = new ConfigEntity();
+	initialSetupConfigured.setName(AdminConstants.INITIAL_SETUP_CONFIG);
+	initialSetupConfigured.setValue("true");
+	configRepository.save(initialSetupConfigured);
+
+	createAuthorities();
+	createRoles();
+	createAdmin();
     }
 
     @Transactional
-    private AuthorityEntity createAuthority(String name) {
-	AuthorityEntity authority = authorityRepository.findByName(name);
-	if (authority == null) {
-	    authority = new AuthorityEntity(name);
-	    authorityRepository.save(authority);
-	}
-
-	return authority;
-    }
-
-    @Transactional
-    private RoleEntity createRole(String name, Collection<AuthorityEntity> authorities) {
-	RoleEntity role = roleRepository.findByName(name);
-	if (role == null) {
-	    if (name.equals("ROLE_ADMIN")) {
-		adminCreated = false;
+    private void createAuthorities() {
+	for (String authorityName : AdminConstants.AUTHORITIES) {
+	    AuthorityEntity authority = authorityRepository.findByName(authorityName);
+	    if (authority == null) {
+		authority = new AuthorityEntity(authorityName);
+		authorityRepository.save(authority);
 	    }
-
-	    role = new RoleEntity(name);
-	    role.setAuthorities(authorities);
-	    roleRepository.save(role);
 	}
-
-	return role;
     }
 
     @Transactional
-    private UserEntity createAdmin(Collection<RoleEntity> roles) {
+    private void createRoles() {
+	for (String roleName : AdminConstants.ROLES) {
+	    RoleEntity role = roleRepository.findByName(roleName);
+	    if (role == null) {
+		role = new RoleEntity(roleName);
+		List<String> authorityNames = AdminConstants.ROLE_MAP.get(roleName);
+		List<AuthorityEntity> authorities = new ArrayList<>();
+		for (String authorityName : authorityNames) {
+		    AuthorityEntity authority = authorityRepository.findByName(authorityName);
+		    if (authority != null) {
+			authorities.add(authority);
+		    }
+		}
+
+		role.setAuthorities(authorities);
+		roleRepository.save(role);
+	    }
+	}
+    }
+
+    @Transactional
+    private UserEntity createAdmin() {
 	UserEntity admin = new UserEntity();
-	admin.setUsername("Administrator");
-	admin.setFirstName("Administrator");
-	admin.setLastName("Administrator");
+	admin.setUsername(AdminConstants.USERNAME);
+	admin.setFirstName(AdminConstants.FIRST_NAME);
+	admin.setLastName(AdminConstants.LAST_NAME);
 	admin.setEmail("admin@test.com");
 	admin.setPublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
-	admin.setEncryptedPassword(bCryptPasswordEncoder.encode("abcd1234"));
+	admin.setEncryptedPassword(bCryptPasswordEncoder.encode(AdminConstants.INITIAL_PASSWORD));
+
+	List<RoleEntity> roles = new ArrayList<>();
+	for (String roleName : AdminConstants.ADMINISTRATOR_USER_ROLES) {
+	    RoleEntity role = roleRepository.findByName(roleName);
+	    if (role != null) {
+		roles.add(role);
+	    }
+	}
+
 	admin.setRoles(roles);
 
 	return userRepository.save(admin);
