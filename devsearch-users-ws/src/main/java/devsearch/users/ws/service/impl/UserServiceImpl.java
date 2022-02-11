@@ -20,7 +20,7 @@ import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.security.UserPrincipal;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.UserDto;
-import devsearch.users.ws.shared.utils.Constants;
+import devsearch.users.ws.shared.utils.AppConstants;
 import devsearch.users.ws.shared.utils.Mapper;
 import devsearch.users.ws.shared.utils.Utils;
 
@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
 
 	UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
 
-	userEntity.setPublicId(utils.generatePublicId(Constants.PUBLIC_ID_LENGTH));
+	userEntity.setPublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 	userEntity.setEncryptedPassword(bCryptpasswordEncoder.encode(userDto.getPassword()));
 
 	UserEntity storedUserEntity = null;

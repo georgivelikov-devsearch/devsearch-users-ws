@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
-import devsearch.users.ws.shared.utils.Constants;
+import devsearch.users.ws.shared.utils.AppConstants;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
 
     @ExceptionHandler(value = UsersRestApiException.class)
     public ResponseEntity<Object> handleRestApiException(UsersRestApiException ex, WebRequest request) {
-	DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
+	DateFormat df = new SimpleDateFormat(AppConstants.DATE_FORMAT);
 	String dateStr = df.format(new Date());
 	ExceptionMessageRest exception = new ExceptionMessageRest(dateStr, getPath(request), getMethod(request),
 		ex.getMessage(), ex.getExceptionCode(), ex.getSourceExceptionMessage());
@@ -28,7 +28,7 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<Object> handleException(Exception ex, WebRequest request) {
-	DateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
+	DateFormat df = new SimpleDateFormat(AppConstants.DATE_FORMAT);
 	String dateStr = df.format(new Date());
 	ExceptionMessageRest exception = new ExceptionMessageRest(dateStr, getPath(request), getMethod(request),
 		ex.getMessage(), ExceptionMessages.INTERNAL_SERVER_ERROR.getExceptionCode());

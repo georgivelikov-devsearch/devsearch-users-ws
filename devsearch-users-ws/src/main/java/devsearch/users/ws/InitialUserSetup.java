@@ -16,7 +16,7 @@ import devsearch.users.ws.io.entity.UserEntity;
 import devsearch.users.ws.io.repository.AuthorityRepository;
 import devsearch.users.ws.io.repository.RoleRepository;
 import devsearch.users.ws.io.repository.UserRepository;
-import devsearch.users.ws.shared.utils.Constants;
+import devsearch.users.ws.shared.utils.AppConstants;
 import devsearch.users.ws.shared.utils.Utils;
 
 @Component
@@ -38,7 +38,6 @@ public class InitialUserSetup {
     private Utils utils;
 
     private boolean adminCreated = true;
-    private boolean userCreated = true;
 
     @EventListener
     @Transactional
@@ -56,7 +55,6 @@ public class InitialUserSetup {
 	}
 
 	createAdmin(Arrays.asList(roleAdmin));
-	createUser(Arrays.asList(roleUser));
     }
 
     @Transactional
@@ -93,24 +91,10 @@ public class InitialUserSetup {
 	admin.setFirstName("Administrator");
 	admin.setLastName("Administrator");
 	admin.setEmail("admin@test.com");
-	admin.setPublicId(utils.generatePublicId(Constants.PUBLIC_ID_LENGTH));
+	admin.setPublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 	admin.setEncryptedPassword(bCryptPasswordEncoder.encode("abcd1234"));
 	admin.setRoles(roles);
 
 	return userRepository.save(admin);
-    }
-
-    @Transactional
-    private UserEntity createUser(Collection<RoleEntity> roles) {
-	UserEntity user = new UserEntity();
-	user.setUsername("georgivelikov");
-	user.setFirstName("georgi");
-	user.setLastName("velikov");
-	user.setEmail("georgi@test.com");
-	user.setPublicId(utils.generatePublicId(Constants.PUBLIC_ID_LENGTH));
-	user.setEncryptedPassword(bCryptPasswordEncoder.encode("abcd1234"));
-	user.setRoles(roles);
-
-	return userRepository.save(user);
     }
 }

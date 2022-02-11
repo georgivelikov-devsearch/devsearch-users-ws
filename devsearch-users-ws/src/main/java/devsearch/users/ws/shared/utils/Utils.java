@@ -28,7 +28,7 @@ public class Utils {
     }
 
     public String getDateString(Date date) {
-	return Constants.DATE_FORMATTER.format(date);
+	return AppConstants.DATE_FORMATTER.format(date);
     }
 
     private String generateRandomString(int length) {

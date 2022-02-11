@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import devsearch.users.ws.exception.ExceptionMessageRest;
 import devsearch.users.ws.exception.ExceptionMessages;
-import devsearch.users.ws.shared.utils.Constants;
+import devsearch.users.ws.shared.utils.AppConstants;
 import devsearch.users.ws.shared.utils.Utils;
 
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
@@ -36,7 +36,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 	ObjectMapper mapper = new ObjectMapper();
 
 	response.setStatus(HttpStatus.UNAUTHORIZED.value());
-	response.setCharacterEncoding(Constants.DEFAULT_ENCODING);
+	response.setCharacterEncoding(AppConstants.DEFAULT_ENCODING);
 	response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 	response.getWriter().write(mapper.writeValueAsString(exception));
     }
