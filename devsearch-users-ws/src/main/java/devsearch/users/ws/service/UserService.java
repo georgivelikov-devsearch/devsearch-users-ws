@@ -17,11 +17,11 @@ public interface UserService extends UserDetailsService {
 
     public UserDto getUserForLogin(String username) throws UsersRestApiException;
 
-    public UserDto updateUser(String publicId, UserDto userDto) throws UsersRestApiException;
+    public UserDto updateUser(String userId, UserDto userDto) throws UsersRestApiException;
 
     public UserDto createUser(UserDto userDto) throws UsersRestApiException;
 
-    public void deleteUser(String publicId) throws UsersRestApiException;
+    public void deleteUser(String userId) throws UsersRestApiException;
 
     public List<UserDto> getUsers(int page, int limit) throws UsersRestApiException;
 }

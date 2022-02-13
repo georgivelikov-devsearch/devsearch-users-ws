@@ -7,7 +7,13 @@ import devsearch.users.ws.shared.dto.AddressDto;
 
 public interface AddressService {
 
-    public AddressDto getAddressById(String addressId) throws UsersRestApiException;
+    public AddressDto getAddressByAddressId(String addressId) throws UsersRestApiException;
 
-    public List<AddressDto> getAddresses(String userId) throws UsersRestApiException;
+    public List<AddressDto> getAddresses(String profileId) throws UsersRestApiException;
+
+    public AddressDto updateAddress(String addressId, AddressDto addressDto) throws UsersRestApiException;
+
+    public AddressDto createAddress(AddressDto addressDto) throws UsersRestApiException;
+
+    public void deleteAddress(String addressId) throws UsersRestApiException;
 }
