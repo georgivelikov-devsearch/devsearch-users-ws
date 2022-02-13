@@ -115,7 +115,6 @@ public class ProfileServiceImpl implements ProfileService {
 	} catch (Exception ex) {
 	    throw new UsersRestApiException(ExceptionMessages.DELETE_RECORD_FAILED, ex.getMessage());
 	}
-
     }
 
 }
