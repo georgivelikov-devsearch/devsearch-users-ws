@@ -9,7 +9,7 @@ import devsearch.users.ws.shared.dto.UserDto;
 
 public interface UserService extends UserDetailsService {
 
-    public UserDto getUserByPublicId(String publicId) throws UsersRestApiException;
+    public UserDto getUserByUserId(String userId) throws UsersRestApiException;
 
     public UserDto getUserByUsername(String username) throws UsersRestApiException;
 

@@ -1,14 +1,15 @@
 package devsearch.users.ws.io.repository;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import devsearch.users.ws.io.entity.ProfileEntity;
 import devsearch.users.ws.io.entity.UserEntity;
 
 @Repository
-public interface UserRepository extends PagingAndSortingRepository<UserEntity, Long> {
+public interface ProfileRepository extends CrudRepository<ProfileEntity, Long> {
 
-    public UserEntity findByUserId(String userId);
+    public UserEntity findByPublicId(String publicId);
 
     public UserEntity findByUsername(String username);
 

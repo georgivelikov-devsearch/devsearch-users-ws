@@ -64,8 +64,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByPublicId(String publicId) throws UsersRestApiException {
-	UserEntity userEntity = userRepository.findByPublicId(publicId);
+    public UserDto getUserByUserId(String userId) throws UsersRestApiException {
+	UserEntity userEntity = userRepository.findByUserId(userId);
 
 	if (userEntity == null) {
 	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
@@ -122,8 +122,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(String publicId, UserDto userDto) throws UsersRestApiException {
-	UserEntity userEntity = userRepository.findByPublicId(publicId);
+    public UserDto updateUser(String userId, UserDto userDto) throws UsersRestApiException {
+	UserEntity userEntity = userRepository.findByUserId(userId);
 	if (userEntity == null) {
 	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}
@@ -144,8 +144,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(String publicId) throws UsersRestApiException {
-	UserEntity userEntity = userRepository.findByPublicId(publicId);
+    public void deleteUser(String userId) throws UsersRestApiException {
+	UserEntity userEntity = userRepository.findByUserId(userId);
 	if (userEntity == null) {
 	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}
