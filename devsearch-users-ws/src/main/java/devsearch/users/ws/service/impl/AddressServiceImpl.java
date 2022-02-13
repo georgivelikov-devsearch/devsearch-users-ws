@@ -16,7 +16,7 @@ import devsearch.users.ws.shared.utils.Utils;
 public class AddressServiceImpl implements AddressService {
 
     @Autowired
-    private ProfileRepository profileRepository;
+    private ProfileRepository addressRepository;
 
     @Autowired
     private Mapper modelMapper;
