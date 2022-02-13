@@ -6,12 +6,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import devsearch.users.ws.io.entity.AddressEntity;
-import devsearch.users.ws.io.entity.UserEntity;
+import devsearch.users.ws.io.entity.ProfileEntity;
 
 @Repository
 public interface AddressRepository extends CrudRepository<AddressEntity, Long> {
 
     public AddressEntity findByAddressId(String addressId);
 
-    public List<AddressEntity> findAllByUser(UserEntity userEntity);
+    public List<AddressEntity> findAllByProfile(ProfileEntity profile);
 }
