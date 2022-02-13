@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdminConstants {
+public class InitialConstants {
 
     // STARTING AUTHORITIES
     static final String READ_AUTHORITY = "READ_AUTHORITY";

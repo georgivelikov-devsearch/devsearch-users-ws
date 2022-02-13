@@ -45,13 +45,13 @@ public class InitialUserSetup {
     @EventListener
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent ev) {
-	ConfigEntity initialSetupConfigured = configRepository.findByName(AdminConstants.INITIAL_SETUP_CONFIG);
+	ConfigEntity initialSetupConfigured = configRepository.findByName(InitialConstants.INITIAL_SETUP_CONFIG);
 	if (initialSetupConfigured != null && Boolean.valueOf(initialSetupConfigured.getValue())) {
 	    return;
 	}
 
 	initialSetupConfigured = new ConfigEntity();
-	initialSetupConfigured.setName(AdminConstants.INITIAL_SETUP_CONFIG);
+	initialSetupConfigured.setName(InitialConstants.INITIAL_SETUP_CONFIG);
 	initialSetupConfigured.setValue("true");
 	configRepository.save(initialSetupConfigured);
 
@@ -62,7 +62,7 @@ public class InitialUserSetup {
 
     @Transactional
     private void createAuthorities() {
-	for (String authorityName : AdminConstants.AUTHORITIES) {
+	for (String authorityName : InitialConstants.AUTHORITIES) {
 	    AuthorityEntity authority = authorityRepository.findByName(authorityName);
 	    if (authority == null) {
 		authority = new AuthorityEntity(authorityName);
@@ -73,11 +73,11 @@ public class InitialUserSetup {
 
     @Transactional
     private void createRoles() {
-	for (String roleName : AdminConstants.ROLES) {
+	for (String roleName : InitialConstants.ROLES) {
 	    RoleEntity role = roleRepository.findByName(roleName);
 	    if (role == null) {
 		role = new RoleEntity(roleName);
-		List<String> authorityNames = AdminConstants.ROLE_MAP.get(roleName);
+		List<String> authorityNames = InitialConstants.ROLE_MAP.get(roleName);
 		List<AuthorityEntity> authorities = new ArrayList<>();
 		for (String authorityName : authorityNames) {
 		    AuthorityEntity authority = authorityRepository.findByName(authorityName);
@@ -95,15 +95,15 @@ public class InitialUserSetup {
     @Transactional
     private UserEntity createAdmin() {
 	UserEntity admin = new UserEntity();
-	admin.setUsername(AdminConstants.USERNAME);
-	admin.setFirstName(AdminConstants.FIRST_NAME);
-	admin.setLastName(AdminConstants.LAST_NAME);
+	admin.setUsername(InitialConstants.USERNAME);
+	admin.setFirstName(InitialConstants.FIRST_NAME);
+	admin.setLastName(InitialConstants.LAST_NAME);
 	admin.setEmail("admin@test.com");
 	admin.setPublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
-	admin.setEncryptedPassword(bCryptPasswordEncoder.encode(AdminConstants.INITIAL_PASSWORD));
+	admin.setEncryptedPassword(bCryptPasswordEncoder.encode(InitialConstants.INITIAL_PASSWORD));
 
 	List<RoleEntity> roles = new ArrayList<>();
-	for (String roleName : AdminConstants.ADMINISTRATOR_USER_ROLES) {
+	for (String roleName : InitialConstants.ADMINISTRATOR_USER_ROLES) {
 	    RoleEntity role = roleRepository.findByName(roleName);
 	    if (role != null) {
 		roles.add(role);
