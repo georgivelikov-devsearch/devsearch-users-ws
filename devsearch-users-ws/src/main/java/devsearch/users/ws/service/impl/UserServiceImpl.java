@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
 
 	UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
 
-	userEntity.setPublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	userEntity.setUserId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 	userEntity.setEncryptedPassword(bCryptpasswordEncoder.encode(userDto.getPassword()));
 
 	UserEntity storedUserEntity = null;

@@ -70,6 +70,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	}
 
 	res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKER_PREFIX + token);
-	res.addHeader("UserID", userDto.getPublicId());
+	res.addHeader("UserId", userDto.getUserId());
     }
 }

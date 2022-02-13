@@ -3,7 +3,7 @@ package devsearch.users.ws.shared.dto;
 public class UserDto {
 
     private long id;
-    private String publicId;
+    private String userId;
     private String username;
     private String firstName;
     private String lastName;
@@ -19,12 +19,12 @@ public class UserDto {
 	this.id = id;
     }
 
-    public String getPublicId() {
-	return publicId;
+    public String getUserId() {
+	return userId;
     }
 
-    public void setPublicId(String publicId) {
-	this.publicId = publicId;
+    public void setUserId(String userId) {
+	this.userId = userId;
     }
 
     public String getUsername() {

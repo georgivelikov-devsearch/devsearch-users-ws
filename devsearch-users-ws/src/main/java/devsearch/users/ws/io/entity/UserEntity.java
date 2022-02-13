@@ -29,7 +29,7 @@ public class UserEntity implements Serializable {
     private long id;
 
     @Column(nullable = false, unique = true)
-    private String publicId;
+    private String userId;
 
     @Column(nullable = false, unique = true)
     @Size(min = 3, max = 50)
@@ -67,12 +67,12 @@ public class UserEntity implements Serializable {
 	this.id = id;
     }
 
-    public String getPublicId() {
-	return publicId;
+    public String getUserId() {
+	return userId;
     }
 
-    public void setPublicId(String publicId) {
-	this.publicId = publicId;
+    public void setUserId(String userId) {
+	this.userId = userId;
     }
 
     public String getUsername() {

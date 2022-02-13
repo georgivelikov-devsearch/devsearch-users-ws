@@ -99,7 +99,7 @@ public class InitialUserSetup {
 	admin.setFirstName(InitialConstants.FIRST_NAME);
 	admin.setLastName(InitialConstants.LAST_NAME);
 	admin.setEmail("admin@test.com");
-	admin.setPublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	admin.setUserId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 	admin.setEncryptedPassword(bCryptPasswordEncoder.encode(InitialConstants.INITIAL_PASSWORD));
 
 	List<RoleEntity> roles = new ArrayList<>();
