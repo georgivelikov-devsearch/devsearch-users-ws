@@ -9,9 +9,7 @@ import devsearch.users.ws.io.entity.UserEntity;
 @Repository
 public interface ProfileRepository extends CrudRepository<ProfileEntity, Long> {
 
-    public UserEntity findByPublicId(String publicId);
+    public ProfileEntity findByProfileId(String profileId);
 
-    public UserEntity findByUsername(String username);
-
-    public UserEntity findByEmail(String email);
+    public ProfileEntity findByUser(UserEntity user);
 }

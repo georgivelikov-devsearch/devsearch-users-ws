@@ -11,7 +11,7 @@ import devsearch.users.ws.io.entity.UserEntity;
 @Repository
 public interface AddressRepository extends CrudRepository<AddressEntity, Long> {
 
-    public AddressEntity findByPublicId(String addressId);
+    public AddressEntity findByAddressId(String addressId);
 
     public List<AddressEntity> findAllByUser(UserEntity userEntity);
 }
