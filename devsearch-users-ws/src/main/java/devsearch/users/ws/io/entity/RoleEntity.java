@@ -6,13 +6,15 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "roles")
@@ -30,8 +32,9 @@ public class RoleEntity implements Serializable {
     @ManyToMany(mappedBy = "roles")
     private Collection<UserEntity> users;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(cascade = { CascadeType.PERSIST
-    }, fetch = FetchType.EAGER)
+    })
     @JoinTable(name = "roles_authorities", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
 	    inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private Collection<AuthorityEntity> authorities;
