@@ -4,6 +4,7 @@ import java.util.Collection;
 
 public class ProfileRequest {
 
+    private String profileId;
     private String displayName;
     private String shortIntro;
     private String bio;
@@ -14,6 +15,14 @@ public class ProfileRequest {
     private String socialWebsite;
     private UserRequest user;
     private Collection<AddressRequest> addresses;
+
+    public String getProfileId() {
+	return profileId;
+    }
+
+    public void setProfileId(String profileId) {
+	this.profileId = profileId;
+    }
 
     public String getDisplayName() {
 	return displayName;
