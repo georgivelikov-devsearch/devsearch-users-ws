@@ -5,21 +5,13 @@ import java.util.Collection;
 public class ProfileDto {
 
     private String displayName;
-
     private String shortIntro;
-
     private String bio;
-
     private String socialLinkedIn;
-
     private String socialTwitter;
-
     private String socialGithub;
-
     private String socialYoutube;
-
     private String socialWebsite;
-
     private UserDto user;
 
     private Collection<AddressDto> addresses;

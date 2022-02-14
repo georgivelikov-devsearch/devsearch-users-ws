@@ -3,15 +3,10 @@ package devsearch.users.ws.shared.dto;
 public class AddressDto {
 
     private String addressId;
-
     private String city;
-
     private String country;
-
     private String street;
-
     private String postalCode;
-
     private String type;
 
     public String getAddressId() {

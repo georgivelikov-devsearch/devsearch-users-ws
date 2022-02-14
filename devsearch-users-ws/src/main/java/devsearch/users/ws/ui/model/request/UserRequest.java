@@ -1,12 +1,21 @@
 package devsearch.users.ws.ui.model.request;
 
-public class UserDetailsRequestModel {
+public class UserRequest {
 
+    private String userId;
     private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+
+    public String getUserId() {
+	return userId;
+    }
+
+    public void setUserId(String userId) {
+	this.userId = userId;
+    }
 
     public String getUsername() {
 	return username;

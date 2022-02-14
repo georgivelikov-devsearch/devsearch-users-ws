@@ -3,17 +3,11 @@ package devsearch.users.ws.shared.dto;
 public class UserDto {
 
     private String userId;
-
     private String username;
-
     private String firstName;
-
     private String lastName;
-
     private String email;
-
     private String password;
-
     private String encryptedPassword;
 
     public String getUserId() {

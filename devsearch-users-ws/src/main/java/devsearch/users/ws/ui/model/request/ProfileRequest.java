@@ -1,8 +1,8 @@
-package devsearch.users.ws.ui.model.response;
+package devsearch.users.ws.ui.model.request;
 
 import java.util.Collection;
 
-public class ProfileResponse {
+public class ProfileRequest {
 
     private String displayName;
     private String shortIntro;
@@ -12,8 +12,8 @@ public class ProfileResponse {
     private String socialGithub;
     private String socialYoutube;
     private String socialWebsite;
-    private UserResponse user;
-    private Collection<AddressResponse> addresses;
+    private UserRequest user;
+    private Collection<AddressRequest> addresses;
 
     public String getDisplayName() {
 	return displayName;
@@ -79,19 +79,19 @@ public class ProfileResponse {
 	this.socialWebsite = socialWebsite;
     }
 
-    public UserResponse getUser() {
+    public UserRequest getUser() {
 	return user;
     }
 
-    public void setUser(UserResponse user) {
+    public void setUser(UserRequest user) {
 	this.user = user;
     }
 
-    public Collection<AddressResponse> getAddresses() {
+    public Collection<AddressRequest> getAddresses() {
 	return addresses;
     }
 
-    public void setAddresses(Collection<AddressResponse> addresses) {
+    public void setAddresses(Collection<AddressRequest> addresses) {
 	this.addresses = addresses;
     }
 }

@@ -1,21 +1,12 @@
-package devsearch.users.ws.ui.model.response;
+package devsearch.users.ws.ui.model.request;
 
-public class AddressResponse {
+public class AddressRequest {
 
-    private String addressId;
     private String city;
     private String country;
     private String street;
     private String postalCode;
     private String type;
-
-    public String getAddressId() {
-	return addressId;
-    }
-
-    public void setAddressId(String addressId) {
-	this.addressId = addressId;
-    }
 
     public String getCity() {
 	return city;

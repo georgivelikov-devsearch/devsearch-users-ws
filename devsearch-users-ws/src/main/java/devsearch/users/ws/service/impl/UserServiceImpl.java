@@ -18,9 +18,7 @@ import devsearch.users.ws.exception.UsersRestApiException;
 import devsearch.users.ws.io.entity.UserEntity;
 import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.security.UserPrincipal;
-import devsearch.users.ws.service.ProfileService;
 import devsearch.users.ws.service.UserService;
-import devsearch.users.ws.shared.dto.ProfileDto;
 import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.shared.utils.AppConstants;
 import devsearch.users.ws.shared.utils.Mapper;
@@ -34,9 +32,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private ProfileService profileService;
 
     @Autowired
     private Mapper modelMapper;
@@ -123,13 +118,7 @@ public class UserServiceImpl implements UserService {
 	    throw new UsersRestApiException(ExceptionMessages.CREATE_RECORD_FAILED, ex.getMessage());
 	}
 
-	UserDto newUserDto = modelMapper.map(storedUserEntity, UserDto.class);
-	ProfileDto profileDto = new ProfileDto();
-	profileDto.setUser(newUserDto);
-	// create starting profile for that user
-	profileService.createProfile(profileDto);
-
-	return userDto;
+	return modelMapper.map(storedUserEntity, UserDto.class);
     }
 
     @Override

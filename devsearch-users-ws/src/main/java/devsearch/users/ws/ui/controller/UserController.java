@@ -19,7 +19,7 @@ import devsearch.users.ws.exception.UsersRestApiException;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.shared.utils.Mapper;
-import devsearch.users.ws.ui.model.request.UserDetailsRequestModel;
+import devsearch.users.ws.ui.model.request.UserRequest;
 import devsearch.users.ws.ui.model.response.UserResponse;
 
 @RestController
@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserResponse createUser(@RequestBody UserDetailsRequestModel userDetails) throws UsersRestApiException {
+    public UserResponse createUser(@RequestBody UserRequest userDetails) throws UsersRestApiException {
 	UserDto userDto = modelMapper.map(userDetails, UserDto.class);
 	UserDto createdUser = userService.createUser(userDto);
 
@@ -75,7 +75,7 @@ public class UserController {
     }
 
     @PutMapping(path = "/{id}")
-    public UserResponse updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails)
+    public UserResponse updateUser(@PathVariable String id, @RequestBody UserRequest userDetails)
 	    throws UsersRestApiException {
 	UserDto userDto = modelMapper.map(userDetails, UserDto.class);
 

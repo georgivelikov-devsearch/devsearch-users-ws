@@ -3,13 +3,9 @@ package devsearch.users.ws.ui.model.response;
 public class UserResponse {
 
     private String userId;
-
     private String username;
-
     private String firstName;
-
     private String lastName;
-
     private String email;
 
     public String getUserId() {
