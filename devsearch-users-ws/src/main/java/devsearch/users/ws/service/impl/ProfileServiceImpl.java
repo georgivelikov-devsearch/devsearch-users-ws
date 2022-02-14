@@ -43,10 +43,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDto getProfileByUserId(String userId) throws UsersRestApiException {
-	UserEntity userEntity = userRepository.findByUserId(userId);
-
-	ProfileEntity profileEntity = profileRepository.findByUser(userEntity);
-
+	ProfileEntity profileEntity = profileRepository.findByUserId(userId);
 	if (profileEntity == null) {
 	    throw new UsersRestApiException(ExceptionMessages.NO_PFOFILE_FOUND_FOR_THIS_USER);
 	}
@@ -82,11 +79,21 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDto createProfile(ProfileDto profileDto) throws UsersRestApiException {
-	ProfileEntity profileEntity = modelMapper.map(profileDto, ProfileEntity.class);
-	UserEntity userEntity = userRepository.findByUserId(profileDto.getUserId());
+	String userId = profileDto.getUserId();
+	UserEntity userEntity = userRepository.findByUserId(userId);
+	if (userEntity == null) {
+	    throw new UsersRestApiException(ExceptionMessages.NO_USER_FOUND_FOR_THIS_PROFILE);
+	}
 
+	ProfileEntity profileEntity = profileRepository.findByUserId(userId);
+	if (profileEntity != null) {
+	    throw new UsersRestApiException(ExceptionMessages.PROFILE_ALREADY_EXISTS_FOR_THIS_USER);
+	}
+
+	profileEntity = modelMapper.map(profileDto, ProfileEntity.class);
 	profileEntity.setUser(userEntity);
 	profileEntity.setProfileId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	userEntity.setProfile(profileEntity);
 
 	ProfileEntity storedProfileEntity = null;
 	try {
