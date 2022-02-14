@@ -49,7 +49,7 @@ public class ProfileEntity implements Serializable {
     @Column(nullable = true, length = 400)
     private String socialWebsite;
 
-    @OneToOne(mappedBy = "profile")
+    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
     private UserEntity user;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)

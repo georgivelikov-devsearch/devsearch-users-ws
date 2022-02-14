@@ -1,6 +1,6 @@
 package devsearch.users.ws.ui.model.request;
 
-public class UserLoginRequest {
+public class LoginRequest {
 
     private String username;
     private String password;

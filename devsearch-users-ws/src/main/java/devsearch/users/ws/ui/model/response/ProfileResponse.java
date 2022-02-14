@@ -12,7 +12,6 @@ public class ProfileResponse {
     private String socialGithub;
     private String socialYoutube;
     private String socialWebsite;
-    private UserResponse user;
     private Collection<AddressResponse> addresses;
 
     public String getDisplayName() {
@@ -77,14 +76,6 @@ public class ProfileResponse {
 
     public void setSocialWebsite(String socialWebsite) {
 	this.socialWebsite = socialWebsite;
-    }
-
-    public UserResponse getUser() {
-	return user;
-    }
-
-    public void setUser(UserResponse user) {
-	this.user = user;
     }
 
     public Collection<AddressResponse> getAddresses() {

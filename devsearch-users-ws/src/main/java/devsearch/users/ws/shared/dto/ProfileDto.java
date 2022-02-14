@@ -4,6 +4,7 @@ import java.util.Collection;
 
 public class ProfileDto {
 
+    private String profileId;
     private String displayName;
     private String shortIntro;
     private String bio;
@@ -12,9 +13,16 @@ public class ProfileDto {
     private String socialGithub;
     private String socialYoutube;
     private String socialWebsite;
-    private UserDto user;
-
+    private String userId;
     private Collection<AddressDto> addresses;
+
+    public String getProfileId() {
+	return profileId;
+    }
+
+    public void setProfileId(String profileId) {
+	this.profileId = profileId;
+    }
 
     public String getDisplayName() {
 	return displayName;
@@ -80,12 +88,12 @@ public class ProfileDto {
 	this.socialWebsite = socialWebsite;
     }
 
-    public UserDto getUser() {
-	return user;
+    public String getUserId() {
+	return userId;
     }
 
-    public void setUser(UserDto user) {
-	this.user = user;
+    public void setUserId(String userId) {
+	this.userId = userId;
     }
 
     public Collection<AddressDto> getAddresses() {
@@ -95,4 +103,5 @@ public class ProfileDto {
     public void setAddresses(Collection<AddressDto> addresses) {
 	this.addresses = addresses;
     }
+
 }

@@ -10,7 +10,6 @@ import devsearch.users.ws.io.entity.UserEntity;
 import devsearch.users.ws.io.repository.ProfileRepository;
 import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.service.ProfileService;
-import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.ProfileDto;
 import devsearch.users.ws.shared.utils.AppConstants;
 import devsearch.users.ws.shared.utils.Mapper;
@@ -24,9 +23,6 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private Mapper modelMapper;
@@ -74,8 +70,6 @@ public class ProfileServiceImpl implements ProfileService {
 	profileEntity.setSocialYoutube(profileDto.getSocialYoutube());
 	profileEntity.setSocialWebsite(profileDto.getSocialWebsite());
 
-	userService.updateUser(profileEntity.getUser().getUserId(), profileDto.getUser());
-
 	ProfileEntity updatedProfileEntity = null;
 	try {
 	    updatedProfileEntity = profileRepository.save(profileEntity);
@@ -89,7 +83,9 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileDto createProfile(ProfileDto profileDto) throws UsersRestApiException {
 	ProfileEntity profileEntity = modelMapper.map(profileDto, ProfileEntity.class);
+	UserEntity userEntity = userRepository.findByUserId(profileDto.getUserId());
 
+	profileEntity.setUser(userEntity);
 	profileEntity.setProfileId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 
 	ProfileEntity storedProfileEntity = null;

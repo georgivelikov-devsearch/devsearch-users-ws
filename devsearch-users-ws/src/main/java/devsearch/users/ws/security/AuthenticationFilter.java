@@ -21,7 +21,7 @@ import devsearch.users.ws.SpringApplicationContext;
 import devsearch.users.ws.exception.UsersRestApiException;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.UserDto;
-import devsearch.users.ws.ui.model.request.UserLoginRequest;
+import devsearch.users.ws.ui.model.request.LoginRequest;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -38,8 +38,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	    throws AuthenticationException {
 
 	try {
-	    UserLoginRequest creds = new ObjectMapper().readValue(req.getInputStream(),
-		    UserLoginRequest.class);
+	    LoginRequest creds = new ObjectMapper().readValue(req.getInputStream(),
+		    LoginRequest.class);
 	    return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
 		    creds.getPassword(), new ArrayList<>()));
 	} catch (IOException ex) {
