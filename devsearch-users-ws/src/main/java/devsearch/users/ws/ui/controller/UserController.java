@@ -67,17 +67,17 @@ public class UserController {
     }
 
     @PostMapping
-    public UserResponse createUser(@RequestBody UserRequest userDetails) throws UsersRestApiException {
-	UserDto userDto = modelMapper.map(userDetails, UserDto.class);
+    public UserResponse createUser(@RequestBody UserRequest user) throws UsersRestApiException {
+	UserDto userDto = modelMapper.map(user, UserDto.class);
 	UserDto createdUser = userService.createUser(userDto);
 
 	return modelMapper.map(createdUser, UserResponse.class);
     }
 
     @PutMapping(path = "/{id}")
-    public UserResponse updateUser(@PathVariable String id, @RequestBody UserRequest userDetails)
+    public UserResponse updateUser(@PathVariable String id, @RequestBody UserRequest user)
 	    throws UsersRestApiException {
-	UserDto userDto = modelMapper.map(userDetails, UserDto.class);
+	UserDto userDto = modelMapper.map(user, UserDto.class);
 
 	UserDto updatedUser = userService.updateUser(id, userDto);
 

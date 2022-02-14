@@ -3,6 +3,8 @@ package devsearch.users.ws.ui.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,6 +12,7 @@ import devsearch.users.ws.exception.UsersRestApiException;
 import devsearch.users.ws.service.ProfileService;
 import devsearch.users.ws.shared.dto.ProfileDto;
 import devsearch.users.ws.shared.utils.Mapper;
+import devsearch.users.ws.ui.model.request.ProfileRequest;
 import devsearch.users.ws.ui.model.response.ProfileResponse;
 
 @RestController
@@ -32,6 +35,14 @@ public class ProfileController {
 	ProfileDto profileDto = profileService.getProfileByProfileId(profileId);
 
 	return modelMapper.map(profileDto, ProfileResponse.class);
+    }
+
+    @PostMapping
+    public ProfileResponse createProfile(@RequestBody ProfileRequest profileRequest) throws UsersRestApiException {
+	ProfileDto profileDto = modelMapper.map(profileRequest, ProfileDto.class);
+	ProfileDto createdProfile = profileService.createProfile(profileDto);
+
+	return modelMapper.map(createdProfile, ProfileResponse.class);
     }
 
 }
