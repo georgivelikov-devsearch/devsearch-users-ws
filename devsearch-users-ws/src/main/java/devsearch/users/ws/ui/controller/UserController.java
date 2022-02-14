@@ -33,7 +33,7 @@ public class UserController {
     private Mapper modelMapper;
 
     @GetMapping(path = "/status")
-    public String welcome() {
+    public String status() {
 	return "UserController is working!";
     }
 

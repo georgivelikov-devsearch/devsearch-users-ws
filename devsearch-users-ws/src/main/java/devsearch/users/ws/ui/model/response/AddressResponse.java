@@ -1,6 +1,6 @@
-package devsearch.users.ws.shared.dto;
+package devsearch.users.ws.ui.model.response;
 
-public class AddressDto {
+public class AddressResponse {
 
     private String addressId;
 

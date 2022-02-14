@@ -2,22 +2,19 @@ package devsearch.users.ws.shared.dto;
 
 public class UserDto {
 
-    private long id;
     private String userId;
+
     private String username;
+
     private String firstName;
+
     private String lastName;
+
     private String email;
+
     private String password;
+
     private String encryptedPassword;
-
-    public long getId() {
-	return id;
-    }
-
-    public void setId(long id) {
-	this.id = id;
-    }
 
     public String getUserId() {
 	return userId;
