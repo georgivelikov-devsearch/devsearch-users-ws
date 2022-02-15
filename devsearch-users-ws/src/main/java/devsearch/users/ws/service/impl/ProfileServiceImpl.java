@@ -52,8 +52,8 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ProfileDto updateProfile(String profileId, ProfileDto profileDto) throws UsersRestApiException {
-	ProfileEntity profileEntity = profileRepository.findByProfileId(profileId);
+    public ProfileDto updateProfile(ProfileDto profileDto) throws UsersRestApiException {
+	ProfileEntity profileEntity = profileRepository.findByProfileId(profileDto.getProfileId());
 	if (profileEntity == null) {
 	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}

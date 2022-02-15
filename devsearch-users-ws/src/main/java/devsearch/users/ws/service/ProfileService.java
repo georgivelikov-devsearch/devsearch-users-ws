@@ -9,7 +9,7 @@ public interface ProfileService {
 
     public ProfileDto getProfileByUserId(String userId) throws UsersRestApiException;
 
-    public ProfileDto updateProfile(String profileId, ProfileDto profileDto) throws UsersRestApiException;
+    public ProfileDto updateProfile(ProfileDto profileDto) throws UsersRestApiException;
 
     public ProfileDto createProfile(ProfileDto profileDto) throws UsersRestApiException;
 

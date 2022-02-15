@@ -17,7 +17,7 @@ public interface UserService extends UserDetailsService {
 
     public UserDto getUserForLogin(String username) throws UsersRestApiException;
 
-    public UserDto updateUser(String userId, UserDto userDto) throws UsersRestApiException;
+    public UserDto updateUser(UserDto userDto) throws UsersRestApiException;
 
     public UserDto createUser(UserDto userDto) throws UsersRestApiException;
 

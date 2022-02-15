@@ -53,8 +53,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressDto updateAddress(String addressId, AddressDto addressDto) throws UsersRestApiException {
-	AddressEntity addressEntity = addressRepository.findByAddressId(addressId);
+    public AddressDto updateAddress(AddressDto addressDto) throws UsersRestApiException {
+	AddressEntity addressEntity = addressRepository.findByAddressId(addressDto.getAddressId());
 	if (addressEntity == null) {
 	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}

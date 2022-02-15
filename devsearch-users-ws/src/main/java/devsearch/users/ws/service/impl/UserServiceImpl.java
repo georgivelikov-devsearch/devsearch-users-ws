@@ -122,8 +122,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(String userId, UserDto userDto) throws UsersRestApiException {
-	UserEntity userEntity = userRepository.findByUserId(userId);
+    public UserDto updateUser(UserDto userDto) throws UsersRestApiException {
+	UserEntity userEntity = userRepository.findByUserId(userDto.getUserId());
 	if (userEntity == null) {
 	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}

@@ -11,7 +11,7 @@ public interface AddressService {
 
     public List<AddressDto> getAddresses(String profileId) throws UsersRestApiException;
 
-    public AddressDto updateAddress(String addressId, AddressDto addressDto) throws UsersRestApiException;
+    public AddressDto updateAddress(AddressDto addressDto) throws UsersRestApiException;
 
     public AddressDto createAddress(AddressDto addressDto) throws UsersRestApiException;
 
