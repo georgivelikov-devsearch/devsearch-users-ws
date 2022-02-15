@@ -74,19 +74,18 @@ public class UserController {
 	return modelMapper.map(createdUser, UserResponse.class);
     }
 
-    @PutMapping(path = "/{id}")
-    public UserResponse updateUser(@PathVariable String id, @RequestBody UserRequest user)
-	    throws UsersRestApiException {
+    @PutMapping()
+    public UserResponse updateUser(@RequestBody UserRequest user) throws UsersRestApiException {
 	UserDto userDto = modelMapper.map(user, UserDto.class);
 
-	UserDto updatedUser = userService.updateUser(id, userDto);
+	UserDto updatedUser = userService.updateUser(userDto);
 
 	return modelMapper.map(updatedUser, UserResponse.class);
     }
 
     @Secured("ROLE_ADMIN")
-    @DeleteMapping(path = "/{id}")
-    public void deleteUser(@PathVariable String id) throws UsersRestApiException {
-	userService.deleteUser(id);
+    @DeleteMapping(path = "/{userId}")
+    public void deleteUser(@PathVariable String userId) throws UsersRestApiException {
+	userService.deleteUser(userId);
     }
 }
