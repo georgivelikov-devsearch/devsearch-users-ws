@@ -13,7 +13,7 @@ public class ProfileDto {
     private String socialGithub;
     private String socialYoutube;
     private String socialWebsite;
-    private String userId;
+    private UserDto user;
     private Collection<AddressDto> addresses;
 
     public String getProfileId() {
@@ -88,12 +88,12 @@ public class ProfileDto {
 	this.socialWebsite = socialWebsite;
     }
 
-    public String getUserId() {
-	return userId;
+    public UserDto getUser() {
+	return user;
     }
 
-    public void setUserId(String userId) {
-	this.userId = userId;
+    public void setUser(UserDto user) {
+	this.user = user;
     }
 
     public Collection<AddressDto> getAddresses() {

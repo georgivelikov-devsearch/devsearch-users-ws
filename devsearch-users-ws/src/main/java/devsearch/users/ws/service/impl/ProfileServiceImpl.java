@@ -1,15 +1,20 @@
 package devsearch.users.ws.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import devsearch.users.ws.exception.ExceptionMessages;
 import devsearch.users.ws.exception.UsersRestApiException;
+import devsearch.users.ws.io.entity.AddressEntity;
 import devsearch.users.ws.io.entity.ProfileEntity;
 import devsearch.users.ws.io.entity.UserEntity;
 import devsearch.users.ws.io.repository.ProfileRepository;
 import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.service.ProfileService;
+import devsearch.users.ws.shared.dto.AddressDto;
 import devsearch.users.ws.shared.dto.ProfileDto;
 import devsearch.users.ws.shared.utils.AppConstants;
 import devsearch.users.ws.shared.utils.Mapper;
@@ -67,6 +72,24 @@ public class ProfileServiceImpl implements ProfileService {
 	profileEntity.setSocialYoutube(profileDto.getSocialYoutube());
 	profileEntity.setSocialWebsite(profileDto.getSocialWebsite());
 
+	profileEntity.getUser().setFirstName(profileDto.getUser().getFirstName());
+	profileEntity.getUser().setLastName(profileDto.getUser().getLastName());
+
+	for (AddressEntity address : profileEntity.getAddresses()) {
+	    AddressDto addressDto = profileDto.getAddresses()
+		    .stream()
+		    .filter(currentAddressDto -> address.getAddressId().equals(currentAddressDto.getAddressId()))
+		    .findFirst()
+		    .orElse(null);
+	    if (addressDto != null) {
+		address.setCity(addressDto.getCity());
+		address.setCountry(addressDto.getCountry());
+		address.setPostalCode(addressDto.getPostalCode());
+		address.setStreet(addressDto.getStreet());
+		address.setType(addressDto.getType());
+	    }
+	}
+
 	ProfileEntity updatedProfileEntity = null;
 	try {
 	    updatedProfileEntity = profileRepository.save(profileEntity);
@@ -79,10 +102,20 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ProfileDto createProfile(ProfileDto profileDto) throws UsersRestApiException {
-	String userId = profileDto.getUserId();
+	String userId = profileDto.getUser().getUserId();
 	UserEntity userEntity = userRepository.findByUserId(userId);
 	if (userEntity == null) {
 	    throw new UsersRestApiException(ExceptionMessages.NO_USER_FOUND_FOR_THIS_PROFILE);
+	}
+
+	if (profileDto.getAddresses() != null) {
+	    List<AddressDto> addressesDto = new ArrayList<>(profileDto.getAddresses());
+	    for (int i = 0; i < addressesDto.size(); i++) {
+		AddressDto addressDto = addressesDto.get(i);
+		addressDto.setProfileDto(profileDto);
+		addressDto.setAddressId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+		addressesDto.set(i, addressDto);
+	    }
 	}
 
 	ProfileEntity profileEntity = profileRepository.findByUserId(userId);
@@ -90,9 +123,11 @@ public class ProfileServiceImpl implements ProfileService {
 	    throw new UsersRestApiException(ExceptionMessages.PROFILE_ALREADY_EXISTS_FOR_THIS_USER);
 	}
 
+	profileDto.setProfileId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 	profileEntity = modelMapper.map(profileDto, ProfileEntity.class);
+	// modelMapper creates new UserEntity from UserDao in ProfileDao. But we want to
+	// use the already created user from the Registration process
 	profileEntity.setUser(userEntity);
-	profileEntity.setProfileId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 	userEntity.setProfile(profileEntity);
 
 	ProfileEntity storedProfileEntity = null;

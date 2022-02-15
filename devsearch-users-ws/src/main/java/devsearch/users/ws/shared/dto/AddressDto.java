@@ -8,6 +8,7 @@ public class AddressDto {
     private String street;
     private String postalCode;
     private String type;
+    private ProfileDto profileDto;
 
     public String getAddressId() {
 	return addressId;
@@ -55,5 +56,13 @@ public class AddressDto {
 
     public void setType(String type) {
 	this.type = type;
+    }
+
+    public ProfileDto getProfileDto() {
+	return profileDto;
+    }
+
+    public void setProfileDto(ProfileDto profileDto) {
+	this.profileDto = profileDto;
     }
 }

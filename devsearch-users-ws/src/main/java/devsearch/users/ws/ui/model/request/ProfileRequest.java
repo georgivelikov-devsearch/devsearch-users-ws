@@ -13,7 +13,7 @@ public class ProfileRequest {
     private String socialGithub;
     private String socialYoutube;
     private String socialWebsite;
-    private String userId;
+    private UserRequest user;
     private Collection<AddressRequest> addresses;
 
     public String getProfileId() {
@@ -88,12 +88,12 @@ public class ProfileRequest {
 	this.socialWebsite = socialWebsite;
     }
 
-    public String getUserId() {
-	return userId;
+    public UserRequest getUser() {
+	return user;
     }
 
-    public void setUserId(String userId) {
-	this.userId = userId;
+    public void setUser(UserRequest user) {
+	this.user = user;
     }
 
     public Collection<AddressRequest> getAddresses() {
