@@ -38,8 +38,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	    throws AuthenticationException {
 
 	try {
-	    LoginRequest creds = new ObjectMapper().readValue(req.getInputStream(),
-		    LoginRequest.class);
+	    LoginRequest creds = new ObjectMapper().readValue(req.getInputStream(), LoginRequest.class);
 	    return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
 		    creds.getPassword(), new ArrayList<>()));
 	} catch (IOException ex) {
@@ -70,6 +69,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	}
 
 	res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKER_PREFIX + token);
-	res.addHeader("UserId", userDto.getUserId());
+	res.addHeader(SecurityConstants.USER_ID, userDto.getUserId());
     }
 }
