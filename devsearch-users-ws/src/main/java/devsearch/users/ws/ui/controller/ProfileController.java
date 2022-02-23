@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,4 +48,12 @@ public class ProfileController {
 	return modelMapper.map(createdProfile, ProfilePrivateResponse.class);
     }
 
+    @PutMapping
+    public ProfilePrivateResponse updateProfile(@RequestBody ProfileRequest profileRequest)
+	    throws RestApiUsersException {
+	ProfileDto profileDto = modelMapper.map(profileRequest, ProfileDto.class);
+	ProfileDto updatedProfile = profileService.updateProfile(profileDto);
+
+	return modelMapper.map(updatedProfile, ProfilePrivateResponse.class);
+    }
 }
