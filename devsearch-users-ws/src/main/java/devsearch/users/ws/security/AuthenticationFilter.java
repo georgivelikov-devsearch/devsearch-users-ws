@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import devsearch.users.ws.SpringApplicationContext;
-import devsearch.users.ws.exception.UsersRestApiException;
+import devsearch.users.ws.exception.RestApiUsersException;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.ui.model.request.LoginRequest;
@@ -64,7 +64,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	UserDto userDto;
 	try {
 	    userDto = userService.getUserForLogin(username);
-	} catch (UsersRestApiException ex) {
+	} catch (RestApiUsersException ex) {
 	    throw new ServletException(ex);
 	}
 

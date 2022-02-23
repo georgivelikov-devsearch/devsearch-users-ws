@@ -1,15 +1,11 @@
 package devsearch.users.ws.io.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,37 +19,52 @@ public class ProfileEntity implements Serializable {
     private long id;
 
     @Column(nullable = false, unique = true)
-    private String profileId;
+    private String profilePrivateId;
+
+    @Column(nullable = false, unique = true)
+    private String profilePublicId;
+
+    @Column(nullable = false, unique = true)
+    private String userId;
+
+    @Column(nullable = false, length = 50)
+    private String firstName;
+
+    @Column(nullable = false, length = 50)
+    private String lastName;
 
     @Column(nullable = true, length = 50)
-    private String displayName;
+    private String contactEmail;
 
     @Column(nullable = true, length = 200)
     private String shortIntro;
 
-    @Column(nullable = true, length = 1000)
-    private String bio;
+    @Column(nullable = true, length = 3000)
+    private String about;
 
-    @Column(nullable = true, length = 400)
+    @Column(nullable = true, length = 500)
     private String socialLinkedIn;
 
-    @Column(nullable = true, length = 400)
+    @Column(nullable = true, length = 500)
     private String socialTwitter;
 
-    @Column(nullable = true, length = 400)
+    @Column(nullable = true, length = 500)
     private String socialGithub;
 
-    @Column(nullable = true, length = 400)
+    @Column(nullable = true, length = 500)
     private String socialYoutube;
 
-    @Column(nullable = true, length = 400)
+    @Column(nullable = true, length = 500)
     private String socialWebsite;
 
-    @OneToOne(mappedBy = "profile")
-    private UserEntity user;
+    @Column(nullable = true, length = 500)
+    private String profilePictureUrl;
 
-    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
-    private Collection<AddressEntity> addresses;
+    @Column(nullable = true, length = 50)
+    private String locationCity;
+
+    @Column(nullable = true, length = 50)
+    private String locationCountry;
 
     public long getId() {
 	return id;
@@ -63,20 +74,52 @@ public class ProfileEntity implements Serializable {
 	this.id = id;
     }
 
-    public String getProfileId() {
-	return profileId;
+    public String getProfilePrivateId() {
+	return profilePrivateId;
     }
 
-    public void setProfileId(String profileId) {
-	this.profileId = profileId;
+    public void setProfilePrivateId(String profilePrivateId) {
+	this.profilePrivateId = profilePrivateId;
     }
 
-    public String getDisplayName() {
-	return displayName;
+    public String getProfilePublicId() {
+	return profilePublicId;
     }
 
-    public void setDisplayName(String displayName) {
-	this.displayName = displayName;
+    public void setProfilePublicId(String profilePublicId) {
+	this.profilePublicId = profilePublicId;
+    }
+
+    public String getUserId() {
+	return userId;
+    }
+
+    public void setUserId(String userId) {
+	this.userId = userId;
+    }
+
+    public String getFirstName() {
+	return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+	this.firstName = firstName;
+    }
+
+    public String getLastName() {
+	return lastName;
+    }
+
+    public void setLastName(String lastName) {
+	this.lastName = lastName;
+    }
+
+    public String getContactEmail() {
+	return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+	this.contactEmail = contactEmail;
     }
 
     public String getShortIntro() {
@@ -87,12 +130,12 @@ public class ProfileEntity implements Serializable {
 	this.shortIntro = shortIntro;
     }
 
-    public String getBio() {
-	return bio;
+    public String getAbout() {
+	return about;
     }
 
-    public void setBio(String bio) {
-	this.bio = bio;
+    public void setAbout(String about) {
+	this.about = about;
     }
 
     public String getSocialLinkedIn() {
@@ -135,20 +178,27 @@ public class ProfileEntity implements Serializable {
 	this.socialWebsite = socialWebsite;
     }
 
-    public UserEntity getUser() {
-	return user;
+    public String getProfilePictureUrl() {
+	return profilePictureUrl;
     }
 
-    public void setUser(UserEntity user) {
-	this.user = user;
+    public void setProfilePictureUrl(String profilePictureUrl) {
+	this.profilePictureUrl = profilePictureUrl;
     }
 
-    public Collection<AddressEntity> getAddresses() {
-	return addresses;
+    public String getLocationCity() {
+	return locationCity;
     }
 
-    public void setAddresses(Collection<AddressEntity> addresses) {
-	this.addresses = addresses;
+    public void setLocationCity(String locationCity) {
+	this.locationCity = locationCity;
     }
 
+    public String getLocationCountry() {
+	return locationCountry;
+    }
+
+    public void setLocationCountry(String locationCountry) {
+	this.locationCountry = locationCountry;
+    }
 }

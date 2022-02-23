@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import devsearch.users.ws.exception.UsersRestApiException;
+import devsearch.users.ws.exception.RestApiUsersException;
 import devsearch.users.ws.service.ProfileService;
 import devsearch.users.ws.shared.dto.ProfileDto;
 import devsearch.users.ws.shared.utils.Mapper;
 import devsearch.users.ws.ui.model.request.ProfileRequest;
-import devsearch.users.ws.ui.model.response.ProfileResponse;
+import devsearch.users.ws.ui.model.response.ProfilePrivateResponse;
 
 @RestController
 @RequestMapping("profiles")
@@ -30,19 +30,21 @@ public class ProfileController {
 	return "ProfileController is working!";
     }
 
-    @GetMapping(path = "/{profileId}")
-    public ProfileResponse getUser(@PathVariable String profileId) throws UsersRestApiException {
-	ProfileDto profileDto = profileService.getProfileByProfileId(profileId);
+    @GetMapping(path = "/private/{profilePrivateId}")
+    public ProfilePrivateResponse getProfileByPrivateId(@PathVariable String profilePrivateId)
+	    throws RestApiUsersException {
+	ProfileDto profileDto = profileService.getProfileByProfilePrivateId(profilePrivateId);
 
-	return modelMapper.map(profileDto, ProfileResponse.class);
+	return modelMapper.map(profileDto, ProfilePrivateResponse.class);
     }
 
     @PostMapping
-    public ProfileResponse createProfile(@RequestBody ProfileRequest profileRequest) throws UsersRestApiException {
+    public ProfilePrivateResponse createProfile(@RequestBody ProfileRequest profileRequest)
+	    throws RestApiUsersException {
 	ProfileDto profileDto = modelMapper.map(profileRequest, ProfileDto.class);
 	ProfileDto createdProfile = profileService.createProfile(profileDto);
 
-	return modelMapper.map(createdProfile, ProfileResponse.class);
+	return modelMapper.map(createdProfile, ProfilePrivateResponse.class);
     }
 
 }

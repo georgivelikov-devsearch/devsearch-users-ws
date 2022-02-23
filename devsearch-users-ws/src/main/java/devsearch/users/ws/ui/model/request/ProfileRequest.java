@@ -1,35 +1,70 @@
 package devsearch.users.ws.ui.model.request;
 
-import java.util.Collection;
-
 public class ProfileRequest {
 
-    private String profileId;
-    private String displayName;
+    private String profilePrivateId;
+    private String profilePublicId;
+    private String userId;
+    private String firstName;
+    private String lastName;
+    private String contactEmail;
     private String shortIntro;
-    private String bio;
+    private String about;
     private String socialLinkedIn;
     private String socialTwitter;
     private String socialGithub;
     private String socialYoutube;
     private String socialWebsite;
-    private UserRequest user;
-    private Collection<AddressRequest> addresses;
+    private String profilePictureUrl;
+    private String locationCity;
+    private String locationCountry;
 
-    public String getProfileId() {
-	return profileId;
+    public String getProfilePrivateId() {
+	return profilePrivateId;
     }
 
-    public void setProfileId(String profileId) {
-	this.profileId = profileId;
+    public void setProfilePrivateId(String profilePrivateId) {
+	this.profilePrivateId = profilePrivateId;
     }
 
-    public String getDisplayName() {
-	return displayName;
+    public String getProfilePublicId() {
+	return profilePublicId;
     }
 
-    public void setDisplayName(String displayName) {
-	this.displayName = displayName;
+    public void setProfilePublicId(String profilePublicId) {
+	this.profilePublicId = profilePublicId;
+    }
+
+    public String getUserId() {
+	return userId;
+    }
+
+    public void setUserId(String userId) {
+	this.userId = userId;
+    }
+
+    public String getFirstName() {
+	return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+	this.firstName = firstName;
+    }
+
+    public String getLastName() {
+	return lastName;
+    }
+
+    public void setLastName(String lastName) {
+	this.lastName = lastName;
+    }
+
+    public String getContactEmail() {
+	return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+	this.contactEmail = contactEmail;
     }
 
     public String getShortIntro() {
@@ -40,12 +75,12 @@ public class ProfileRequest {
 	this.shortIntro = shortIntro;
     }
 
-    public String getBio() {
-	return bio;
+    public String getAbout() {
+	return about;
     }
 
-    public void setBio(String bio) {
-	this.bio = bio;
+    public void setAbout(String about) {
+	this.about = about;
     }
 
     public String getSocialLinkedIn() {
@@ -88,19 +123,27 @@ public class ProfileRequest {
 	this.socialWebsite = socialWebsite;
     }
 
-    public UserRequest getUser() {
-	return user;
+    public String getProfilePictureUrl() {
+	return profilePictureUrl;
     }
 
-    public void setUser(UserRequest user) {
-	this.user = user;
+    public void setProfilePictureUrl(String profilePictureUrl) {
+	this.profilePictureUrl = profilePictureUrl;
     }
 
-    public Collection<AddressRequest> getAddresses() {
-	return addresses;
+    public String getLocationCity() {
+	return locationCity;
     }
 
-    public void setAddresses(Collection<AddressRequest> addresses) {
-	this.addresses = addresses;
+    public void setLocationCity(String locationCity) {
+	this.locationCity = locationCity;
+    }
+
+    public String getLocationCountry() {
+	return locationCountry;
+    }
+
+    public void setLocationCountry(String locationCountry) {
+	this.locationCountry = locationCountry;
     }
 }

@@ -12,10 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import devsearch.users.ws.io.entity.AuthorityEntity;
 import devsearch.users.ws.io.entity.ConfigEntity;
+import devsearch.users.ws.io.entity.ProfileEntity;
 import devsearch.users.ws.io.entity.RoleEntity;
 import devsearch.users.ws.io.entity.UserEntity;
 import devsearch.users.ws.io.repository.AuthorityRepository;
 import devsearch.users.ws.io.repository.ConfigRepository;
+import devsearch.users.ws.io.repository.ProfileRepository;
 import devsearch.users.ws.io.repository.RoleRepository;
 import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.shared.utils.AppConstants;
@@ -32,6 +34,9 @@ public class InitialUserSetup {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ProfileRepository profileRepository;
 
     @Autowired
     private ConfigRepository configRepository;
@@ -93,11 +98,9 @@ public class InitialUserSetup {
     }
 
     @Transactional
-    private UserEntity createAdmin() {
+    private void createAdmin() {
 	UserEntity admin = new UserEntity();
 	admin.setUsername(InitialConstants.USERNAME);
-	admin.setFirstName(InitialConstants.FIRST_NAME);
-	admin.setLastName(InitialConstants.LAST_NAME);
 	admin.setEmail("admin@test.com");
 	admin.setUserId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 	admin.setEncryptedPassword(bCryptPasswordEncoder.encode(InitialConstants.INITIAL_PASSWORD));
@@ -112,6 +115,16 @@ public class InitialUserSetup {
 
 	admin.setRoles(roles);
 
-	return userRepository.save(admin);
+	UserEntity newAdmin = userRepository.save(admin);
+
+	ProfileEntity adminProfile = new ProfileEntity();
+	adminProfile.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
+	adminProfile.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	adminProfile.setFirstName(InitialConstants.FIRST_NAME);
+	adminProfile.setLastName(InitialConstants.LAST_NAME);
+	adminProfile.setContactEmail(newAdmin.getEmail());
+	adminProfile.setUserId(newAdmin.getUserId());
+
+	profileRepository.save(adminProfile);
     }
 }

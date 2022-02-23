@@ -1,28 +1,28 @@
 package devsearch.users.ws.exception;
 
-public class UsersRestApiException extends Exception {
+public class RestApiUsersException extends Exception {
 
     private static final long serialVersionUID = -2200242070640018947L;
 
     private String sourceExceptionMessage;
     private String exceptionCode;
 
-    public UsersRestApiException(String message) {
+    public RestApiUsersException(String message) {
 	super(message);
     }
 
-    public UsersRestApiException(ExceptionMessages message) {
+    public RestApiUsersException(ExceptionMessages message) {
 	super(message.getExceptionMessage());
 	this.exceptionCode = message.getExceptionCode();
     }
 
-    public UsersRestApiException(ExceptionMessages message, String sourceExceptionMessage) {
+    public RestApiUsersException(ExceptionMessages message, String sourceExceptionMessage) {
 	super(message.getExceptionMessage());
 	this.exceptionCode = message.getExceptionCode();
 	this.sourceExceptionMessage = sourceExceptionMessage;
     }
 
-    public UsersRestApiException(String message, String exceptionCode, String sourceExceptionMessage) {
+    public RestApiUsersException(String message, String exceptionCode, String sourceExceptionMessage) {
 	super(message);
 	this.exceptionCode = exceptionCode;
 	this.sourceExceptionMessage = sourceExceptionMessage;

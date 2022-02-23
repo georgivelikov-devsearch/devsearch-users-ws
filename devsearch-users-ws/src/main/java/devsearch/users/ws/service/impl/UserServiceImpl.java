@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import devsearch.users.ws.exception.ExceptionMessages;
-import devsearch.users.ws.exception.UsersRestApiException;
+import devsearch.users.ws.exception.RestApiUsersException;
 import devsearch.users.ws.io.entity.UserEntity;
 import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.security.UserPrincipal;
@@ -51,10 +51,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserForLogin(String username) throws UsersRestApiException {
+    public UserDto getUserForLogin(String username) throws RestApiUsersException {
 	UserEntity userEntity = userRepository.findByUsername(username);
 	if (userEntity == null) {
-	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_USERNAME);
+	    throw new RestApiUsersException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_USERNAME);
 	}
 
 	UserDto userDto = new UserDto();
@@ -64,46 +64,46 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByUserId(String userId) throws UsersRestApiException {
+    public UserDto getUserByUserId(String userId) throws RestApiUsersException {
 	UserEntity userEntity = userRepository.findByUserId(userId);
 
 	if (userEntity == null) {
-	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
+	    throw new RestApiUsersException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}
 
 	return modelMapper.map(userEntity, UserDto.class);
     }
 
     @Override
-    public UserDto getUserByUsername(String username) throws UsersRestApiException {
+    public UserDto getUserByUsername(String username) throws RestApiUsersException {
 	UserEntity userEntity = userRepository.findByUsername(username);
 
 	if (userEntity == null) {
-	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_USERNAME);
+	    throw new RestApiUsersException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_USERNAME);
 	}
 
 	return modelMapper.map(userEntity, UserDto.class);
     }
 
     @Override
-    public UserDto getUserByEmail(String email) throws UsersRestApiException {
+    public UserDto getUserByEmail(String email) throws RestApiUsersException {
 	UserEntity userEntity = userRepository.findByEmail(email);
 
 	if (userEntity == null) {
-	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_EMAIL);
+	    throw new RestApiUsersException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_EMAIL);
 	}
 
 	return modelMapper.map(userEntity, UserDto.class);
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) throws UsersRestApiException {
+    public UserDto createUser(UserDto userDto) throws RestApiUsersException {
 	if (userRepository.findByUsername(userDto.getUsername()) != null) {
-	    throw new UsersRestApiException(ExceptionMessages.RECORD_ALREADY_EXISTS_WITH_THIS_USERNAME);
+	    throw new RestApiUsersException(ExceptionMessages.RECORD_ALREADY_EXISTS_WITH_THIS_USERNAME);
 	}
 
 	if (userRepository.findByEmail(userDto.getEmail()) != null) {
-	    throw new UsersRestApiException(ExceptionMessages.RECORD_ALREADY_EXISTS_WITH_THIS_EMAIL);
+	    throw new RestApiUsersException(ExceptionMessages.RECORD_ALREADY_EXISTS_WITH_THIS_EMAIL);
 	}
 
 	UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
@@ -115,50 +115,48 @@ public class UserServiceImpl implements UserService {
 	try {
 	    storedUserEntity = userRepository.save(userEntity);
 	} catch (Exception ex) {
-	    throw new UsersRestApiException(ExceptionMessages.CREATE_RECORD_FAILED, ex.getMessage());
+	    throw new RestApiUsersException(ExceptionMessages.CREATE_RECORD_FAILED, ex.getMessage());
 	}
 
 	return modelMapper.map(storedUserEntity, UserDto.class);
     }
 
     @Override
-    public UserDto updateUser(UserDto userDto) throws UsersRestApiException {
+    public UserDto updateUser(UserDto userDto) throws RestApiUsersException {
 	UserEntity userEntity = userRepository.findByUserId(userDto.getUserId());
 	if (userEntity == null) {
-	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
+	    throw new RestApiUsersException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}
 
 	userEntity.setUsername(userDto.getUsername());
-	userEntity.setFirstName(userDto.getFirstName());
-	userEntity.setLastName(userDto.getLastName());
 	userEntity.setEmail(userDto.getEmail());
 
 	UserEntity updatedUserEntity = null;
 	try {
 	    updatedUserEntity = userRepository.save(userEntity);
 	} catch (Exception ex) {
-	    throw new UsersRestApiException(ExceptionMessages.UPDATE_RECORD_FAILED, ex.getMessage());
+	    throw new RestApiUsersException(ExceptionMessages.UPDATE_RECORD_FAILED, ex.getMessage());
 	}
 
 	return modelMapper.map(updatedUserEntity, UserDto.class);
     }
 
     @Override
-    public void deleteUser(String userId) throws UsersRestApiException {
+    public void deleteUser(String userId) throws RestApiUsersException {
 	UserEntity userEntity = userRepository.findByUserId(userId);
 	if (userEntity == null) {
-	    throw new UsersRestApiException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
+	    throw new RestApiUsersException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}
 
 	try {
 	    userRepository.delete(userEntity);
 	} catch (Exception ex) {
-	    throw new UsersRestApiException(ExceptionMessages.DELETE_RECORD_FAILED, ex.getMessage());
+	    throw new RestApiUsersException(ExceptionMessages.DELETE_RECORD_FAILED, ex.getMessage());
 	}
     }
 
     @Override
-    public List<UserDto> getUsers(int page, int limit) throws UsersRestApiException {
+    public List<UserDto> getUsers(int page, int limit) throws RestApiUsersException {
 	List<UserDto> returnValue = new ArrayList<>();
 	Pageable pageableRequest = PageRequest.of(page, limit);
 	Page<UserEntity> userPage = userRepository.findAll(pageableRequest);

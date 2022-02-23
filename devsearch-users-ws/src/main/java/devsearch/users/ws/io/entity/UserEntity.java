@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -35,12 +34,6 @@ public class UserEntity implements Serializable {
     @Size(min = 3, max = 50)
     private String username;
 
-    @Column(nullable = false, length = 50)
-    private String firstName;
-
-    @Column(nullable = false, length = 50)
-    private String lastName;
-
     @Column(nullable = false, unique = true)
     @Size(min = 3, max = 120)
     private String email;
@@ -54,10 +47,6 @@ public class UserEntity implements Serializable {
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 	    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<RoleEntity> roles;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id", referencedColumnName = "id")
-    private ProfileEntity profile;
 
     public long getId() {
 	return id;
@@ -83,22 +72,6 @@ public class UserEntity implements Serializable {
 	this.username = username;
     }
 
-    public String getFirstName() {
-	return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-	this.firstName = firstName;
-    }
-
-    public String getLastName() {
-	return lastName;
-    }
-
-    public void setLastName(String lastName) {
-	this.lastName = lastName;
-    }
-
     public String getEmail() {
 	return email;
     }
@@ -121,13 +94,5 @@ public class UserEntity implements Serializable {
 
     public void setRoles(Collection<RoleEntity> roles) {
 	this.roles = roles;
-    }
-
-    public ProfileEntity getProfile() {
-	return profile;
-    }
-
-    public void setProfile(ProfileEntity profile) {
-	this.profile = profile;
     }
 }

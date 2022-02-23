@@ -1,20 +1,12 @@
-package devsearch.users.ws.shared.dto;
+package devsearch.users.ws.ui.model.request;
 
-public class UserDto {
+public class RegisterRequest {
 
-    private String userId;
     private String username;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
-    private String encryptedPassword;
-
-    public String getUserId() {
-	return userId;
-    }
-
-    public void setUserId(String userId) {
-	this.userId = userId;
-    }
 
     public String getUsername() {
 	return username;
@@ -22,6 +14,22 @@ public class UserDto {
 
     public void setUsername(String username) {
 	this.username = username;
+    }
+
+    public String getFirstName() {
+	return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+	this.firstName = firstName;
+    }
+
+    public String getLastName() {
+	return lastName;
+    }
+
+    public void setLastName(String lastName) {
+	this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -39,13 +47,4 @@ public class UserDto {
     public void setPassword(String password) {
 	this.password = password;
     }
-
-    public String getEncryptedPassword() {
-	return encryptedPassword;
-    }
-
-    public void setEncryptedPassword(String encryptedPassword) {
-	this.encryptedPassword = encryptedPassword;
-    }
-
 }

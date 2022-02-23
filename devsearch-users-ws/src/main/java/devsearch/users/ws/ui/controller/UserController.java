@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import devsearch.users.ws.exception.UsersRestApiException;
+import devsearch.users.ws.exception.RestApiUsersException;
+import devsearch.users.ws.service.ProfileService;
 import devsearch.users.ws.service.UserService;
+import devsearch.users.ws.shared.dto.ProfileDto;
 import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.shared.utils.Mapper;
+import devsearch.users.ws.ui.model.request.RegisterRequest;
 import devsearch.users.ws.ui.model.request.UserRequest;
+import devsearch.users.ws.ui.model.response.RegisterResponse;
 import devsearch.users.ws.ui.model.response.UserResponse;
 
 @RestController
@@ -30,6 +34,9 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private ProfileService profileService;
+
+    @Autowired
     private Mapper modelMapper;
 
     @GetMapping(path = "/status")
@@ -38,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/{id}")
-    public UserResponse getUser(@PathVariable String id) throws UsersRestApiException {
+    public UserResponse getUser(@PathVariable String id) throws RestApiUsersException {
 	UserDto userDto = userService.getUserByUserId(id);
 
 	return modelMapper.map(userDto, UserResponse.class);
@@ -46,7 +53,7 @@ public class UserController {
 
     @GetMapping()
     public List<UserResponse> getUsers(@RequestParam(value = "page", defaultValue = "1") int page,
-	    @RequestParam(value = "limit", defaultValue = "20") int limit) throws UsersRestApiException {
+	    @RequestParam(value = "limit", defaultValue = "20") int limit) throws RestApiUsersException {
 	List<UserResponse> returnValue = new ArrayList<>();
 
 	// In the Repository implementation pagination starts with '0', but in UI
@@ -67,16 +74,30 @@ public class UserController {
     }
 
     @PostMapping
-    public UserResponse createUser(@RequestBody UserRequest user) throws UsersRestApiException {
-	UserDto userDto = modelMapper.map(user, UserDto.class);
+    public RegisterResponse registerUser(@RequestBody RegisterRequest registerRequest) throws RestApiUsersException {
+	UserDto userDto = modelMapper.map(registerRequest, UserDto.class);
 	UserDto createdUser = userService.createUser(userDto);
 
-	return modelMapper.map(createdUser, UserResponse.class);
+	// Get firstName and lastName from request
+	ProfileDto profileDto = modelMapper.map(registerRequest, ProfileDto.class);
+	// Set userId to that profile
+	profileDto.setUserId(createdUser.getUserId());
+	// Save new profile for the new user
+	ProfileDto createdProfile = profileService.createProfile(profileDto);
+
+	RegisterResponse response = new RegisterResponse();
+	response.setUsername(createdUser.getUsername());
+	response.setEmail(createdUser.getEmail());
+	response.setUserId(createdUser.getUserId());
+	response.setFirstName(createdProfile.getFirstName());
+	response.setLastName(createdProfile.getLastName());
+
+	return response;
     }
 
     @PutMapping()
-    public UserResponse updateUser(@RequestBody UserRequest user) throws UsersRestApiException {
-	UserDto userDto = modelMapper.map(user, UserDto.class);
+    public UserResponse updateUser(@RequestBody UserRequest userRequest) throws RestApiUsersException {
+	UserDto userDto = modelMapper.map(userRequest, UserDto.class);
 
 	UserDto updatedUser = userService.updateUser(userDto);
 
@@ -85,7 +106,7 @@ public class UserController {
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping(path = "/{userId}")
-    public void deleteUser(@PathVariable String userId) throws UsersRestApiException {
+    public void deleteUser(@PathVariable String userId) throws RestApiUsersException {
 	userService.deleteUser(userId);
     }
 }
