@@ -31,6 +31,13 @@ public class ProfileController {
 	return "ProfileController is working!";
     }
 
+    @GetMapping(path = "/user/{userId}")
+    public ProfilePrivateResponse getProfileByUserId(@PathVariable String userId) throws RestApiUsersException {
+	ProfileDto profileDto = profileService.getProfileByUserId(userId);
+
+	return modelMapper.map(profileDto, ProfilePrivateResponse.class);
+    }
+
     @GetMapping(path = "/private/{profilePrivateId}")
     public ProfilePrivateResponse getProfileByPrivateId(@PathVariable String profilePrivateId)
 	    throws RestApiUsersException {
