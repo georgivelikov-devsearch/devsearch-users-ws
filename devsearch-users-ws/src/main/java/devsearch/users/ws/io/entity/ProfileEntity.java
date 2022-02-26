@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "profiles")
@@ -27,10 +28,12 @@ public class ProfileEntity implements Serializable {
     @Column(nullable = false, unique = true)
     private String userId;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
+    @Size(min = 1, max = 50)
     private String firstName;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
+    @Size(min = 1, max = 50)
     private String lastName;
 
     @Column(nullable = true, length = 50)

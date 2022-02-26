@@ -31,11 +31,11 @@ public class UserEntity implements Serializable {
     private String userId;
 
     @Column(nullable = false, unique = true)
-    @Size(min = 3, max = 50)
+    @Size(min = 2, max = 50)
     private String username;
 
     @Column(nullable = false, unique = true)
-    @Size(min = 3, max = 120)
+    @Size(min = 2, max = 120)
     private String email;
 
     @Column(nullable = false)
