@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -45,22 +46,22 @@ public class ProfileEntity implements Serializable {
     @Column(nullable = true, length = 3000)
     private String about;
 
-    @Column(nullable = true, length = 500)
+    @Column(nullable = true, length = 200)
     private String socialLinkedIn;
 
-    @Column(nullable = true, length = 500)
+    @Column(nullable = true, length = 200)
     private String socialTwitter;
 
-    @Column(nullable = true, length = 500)
+    @Column(nullable = true, length = 200)
     private String socialGithub;
 
-    @Column(nullable = true, length = 500)
+    @Column(nullable = true, length = 200)
     private String socialYoutube;
 
-    @Column(nullable = true, length = 500)
+    @Column(nullable = true, length = 200)
     private String socialWebsite;
 
-    @Column(nullable = true, length = 500)
+    @Column(nullable = true, length = 200)
     private String profilePictureUrl;
 
     @Column(nullable = true, length = 50)
@@ -68,6 +69,9 @@ public class ProfileEntity implements Serializable {
 
     @Column(nullable = true, length = 50)
     private String locationCountry;
+
+    @Column(nullable = true)
+    private Lob profilePicture;
 
     public long getId() {
 	return id;
@@ -203,5 +207,13 @@ public class ProfileEntity implements Serializable {
 
     public void setLocationCountry(String locationCountry) {
 	this.locationCountry = locationCountry;
+    }
+
+    public Lob getProfilePicture() {
+	return profilePicture;
+    }
+
+    public void setProfilePicture(Lob profilePicture) {
+	this.profilePicture = profilePicture;
     }
 }
