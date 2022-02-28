@@ -15,9 +15,9 @@ public class ProfilePrivateResponse {
     private String socialGithub;
     private String socialYoutube;
     private String socialWebsite;
-    private String profilePictureUrl;
     private String locationCity;
     private String locationCountry;
+    private String profilePictureUrl;
 
     public String getProfilePrivateId() {
 	return profilePrivateId;
@@ -123,14 +123,6 @@ public class ProfilePrivateResponse {
 	this.socialWebsite = socialWebsite;
     }
 
-    public String getProfilePictureUrl() {
-	return profilePictureUrl;
-    }
-
-    public void setProfilePictureUrl(String profilePictureUrl) {
-	this.profilePictureUrl = profilePictureUrl;
-    }
-
     public String getLocationCity() {
 	return locationCity;
     }
@@ -145,5 +137,13 @@ public class ProfilePrivateResponse {
 
     public void setLocationCountry(String locationCountry) {
 	this.locationCountry = locationCountry;
+    }
+
+    public String getProfilePictureUrl() {
+	return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+	this.profilePictureUrl = profilePictureUrl;
     }
 }

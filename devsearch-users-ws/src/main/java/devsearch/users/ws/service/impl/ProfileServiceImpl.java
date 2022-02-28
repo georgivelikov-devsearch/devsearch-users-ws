@@ -110,13 +110,13 @@ public class ProfileServiceImpl implements ProfileService {
 	profileEntity.setSocialWebsite(profileDto.getSocialWebsite());
 	profileEntity.setLocationCity(profileDto.getLocationCity());
 	profileEntity.setLocationCountry(profileDto.getLocationCountry());
-	// TODO
-	// update profile picture
+	profileEntity.setProfilePictureUrl(profileDto.getProfilePictureUrl());
 
 	ProfileEntity updatedProfileEntity = null;
 	try {
 	    updatedProfileEntity = profileRepository.save(profileEntity);
 	} catch (Exception ex) {
+	    System.out.println(ex.getMessage());
 	    throw new RestApiUsersException(ExceptionMessages.UPDATE_RECORD_FAILED, ex.getMessage());
 	}
 

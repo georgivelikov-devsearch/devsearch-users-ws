@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import devsearch.users.ws.exception.RestApiUsersException;
+import devsearch.users.ws.service.ImageService;
 import devsearch.users.ws.service.ProfileService;
 import devsearch.users.ws.shared.dto.ProfileDto;
 import devsearch.users.ws.shared.utils.Mapper;
@@ -19,6 +20,9 @@ import devsearch.users.ws.ui.model.response.ProfilePrivateResponse;
 @RestController
 @RequestMapping("profiles")
 public class ProfileController {
+
+    @Autowired
+    private ImageService imageService;
 
     @Autowired
     private ProfileService profileService;
@@ -59,6 +63,11 @@ public class ProfileController {
     public ProfilePrivateResponse updateProfile(@RequestBody ProfileRequest profileRequest)
 	    throws RestApiUsersException {
 	ProfileDto profileDto = modelMapper.map(profileRequest, ProfileDto.class);
+	String[] array = profileRequest.getProfilePictureBase64().split(",");
+	String encodedString = array[1];
+	System.out.println(profileRequest.getProfilePictureBase64().length());
+	String profilePictureUrl = imageService.saveImageAndReturnURL(encodedString, profileDto.getProfilePrivateId());
+	profileDto.setProfilePictureUrl(profilePictureUrl);
 	ProfileDto updatedProfile = profileService.updateProfile(profileDto);
 
 	return modelMapper.map(updatedProfile, ProfilePrivateResponse.class);

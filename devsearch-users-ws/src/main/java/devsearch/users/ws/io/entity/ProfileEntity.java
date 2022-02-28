@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -61,17 +60,14 @@ public class ProfileEntity implements Serializable {
     @Column(nullable = true, length = 200)
     private String socialWebsite;
 
-    @Column(nullable = true, length = 200)
-    private String profilePictureUrl;
-
     @Column(nullable = true, length = 50)
     private String locationCity;
 
     @Column(nullable = true, length = 50)
     private String locationCountry;
 
-    @Column(nullable = true)
-    private Lob profilePicture;
+    @Column(nullable = true, length = 200)
+    private String profilePictureUrl;
 
     public long getId() {
 	return id;
@@ -185,14 +181,6 @@ public class ProfileEntity implements Serializable {
 	this.socialWebsite = socialWebsite;
     }
 
-    public String getProfilePictureUrl() {
-	return profilePictureUrl;
-    }
-
-    public void setProfilePictureUrl(String profilePictureUrl) {
-	this.profilePictureUrl = profilePictureUrl;
-    }
-
     public String getLocationCity() {
 	return locationCity;
     }
@@ -209,11 +197,11 @@ public class ProfileEntity implements Serializable {
 	this.locationCountry = locationCountry;
     }
 
-    public Lob getProfilePicture() {
-	return profilePicture;
+    public String getProfilePictureUrl() {
+	return profilePictureUrl;
     }
 
-    public void setProfilePicture(Lob profilePicture) {
-	this.profilePicture = profilePicture;
+    public void setProfilePictureUrl(String profilePictureUrl) {
+	this.profilePictureUrl = profilePictureUrl;
     }
 }
