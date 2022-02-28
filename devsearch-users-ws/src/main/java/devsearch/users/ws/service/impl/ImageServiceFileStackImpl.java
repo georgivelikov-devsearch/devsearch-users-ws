@@ -23,6 +23,7 @@ public class ImageServiceFileStackImpl implements ImageService {
 
 	RestTemplate client = new RestTemplate();
 
+	// filestack.com api key - AnEmTECOR4qEhZPsQS4D0z - should be private
 	Map<String, String> uriVariables = new HashMap<>();
 	uriVariables.put("key", "AnEmTECOR4qEhZPsQS4D0z");
 	uriVariables.put("filename", newFileName);
