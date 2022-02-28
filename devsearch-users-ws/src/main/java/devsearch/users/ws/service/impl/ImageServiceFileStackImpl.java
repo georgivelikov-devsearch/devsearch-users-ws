@@ -15,9 +15,7 @@ import devsearch.users.ws.ui.model.response.FileStackResponse;
 
 @Service
 public class ImageServiceFileStackImpl implements ImageService {
-
-    String fileStackUrl = "https://www.filestackapi.com/api/store/s3";
-    String fileStachUrl2 = "https://www.filestackapi.com/api/store/s3?key={key}&filename={name}&type={type}";
+    String fileStackUrl = "https://www.filestackapi.com/api/store/s3?key={key}&filename={name}&type={type}";
 
     @Override
     public String saveImageAndReturnURL(String base64EncodedSource, String newFileName) {
@@ -31,7 +29,7 @@ public class ImageServiceFileStackImpl implements ImageService {
 	uriVariables.put("type", "image/png");
 
 	HttpEntity<byte[]> request = new HttpEntity<byte[]>(content);
-	HttpEntity<FileStackResponse> response = client.exchange(fileStachUrl2, HttpMethod.POST, request,
+	HttpEntity<FileStackResponse> response = client.exchange(fileStackUrl, HttpMethod.POST, request,
 		FileStackResponse.class, "AnEmTECOR4qEhZPsQS4D0z", newFileName, "image/png");
 
 	return response.getBody().getUrl();
