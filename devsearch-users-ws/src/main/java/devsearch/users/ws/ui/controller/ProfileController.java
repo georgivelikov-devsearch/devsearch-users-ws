@@ -89,6 +89,7 @@ public class ProfileController {
 	    responseProfiles.add(publicProfile);
 
 	}
+
 	return responseProfiles;
     }
 
