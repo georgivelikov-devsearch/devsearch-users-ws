@@ -154,6 +154,11 @@ public class ProfileServiceImpl implements ProfileService {
 	List<ProfileEntity> profiles = profilePage.getContent();
 
 	for (ProfileEntity profileEntity : profiles) {
+	    // TODO FIX THIS
+	    if (profileEntity.getFirstName().equals("Administrator")) {
+		continue;
+	    }
+
 	    ProfileDto profileDto = modelMapper.map(profileEntity, ProfileDto.class);
 	    returnValue.add(profileDto);
 	}

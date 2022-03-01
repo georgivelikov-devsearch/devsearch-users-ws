@@ -66,7 +66,8 @@ public class ProfileController {
     @GetMapping(path = "/public")
     public Collection<ProfilePublicResponse> getPublicProfiles(
 	    @RequestParam(value = "page", defaultValue = "1") int page,
-	    @RequestParam(value = "limit", defaultValue = "20") int limit) throws RestApiUsersException {
+	    @RequestParam(value = "limit", defaultValue = "20") int limit,
+	    @RequestParam(value = "userId", defaultValue = "") String userId) throws RestApiUsersException {
 
 	// In the Repository implementation pagination starts with '0', but in UI
 	// usually pages start from 1, 2, 3 etc. So UI will send the number of the page,
@@ -77,8 +78,14 @@ public class ProfileController {
 
 	Collection<ProfileDto> profiles = profileService.getPublicProfiles(page, limit);
 	Collection<ProfilePublicResponse> responseProfiles = new ArrayList<ProfilePublicResponse>();
+	boolean senderFound = false;
 	for (ProfileDto profile : profiles) {
 	    ProfilePublicResponse publicProfile = modelMapper.map(profile, ProfilePublicResponse.class);
+	    if (!senderFound && profile.getUserId().equals(userId)) {
+		publicProfile.setSender(true);
+		senderFound = true;
+	    }
+
 	    responseProfiles.add(publicProfile);
 
 	}

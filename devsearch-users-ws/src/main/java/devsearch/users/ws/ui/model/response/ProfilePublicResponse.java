@@ -16,6 +16,7 @@ public class ProfilePublicResponse {
     private String locationCity;
     private String locationCountry;
     private String profilePictureUrl;
+    private boolean sender;
 
     public String getProfilePublicId() {
 	return profilePublicId;
@@ -127,5 +128,13 @@ public class ProfilePublicResponse {
 
     public void setProfilePictureUrl(String profilePictureUrl) {
 	this.profilePictureUrl = profilePictureUrl;
+    }
+
+    public boolean isSender() {
+	return sender;
+    }
+
+    public void setSender(boolean sender) {
+	this.sender = sender;
     }
 }
