@@ -1,5 +1,8 @@
 package devsearch.users.ws.ui.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import devsearch.users.ws.exception.RestApiUsersException;
@@ -16,6 +20,7 @@ import devsearch.users.ws.shared.dto.ProfileDto;
 import devsearch.users.ws.shared.utils.Mapper;
 import devsearch.users.ws.ui.model.request.ProfileRequest;
 import devsearch.users.ws.ui.model.response.ProfilePrivateResponse;
+import devsearch.users.ws.ui.model.response.ProfilePublicResponse;
 
 @RestController
 @RequestMapping("profiles")
@@ -50,6 +55,36 @@ public class ProfileController {
 	return modelMapper.map(profileDto, ProfilePrivateResponse.class);
     }
 
+    @GetMapping(path = "/public/{profilePublicId}")
+    public ProfilePublicResponse getProfileByPublicId(@PathVariable String profilePublicId)
+	    throws RestApiUsersException {
+	ProfileDto profileDto = profileService.getProfileByProfilePublicId(profilePublicId);
+
+	return modelMapper.map(profileDto, ProfilePublicResponse.class);
+    }
+
+    @GetMapping(path = "/public")
+    public Collection<ProfilePublicResponse> getPublicProfiles(
+	    @RequestParam(value = "page", defaultValue = "1") int page,
+	    @RequestParam(value = "limit", defaultValue = "20") int limit) throws RestApiUsersException {
+
+	// In the Repository implementation pagination starts with '0', but in UI
+	// usually pages start from 1, 2, 3 etc. So UI will send the number of the page,
+	// which should be reduced by 1
+	if (page > 0) {
+	    page -= 1;
+	}
+
+	Collection<ProfileDto> profiles = profileService.getPublicProfiles(page, limit);
+	Collection<ProfilePublicResponse> responseProfiles = new ArrayList<ProfilePublicResponse>();
+	for (ProfileDto profile : profiles) {
+	    ProfilePublicResponse publicProfile = modelMapper.map(profile, ProfilePublicResponse.class);
+	    responseProfiles.add(publicProfile);
+
+	}
+	return responseProfiles;
+    }
+
     @PostMapping
     public ProfilePrivateResponse createProfile(@RequestBody ProfileRequest profileRequest)
 	    throws RestApiUsersException {
@@ -63,11 +98,12 @@ public class ProfileController {
     public ProfilePrivateResponse updateProfile(@RequestBody ProfileRequest profileRequest)
 	    throws RestApiUsersException {
 	ProfileDto profileDto = modelMapper.map(profileRequest, ProfileDto.class);
-	String[] array = profileRequest.getProfilePictureBase64().split(",");
-	String encodedString = array[1];
-	System.out.println(profileRequest.getProfilePictureBase64().length());
-	String profilePictureUrl = imageService.saveImageAndReturnURL(encodedString, profileDto.getProfilePrivateId());
-	profileDto.setProfilePictureUrl(profilePictureUrl);
+	if (profileDto.isNewProfilePictureUpload()) {
+	    String profilePictureUrl = imageService.saveImageAndReturnURL(profileDto.getProfilePictureBase64(),
+		    profileDto.getProfilePrivateId());
+	    profileDto.setProfilePictureUrl(profilePictureUrl);
+	}
+
 	ProfileDto updatedProfile = profileService.updateProfile(profileDto);
 
 	return modelMapper.map(updatedProfile, ProfilePrivateResponse.class);

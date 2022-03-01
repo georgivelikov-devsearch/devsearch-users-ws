@@ -19,7 +19,9 @@ public class ImageServiceFileStackImpl implements ImageService {
 
     @Override
     public String saveImageAndReturnURL(String base64EncodedSource, String newFileName) {
-	byte[] content = DatatypeConverter.parseBase64Binary(base64EncodedSource);
+	String[] array = base64EncodedSource.split(",");
+	String encodedString = array[1];
+	byte[] content = DatatypeConverter.parseBase64Binary(encodedString);
 
 	RestTemplate client = new RestTemplate();
 

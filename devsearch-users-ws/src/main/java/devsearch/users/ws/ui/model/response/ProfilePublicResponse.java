@@ -1,10 +1,8 @@
-package devsearch.users.ws.shared.dto;
+package devsearch.users.ws.ui.model.response;
 
-public class ProfileDto {
+public class ProfilePublicResponse {
 
-    private String profilePrivateId;
     private String profilePublicId;
-    private String userId;
     private String firstName;
     private String lastName;
     private String contactEmail;
@@ -18,16 +16,6 @@ public class ProfileDto {
     private String locationCity;
     private String locationCountry;
     private String profilePictureUrl;
-    private String profilePictureBase64;
-    private boolean newProfilePictureUpload;
-
-    public String getProfilePrivateId() {
-	return profilePrivateId;
-    }
-
-    public void setProfilePrivateId(String profilePrivateId) {
-	this.profilePrivateId = profilePrivateId;
-    }
 
     public String getProfilePublicId() {
 	return profilePublicId;
@@ -35,14 +23,6 @@ public class ProfileDto {
 
     public void setProfilePublicId(String profilePublicId) {
 	this.profilePublicId = profilePublicId;
-    }
-
-    public String getUserId() {
-	return userId;
-    }
-
-    public void setUserId(String userId) {
-	this.userId = userId;
     }
 
     public String getFirstName() {
@@ -147,21 +127,5 @@ public class ProfileDto {
 
     public void setProfilePictureUrl(String profilePictureUrl) {
 	this.profilePictureUrl = profilePictureUrl;
-    }
-
-    public String getProfilePictureBase64() {
-	return profilePictureBase64;
-    }
-
-    public void setProfilePictureBase64(String profilePictureBase64) {
-	this.profilePictureBase64 = profilePictureBase64;
-    }
-
-    public boolean isNewProfilePictureUpload() {
-	return newProfilePictureUpload;
-    }
-
-    public void setNewProfilePictureUpload(boolean newProfilePictureUpload) {
-	this.newProfilePictureUpload = newProfilePictureUpload;
     }
 }

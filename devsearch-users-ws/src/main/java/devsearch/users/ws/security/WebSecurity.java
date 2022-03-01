@@ -43,6 +43,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		.permitAll()
 		.antMatchers(HttpMethod.GET, SecurityConstants.STATUS_URL)
 		.permitAll()
+		.antMatchers(HttpMethod.GET, "profiles/public/*")
+		.permitAll()
 		.anyRequest()
 		.authenticated()
 		.and()

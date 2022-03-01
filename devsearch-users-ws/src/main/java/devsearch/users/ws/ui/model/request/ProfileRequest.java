@@ -18,6 +18,7 @@ public class ProfileRequest {
     private String locationCity;
     private String locationCountry;
     private String profilePictureBase64;
+    private boolean newProfilePictureUpload;
 
     public String getProfilePrivateId() {
 	return profilePrivateId;
@@ -145,5 +146,13 @@ public class ProfileRequest {
 
     public void setProfilePictureBase64(String profilePictureBase64) {
 	this.profilePictureBase64 = profilePictureBase64;
+    }
+
+    public boolean getNewProfilePictureUpload() {
+	return newProfilePictureUpload;
+    }
+
+    public void setNewProfilePictureUpload(boolean newProfilePictureUpload) {
+	this.newProfilePictureUpload = newProfilePictureUpload;
     }
 }

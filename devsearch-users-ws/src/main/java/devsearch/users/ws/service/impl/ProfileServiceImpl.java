@@ -1,6 +1,12 @@
 package devsearch.users.ws.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import devsearch.users.ws.exception.ExceptionMessages;
@@ -110,7 +116,9 @@ public class ProfileServiceImpl implements ProfileService {
 	profileEntity.setSocialWebsite(profileDto.getSocialWebsite());
 	profileEntity.setLocationCity(profileDto.getLocationCity());
 	profileEntity.setLocationCountry(profileDto.getLocationCountry());
-	profileEntity.setProfilePictureUrl(profileDto.getProfilePictureUrl());
+	if (profileDto.isNewProfilePictureUpload()) {
+	    profileEntity.setProfilePictureUrl(profileDto.getProfilePictureUrl());
+	}
 
 	ProfileEntity updatedProfileEntity = null;
 	try {
@@ -136,6 +144,22 @@ public class ProfileServiceImpl implements ProfileService {
 	} catch (Exception ex) {
 	    throw new RestApiUsersException(ExceptionMessages.DELETE_RECORD_FAILED, ex.getMessage());
 	}
+    }
+
+    @Override
+    public List<ProfileDto> getPublicProfiles(int page, int limit) throws RestApiUsersException {
+	List<ProfileDto> returnValue = new ArrayList<>();
+	Pageable pageableRequest = PageRequest.of(page, limit);
+	Page<ProfileEntity> profilePage = profileRepository.findAll(pageableRequest);
+	List<ProfileEntity> profiles = profilePage.getContent();
+
+	for (ProfileEntity profileEntity : profiles) {
+	    ProfileDto profileDto = modelMapper.map(profileEntity, ProfileDto.class);
+	    returnValue.add(profileDto);
+	}
+
+	return returnValue;
+
     }
 
 }

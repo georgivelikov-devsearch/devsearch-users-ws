@@ -1,5 +1,7 @@
 package devsearch.users.ws.service;
 
+import java.util.List;
+
 import devsearch.users.ws.exception.RestApiUsersException;
 import devsearch.users.ws.shared.dto.ProfileDto;
 
@@ -16,4 +18,6 @@ public interface ProfileService {
     public ProfileDto updateProfile(ProfileDto profileDto) throws RestApiUsersException;
 
     public void deleteProfile(String profileId) throws RestApiUsersException;
+
+    public List<ProfileDto> getPublicProfiles(int page, int limit) throws RestApiUsersException;
 }
