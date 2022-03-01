@@ -1,5 +1,7 @@
 package devsearch.users.ws.io.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -17,4 +19,8 @@ public interface ProfileRepository extends PagingAndSortingRepository<ProfileEnt
     @Transactional
     @Query(value = "SELECT p FROM ProfileEntity p where p.userId=:userId")
     public ProfileEntity findByUserId(String userId);
+
+    @Transactional
+    @Query(value = "SELECT p FROM ProfileEntity p where p.adminProfile=false")
+    Page<ProfileEntity> findAllNotAdmin(Pageable pageable);
 }

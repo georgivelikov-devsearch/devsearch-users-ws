@@ -69,6 +69,9 @@ public class ProfileEntity implements Serializable {
     @Column(nullable = true, length = 200)
     private String profilePictureUrl;
 
+    @Column
+    private boolean adminProfile;
+
     public long getId() {
 	return id;
     }
@@ -203,5 +206,13 @@ public class ProfileEntity implements Serializable {
 
     public void setProfilePictureUrl(String profilePictureUrl) {
 	this.profilePictureUrl = profilePictureUrl;
+    }
+
+    public boolean isAdminProfile() {
+	return adminProfile;
+    }
+
+    public void setAdminProfile(boolean adminProfile) {
+	this.adminProfile = adminProfile;
     }
 }

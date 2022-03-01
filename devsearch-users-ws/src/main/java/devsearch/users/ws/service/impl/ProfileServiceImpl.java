@@ -150,15 +150,10 @@ public class ProfileServiceImpl implements ProfileService {
     public List<ProfileDto> getPublicProfiles(int page, int limit) throws RestApiUsersException {
 	List<ProfileDto> returnValue = new ArrayList<>();
 	Pageable pageableRequest = PageRequest.of(page, limit);
-	Page<ProfileEntity> profilePage = profileRepository.findAll(pageableRequest);
+	Page<ProfileEntity> profilePage = profileRepository.findAllNotAdmin(pageableRequest);
 	List<ProfileEntity> profiles = profilePage.getContent();
 
 	for (ProfileEntity profileEntity : profiles) {
-	    // TODO FIX THIS
-	    if (profileEntity.getFirstName().equals("Administrator")) {
-		continue;
-	    }
-
 	    ProfileDto profileDto = modelMapper.map(profileEntity, ProfileDto.class);
 	    returnValue.add(profileDto);
 	}

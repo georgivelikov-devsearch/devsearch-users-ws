@@ -66,7 +66,7 @@ public class ProfileController {
     @GetMapping(path = "/public")
     public Collection<ProfilePublicResponse> getPublicProfiles(
 	    @RequestParam(value = "page", defaultValue = "1") int page,
-	    @RequestParam(value = "limit", defaultValue = "20") int limit,
+	    @RequestParam(value = "limit", defaultValue = "6") int limit,
 	    @RequestParam(value = "userId", defaultValue = "") String userId) throws RestApiUsersException {
 
 	// In the Repository implementation pagination starts with '0', but in UI

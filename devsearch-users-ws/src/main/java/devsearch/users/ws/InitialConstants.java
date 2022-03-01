@@ -38,4 +38,6 @@ public class InitialConstants {
     static final String LAST_NAME = "Administrator";
     static final String INITIAL_PASSWORD = "abcd1234";
     static final List<String> ADMINISTRATOR_USER_ROLES = Arrays.asList(ROLE_ADMIN, ROLE_USER);
+
+    static final List<String> PERSONAL_USER_ROLES = Arrays.asList(ROLE_USER);
 }
