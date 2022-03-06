@@ -18,5 +18,5 @@ public interface ProfileService {
 
     public void deleteProfile(String profileId) throws RestApiUsersException;
 
-    public ProfileListDto getPublicProfiles(int page, int limit) throws RestApiUsersException;
+    public ProfileListDto getPublicProfiles(int page, int limit, String searchText) throws RestApiUsersException;
 }

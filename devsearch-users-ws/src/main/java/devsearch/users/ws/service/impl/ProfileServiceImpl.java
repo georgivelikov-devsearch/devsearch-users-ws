@@ -148,12 +148,19 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ProfileListDto getPublicProfiles(int page, int limit) throws RestApiUsersException {
+    public ProfileListDto getPublicProfiles(int page, int limit, String searchText) throws RestApiUsersException {
 	ProfileListDto returnValue = new ProfileListDto();
 	Pageable pageableRequest = PageRequest.of(page, limit);
-	Page<ProfileEntity> profilePage = profileRepository.findAllNotAdmin(pageableRequest);
-	List<ProfileEntity> profiles = profilePage.getContent();
-	int totalPages = profilePage.getTotalPages();
+	Page<ProfileEntity> profileListPage = null;
+	// TODO refactor
+	if (searchText != null && !searchText.equals("")) {
+	    profileListPage = profileRepository.findAllNotAdminAndByText(pageableRequest, searchText);
+	} else {
+	    profileListPage = profileRepository.findAllNotAdmin(pageableRequest);
+	}
+
+	List<ProfileEntity> profiles = profileListPage.getContent();
+	int totalPages = profileListPage.getTotalPages();
 
 	List<ProfileDto> profileDtoList = new ArrayList<>();
 	for (ProfileEntity profileEntity : profiles) {

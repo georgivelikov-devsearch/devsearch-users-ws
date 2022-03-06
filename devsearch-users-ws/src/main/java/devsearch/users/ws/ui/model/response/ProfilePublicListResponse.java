@@ -4,17 +4,8 @@ import java.util.Collection;
 
 public class ProfilePublicListResponse {
 
-    private int currentPage;
     private int totalPages;
     private Collection<ProfilePublicResponse> profiles;
-
-    public int getCurrentPage() {
-	return currentPage;
-    }
-
-    public void setCurrentPage(int currentPage) {
-	this.currentPage = currentPage;
-    }
 
     public int getTotalPages() {
 	return totalPages;
