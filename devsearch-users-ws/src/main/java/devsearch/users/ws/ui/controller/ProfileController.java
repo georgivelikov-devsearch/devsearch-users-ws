@@ -17,9 +17,11 @@ import devsearch.users.ws.exception.RestApiUsersException;
 import devsearch.users.ws.service.ImageService;
 import devsearch.users.ws.service.ProfileService;
 import devsearch.users.ws.shared.dto.ProfileDto;
+import devsearch.users.ws.shared.dto.ProfileListDto;
 import devsearch.users.ws.shared.utils.Mapper;
 import devsearch.users.ws.ui.model.request.ProfileRequest;
 import devsearch.users.ws.ui.model.response.ProfilePrivateResponse;
+import devsearch.users.ws.ui.model.response.ProfilePublicListResponse;
 import devsearch.users.ws.ui.model.response.ProfilePublicResponse;
 
 @RestController
@@ -64,8 +66,7 @@ public class ProfileController {
     }
 
     @GetMapping(path = "/public")
-    public Collection<ProfilePublicResponse> getPublicProfiles(
-	    @RequestParam(value = "page", defaultValue = "1") int page,
+    public ProfilePublicListResponse getPublicProfiles(@RequestParam(value = "page", defaultValue = "1") int page,
 	    @RequestParam(value = "limit", defaultValue = "6") int limit,
 	    @RequestParam(value = "userId", defaultValue = "") String userId) throws RestApiUsersException {
 
@@ -76,10 +77,10 @@ public class ProfileController {
 	    page -= 1;
 	}
 
-	Collection<ProfileDto> profiles = profileService.getPublicProfiles(page, limit);
+	ProfileListDto profiles = profileService.getPublicProfiles(page, limit);
 	Collection<ProfilePublicResponse> responseProfiles = new ArrayList<ProfilePublicResponse>();
 	boolean senderFound = false;
-	for (ProfileDto profile : profiles) {
+	for (ProfileDto profile : profiles.getProfiles()) {
 	    ProfilePublicResponse publicProfile = modelMapper.map(profile, ProfilePublicResponse.class);
 	    if (!senderFound && profile.getUserId().equals(userId)) {
 		publicProfile.setSender(true);
@@ -87,10 +88,15 @@ public class ProfileController {
 	    }
 
 	    responseProfiles.add(publicProfile);
-
 	}
 
-	return responseProfiles;
+	ProfilePublicListResponse response = new ProfilePublicListResponse();
+
+	response.setPage(page);
+	response.setTotalPages(profiles.getTotalPages());
+	response.setProfiles(responseProfiles);
+
+	return response;
     }
 
     @PostMapping

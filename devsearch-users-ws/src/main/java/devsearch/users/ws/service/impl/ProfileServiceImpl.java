@@ -17,6 +17,7 @@ import devsearch.users.ws.io.repository.ProfileRepository;
 import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.service.ProfileService;
 import devsearch.users.ws.shared.dto.ProfileDto;
+import devsearch.users.ws.shared.dto.ProfileListDto;
 import devsearch.users.ws.shared.utils.AppConstants;
 import devsearch.users.ws.shared.utils.Mapper;
 import devsearch.users.ws.shared.utils.Utils;
@@ -147,19 +148,22 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public List<ProfileDto> getPublicProfiles(int page, int limit) throws RestApiUsersException {
-	List<ProfileDto> returnValue = new ArrayList<>();
+    public ProfileListDto getPublicProfiles(int page, int limit) throws RestApiUsersException {
+	ProfileListDto returnValue = new ProfileListDto();
 	Pageable pageableRequest = PageRequest.of(page, limit);
 	Page<ProfileEntity> profilePage = profileRepository.findAllNotAdmin(pageableRequest);
 	List<ProfileEntity> profiles = profilePage.getContent();
+	int totalPages = profilePage.getTotalPages();
 
+	List<ProfileDto> profileDtoList = new ArrayList<>();
 	for (ProfileEntity profileEntity : profiles) {
 	    ProfileDto profileDto = modelMapper.map(profileEntity, ProfileDto.class);
-	    returnValue.add(profileDto);
+	    profileDtoList.add(profileDto);
 	}
 
+	returnValue.setTotalPages(totalPages);
+	returnValue.setProfiles(profileDtoList);
+
 	return returnValue;
-
     }
-
 }
