@@ -92,7 +92,8 @@ public class ProfileController {
 
 	ProfilePublicListResponse response = new ProfilePublicListResponse();
 
-	response.setPage(page);
+	// Return back page value to its original
+	response.setCurrentPage(page + 1);
 	response.setTotalPages(profiles.getTotalPages());
 	response.setProfiles(responseProfiles);
 

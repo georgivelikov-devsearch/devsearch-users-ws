@@ -4,16 +4,16 @@ import java.util.Collection;
 
 public class ProfilePublicListResponse {
 
-    private int page;
+    private int currentPage;
     private int totalPages;
     private Collection<ProfilePublicResponse> profiles;
 
-    public int getPage() {
-	return page;
+    public int getCurrentPage() {
+	return currentPage;
     }
 
-    public void setPage(int page) {
-	this.page = page;
+    public void setCurrentPage(int currentPage) {
+	this.currentPage = currentPage;
     }
 
     public int getTotalPages() {
