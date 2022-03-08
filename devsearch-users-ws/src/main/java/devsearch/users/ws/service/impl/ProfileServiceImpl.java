@@ -45,6 +45,7 @@ public class ProfileServiceImpl implements ProfileService {
 	    throw new RestApiUsersException(ExceptionMessages.NO_RECORD_FOUND_WITH_THIS_ID);
 	}
 
+	String test;
 	return modelMapper.map(profileEntity, ProfileDto.class);
     }
 
