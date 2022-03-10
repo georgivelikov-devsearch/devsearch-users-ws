@@ -120,15 +120,16 @@ public class InitialUserSetup {
 
 	UserEntity newAdmin = userRepository.save(admin);
 
-	ProfileEntity adminProfile = new ProfileEntity();
-	adminProfile.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
-	adminProfile.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
-	adminProfile.setFirstName(InitialConstants.FIRST_NAME);
-	adminProfile.setLastName(InitialConstants.LAST_NAME);
-	adminProfile.setContactEmail(newAdmin.getEmail());
-	adminProfile.setUserId(newAdmin.getUserId());
-	adminProfile.setAdminProfile(true);
-	profileRepository.save(adminProfile);
+//	ProfileEntity adminProfile = new ProfileEntity();
+//	adminProfile.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
+//	adminProfile.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+//	adminProfile.setFirstName(InitialConstants.FIRST_NAME);
+//	adminProfile.setLastName(InitialConstants.LAST_NAME);
+//	adminProfile.setContactEmail(newAdmin.getEmail());
+//	adminProfile.setUserId(newAdmin.getUserId());
+//	adminProfile.setAdminProfile(true);
+
+//	profileRepository.save(adminProfile);
     }
 
     @Transactional
@@ -156,6 +157,7 @@ public class InitialUserSetup {
 	profile.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 	profile.setFirstName("Georgi");
 	profile.setLastName("Velikov");
+	profile.setDisplayUsername(personalUser.getUsername());
 	profile.setContactEmail(newUser.getEmail());
 	profile.setUserId(newUser.getUserId());
 	profile.setShortIntro("Experienced FullStack Java and React Developer");
@@ -173,7 +175,7 @@ public class InitialUserSetup {
 	int counter = 0;
 	while (counter < 100) {
 	    UserEntity personalUser = new UserEntity();
-	    personalUser.setUsername(utils.generatePublicId(20));
+	    personalUser.setUsername(utils.generatePublicId(15));
 	    personalUser.setEmail(utils.generatePublicId(10));
 	    personalUser.setUserId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 	    personalUser.setEncryptedPassword(bCryptPasswordEncoder.encode(InitialConstants.INITIAL_PASSWORD));
@@ -193,6 +195,7 @@ public class InitialUserSetup {
 	    ProfileEntity profile = new ProfileEntity();
 	    profile.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
 	    profile.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	    profile.setDisplayUsername(personalUser.getUsername());
 	    profile.setFirstName(utils.generatePublicId(10));
 	    profile.setLastName(utils.generatePublicId(10));
 	    profile.setContactEmail(personalUser.getEmail());

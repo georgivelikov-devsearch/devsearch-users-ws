@@ -87,7 +87,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	final CorsConfiguration configuration = new CorsConfiguration();
 
 	configuration.setAllowedOrigins(Arrays.asList("*"));
-	configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "HEAD"));
+	configuration.setAllowedMethods(Arrays.asList("*"));
 	configuration.setAllowedHeaders(Arrays.asList("*"));
 	configuration.addExposedHeader(SecurityConstants.HEADER_STRING);
 	configuration.addExposedHeader(SecurityConstants.USER_ID);

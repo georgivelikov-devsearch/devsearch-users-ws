@@ -44,9 +44,9 @@ public class UserController {
 	return "UserController is working!";
     }
 
-    @GetMapping(path = "/{id}")
-    public UserResponse getUser(@PathVariable String id) throws RestApiUsersException {
-	UserDto userDto = userService.getUserByUserId(id);
+    @GetMapping(path = "/{userId}")
+    public UserResponse getUser(@PathVariable String userId) throws RestApiUsersException {
+	UserDto userDto = userService.getUserByUserId(userId);
 
 	return modelMapper.map(userDto, UserResponse.class);
     }

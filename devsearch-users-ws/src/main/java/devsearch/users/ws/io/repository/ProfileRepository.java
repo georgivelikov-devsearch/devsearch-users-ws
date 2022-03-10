@@ -21,10 +21,6 @@ public interface ProfileRepository extends PagingAndSortingRepository<ProfileEnt
     public ProfileEntity findByUserId(String userId);
 
     @Transactional
-    @Query(value = "SELECT p FROM ProfileEntity p where p.adminProfile=false")
-    Page<ProfileEntity> findAllNotAdmin(Pageable pageable);
-
-    @Transactional
-    @Query(value = "SELECT p FROM ProfileEntity p where p.adminProfile=false AND (p.firstName LIKE %:searchText% OR p.lastName LIKE %:searchText%)")
-    Page<ProfileEntity> findAllNotAdminAndByText(Pageable pageable, String searchText);
+    @Query(value = "SELECT p FROM ProfileEntity p where (p.firstName LIKE %:searchText% OR p.lastName LIKE %:searchText%)")
+    Page<ProfileEntity> findAllByText(Pageable pageable, String searchText);
 }

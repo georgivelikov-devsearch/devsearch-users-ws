@@ -36,6 +36,10 @@ public class ProfileEntity implements Serializable {
     @Size(min = 1, max = 50)
     private String lastName;
 
+    @Column(nullable = false)
+    @Size(min = 1, max = 50)
+    private String displayUsername;
+
     @Column(nullable = true, length = 50)
     private String contactEmail;
 
@@ -118,6 +122,14 @@ public class ProfileEntity implements Serializable {
 
     public void setLastName(String lastName) {
 	this.lastName = lastName;
+    }
+
+    public String getDisplayUsername() {
+	return displayUsername;
+    }
+
+    public void setDisplayUsername(String displayUsername) {
+	this.displayUsername = displayUsername;
     }
 
     public String getContactEmail() {
@@ -206,13 +218,5 @@ public class ProfileEntity implements Serializable {
 
     public void setProfilePictureUrl(String profilePictureUrl) {
 	this.profilePictureUrl = profilePictureUrl;
-    }
-
-    public boolean isAdminProfile() {
-	return adminProfile;
-    }
-
-    public void setAdminProfile(boolean adminProfile) {
-	this.adminProfile = adminProfile;
     }
 }

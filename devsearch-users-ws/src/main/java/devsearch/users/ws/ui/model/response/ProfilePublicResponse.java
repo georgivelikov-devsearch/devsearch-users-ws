@@ -3,6 +3,7 @@ package devsearch.users.ws.ui.model.response;
 public class ProfilePublicResponse {
 
     private String profilePublicId;
+    private String displayUsername;
     private String firstName;
     private String lastName;
     private String contactEmail;
@@ -24,6 +25,14 @@ public class ProfilePublicResponse {
 
     public void setProfilePublicId(String profilePublicId) {
 	this.profilePublicId = profilePublicId;
+    }
+
+    public String getDisplayUsername() {
+	return displayUsername;
+    }
+
+    public void setDisplayUsername(String displayUsername) {
+	this.displayUsername = displayUsername;
     }
 
     public String getFirstName() {

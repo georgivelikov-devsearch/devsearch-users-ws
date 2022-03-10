@@ -85,6 +85,7 @@ public class ProfileServiceImpl implements ProfileService {
 	profileDto.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
 	profileDto.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 	profileDto.setUserId(userId);
+	profileDto.setDisplayUsername(userEntity.getUsername());
 
 	profileEntity = modelMapper.map(profileDto, ProfileEntity.class);
 
@@ -154,9 +155,9 @@ public class ProfileServiceImpl implements ProfileService {
 	Page<ProfileEntity> profileListPage = null;
 	// TODO refactor
 	if (searchText != null && !searchText.equals("")) {
-	    profileListPage = profileRepository.findAllNotAdminAndByText(pageableRequest, searchText);
+	    profileListPage = profileRepository.findAllByText(pageableRequest, searchText);
 	} else {
-	    profileListPage = profileRepository.findAllNotAdmin(pageableRequest);
+	    profileListPage = profileRepository.findAll(pageableRequest);
 	}
 
 	List<ProfileEntity> profiles = profileListPage.getContent();
