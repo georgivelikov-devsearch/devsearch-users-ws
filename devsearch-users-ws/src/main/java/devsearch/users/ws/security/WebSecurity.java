@@ -1,8 +1,5 @@
 package devsearch.users.ws.security;
 
-import java.util.Arrays;
-
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -11,9 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.service.UserService;
@@ -82,18 +76,23 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	return new AuthorizationFilter(authenticationManager(), userRepository);
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-	final CorsConfiguration configuration = new CorsConfiguration();
-
-	configuration.setAllowedOrigins(Arrays.asList("*"));
-	configuration.setAllowedMethods(Arrays.asList("*"));
-	configuration.setAllowedHeaders(Arrays.asList("*"));
-	configuration.addExposedHeader(SecurityConstants.HEADER_STRING);
-	configuration.addExposedHeader(SecurityConstants.USER_ID);
-	final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	source.registerCorsConfiguration("/**", configuration);
-
-	return source;
-    }
+    /*
+     * Needed when browser is calling directly the micro service. When Gateway
+     * service is calling the service, it is not needed
+     */
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//	final CorsConfiguration configuration = new CorsConfiguration();
+//
+//	configuration.setAllowCredentials(true);
+//	configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+//	configuration.setAllowedMethods(Arrays.asList("*"));
+//	configuration.setAllowedHeaders(Arrays.asList("*"));
+//	configuration.addExposedHeader(SecurityConstants.HEADER_STRING);
+//	configuration.addExposedHeader(SecurityConstants.USER_ID);
+//	final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//	source.registerCorsConfiguration("/**", configuration);
+//
+//	return source;
+//    }
 }
