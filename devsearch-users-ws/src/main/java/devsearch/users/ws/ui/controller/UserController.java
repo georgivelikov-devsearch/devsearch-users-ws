@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import devsearch.users.ws.exception.RestApiUsersException;
-import devsearch.users.ws.service.ProfileService;
+import devsearch.users.ws.io.client.ProfilesClient;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.ProfileDto;
 import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.shared.utils.Mapper;
+import devsearch.users.ws.ui.model.request.ProfileRequest;
 import devsearch.users.ws.ui.model.request.RegisterRequest;
 import devsearch.users.ws.ui.model.request.UserRequest;
+import devsearch.users.ws.ui.model.response.ProfilePrivateResponse;
 import devsearch.users.ws.ui.model.response.RegisterResponse;
 import devsearch.users.ws.ui.model.response.UserResponse;
 
@@ -31,10 +33,10 @@ import devsearch.users.ws.ui.model.response.UserResponse;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private ProfilesClient profilesClient;
 
     @Autowired
-    private ProfileService profileService;
+    private UserService userService;
 
     @Autowired
     private Mapper modelMapper;
@@ -82,8 +84,16 @@ public class UserController {
 	ProfileDto profileDto = modelMapper.map(registerRequest, ProfileDto.class);
 	// Set userId to that profile
 	profileDto.setUserId(createdUser.getUserId());
-	// Save new profile for the new user
-	ProfileDto createdProfile = profileService.createProfile(profileDto);
+	profileDto.setDisplayUsername(createdUser.getUsername());
+	// Create new profile for the new user
+//	ProfileDto createdProfile = profileService.createProfile(profileDto);
+//	RestTemplate restTemplate = new RestTemplate();
+//	HttpEntity<ProfileDto> request = new HttpEntity<>(profileDto);
+//	ProfilePrivateResponse createdProfile = restTemplate.postForObject("http://localhost:8080/profiles", request,
+//		ProfilePrivateResponse.class);
+
+	ProfileRequest profileRequest = modelMapper.map(profileDto, ProfileRequest.class);
+	ProfilePrivateResponse createdProfile = profilesClient.createProfile(profileRequest);
 
 	RegisterResponse response = new RegisterResponse();
 	response.setUsername(createdUser.getUsername());

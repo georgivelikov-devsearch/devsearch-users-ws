@@ -5,6 +5,7 @@ public class ProfileRequest {
     private String profilePrivateId;
     private String profilePublicId;
     private String userId;
+    private String displayUsername;
     private String firstName;
     private String lastName;
     private String contactEmail;
@@ -42,6 +43,14 @@ public class ProfileRequest {
 
     public void setUserId(String userId) {
 	this.userId = userId;
+    }
+
+    public String getDisplayUsername() {
+	return displayUsername;
+    }
+
+    public void setDisplayUsername(String displayUsername) {
+	this.displayUsername = displayUsername;
     }
 
     public String getFirstName() {
