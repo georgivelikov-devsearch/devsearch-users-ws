@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import devsearch.users.ws.exception.RestApiUsersException;
-import devsearch.users.ws.io.client.ProfilesClient;
+import devsearch.users.ws.io.client.ProfileClient;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.ProfileDto;
 import devsearch.users.ws.shared.dto.UserDto;
@@ -33,7 +35,7 @@ import devsearch.users.ws.ui.model.response.UserResponse;
 public class UserController {
 
     @Autowired
-    private ProfilesClient profilesClient;
+    private ProfileClient profileClient;
 
     @Autowired
     private UserService userService;
@@ -93,7 +95,7 @@ public class UserController {
 //		ProfilePrivateResponse.class);
 
 	ProfileRequest profileRequest = modelMapper.map(profileDto, ProfileRequest.class);
-	ProfilePrivateResponse createdProfile = profilesClient.createProfile(profileRequest);
+	ProfilePrivateResponse createdProfile = profileClient.createProfile(profileRequest);
 
 	RegisterResponse response = new RegisterResponse();
 	response.setUsername(createdUser.getUsername());
@@ -116,7 +118,9 @@ public class UserController {
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping(path = "/{userId}")
-    public void deleteUser(@PathVariable String userId) throws RestApiUsersException {
+    public ResponseEntity<?> deleteUser(@PathVariable String userId) throws RestApiUsersException {
 	userService.deleteUser(userId);
+
+	return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     }
 }

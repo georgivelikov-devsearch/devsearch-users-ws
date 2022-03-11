@@ -10,18 +10,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import devsearch.users.ws.io.client.ProfileClient;
 import devsearch.users.ws.io.entity.AuthorityEntity;
 import devsearch.users.ws.io.entity.ConfigEntity;
-import devsearch.users.ws.io.entity.ProfileEntity;
 import devsearch.users.ws.io.entity.RoleEntity;
 import devsearch.users.ws.io.entity.UserEntity;
 import devsearch.users.ws.io.repository.AuthorityRepository;
 import devsearch.users.ws.io.repository.ConfigRepository;
-import devsearch.users.ws.io.repository.ProfileRepository;
 import devsearch.users.ws.io.repository.RoleRepository;
 import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.shared.utils.AppConstants;
 import devsearch.users.ws.shared.utils.Utils;
+import devsearch.users.ws.ui.model.request.ProfileRequest;
 
 @Component
 public class InitialUserSetup {
@@ -36,7 +36,7 @@ public class InitialUserSetup {
     private UserRepository userRepository;
 
     @Autowired
-    private ProfileRepository profileRepository;
+    private ProfileClient profileClient;
 
     @Autowired
     private ConfigRepository configRepository;
@@ -118,18 +118,7 @@ public class InitialUserSetup {
 
 	admin.setRoles(roles);
 
-	UserEntity newAdmin = userRepository.save(admin);
-
-//	ProfileEntity adminProfile = new ProfileEntity();
-//	adminProfile.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
-//	adminProfile.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
-//	adminProfile.setFirstName(InitialConstants.FIRST_NAME);
-//	adminProfile.setLastName(InitialConstants.LAST_NAME);
-//	adminProfile.setContactEmail(newAdmin.getEmail());
-//	adminProfile.setUserId(newAdmin.getUserId());
-//	adminProfile.setAdminProfile(true);
-
-//	profileRepository.save(adminProfile);
+	userRepository.save(admin);
     }
 
     @Transactional
@@ -152,33 +141,34 @@ public class InitialUserSetup {
 
 	UserEntity newUser = userRepository.save(personalUser);
 
-	ProfileEntity profile = new ProfileEntity();
-	profile.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
-	profile.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
-	profile.setFirstName("Georgi");
-	profile.setLastName("Velikov");
-	profile.setDisplayUsername(personalUser.getUsername());
-	profile.setContactEmail(newUser.getEmail());
-	profile.setUserId(newUser.getUserId());
-	profile.setShortIntro("Experienced FullStack Java and React Developer");
-	profile.setAbout(
+	ProfileRequest profileRequest = new ProfileRequest();
+	profileRequest.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
+	profileRequest.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	profileRequest.setFirstName("Georgi");
+	profileRequest.setLastName("Velikov");
+	profileRequest.setDisplayUsername(personalUser.getUsername());
+	profileRequest.setContactEmail(newUser.getEmail());
+	profileRequest.setUserId(newUser.getUserId());
+	profileRequest.setShortIntro("Experienced FullStack Java and React Developer");
+	profileRequest.setAbout(
 		"Praesent sit amet dolor et urna consectetur pharetra. Vestibulum vel pellentesque ipsum. Morbi iaculis sit amet lorem nec blandit. Phasellus sed augue commodo, imperdiet purus ac, feugiat neque. Sed egestas non eros mollis mollis. Suspendisse felis massa, egestas laoreet eros id, lacinia consequat nisl. Pellentesque tincidunt odio nec purus dignissim facilisis. Nulla molestie pharetra risus eget molestie. Integer facilisis sit amet nisl at aliquet. Vestibulum consectetur nunc eu lorem mattis sagittis. Sed auctor tristique mollis. Nulla blandit neque vel iaculis tristique. Nulla feugiat pulvinar nisl et eleifend.");
-	profile.setLocationCity("Sofia");
-	profile.setLocationCountry("Bulgaria");
-	profileRepository.save(profile);
+	profileRequest.setLocationCity("Sofia");
+	profileRequest.setLocationCountry("Bulgaria");
+
+	profileClient.createProfile(profileRequest);
     }
 
     @Transactional
     private void createRandomUsers() {
 	List<UserEntity> users = new ArrayList<>();
-	List<ProfileEntity> profiles = new ArrayList<>();
+	List<ProfileRequest> profiles = new ArrayList<>();
 	int counter = 0;
 	while (counter < 100) {
-	    UserEntity personalUser = new UserEntity();
-	    personalUser.setUsername(utils.generatePublicId(15));
-	    personalUser.setEmail(utils.generatePublicId(10));
-	    personalUser.setUserId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
-	    personalUser.setEncryptedPassword(bCryptPasswordEncoder.encode(InitialConstants.INITIAL_PASSWORD));
+	    UserEntity user = new UserEntity();
+	    user.setUsername(utils.generatePublicId(15));
+	    user.setEmail(utils.generatePublicId(10));
+	    user.setUserId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	    user.setEncryptedPassword(bCryptPasswordEncoder.encode(InitialConstants.INITIAL_PASSWORD));
 
 	    List<RoleEntity> roles = new ArrayList<>();
 	    for (String roleName : InitialConstants.PERSONAL_USER_ROLES) {
@@ -188,28 +178,28 @@ public class InitialUserSetup {
 		}
 	    }
 
-	    personalUser.setRoles(roles);
+	    user.setRoles(roles);
 
-	    users.add(personalUser);
+	    users.add(user);
 
-	    ProfileEntity profile = new ProfileEntity();
-	    profile.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
-	    profile.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
-	    profile.setDisplayUsername(personalUser.getUsername());
-	    profile.setFirstName(utils.generatePublicId(10));
-	    profile.setLastName(utils.generatePublicId(10));
-	    profile.setContactEmail(personalUser.getEmail());
-	    profile.setUserId(personalUser.getUserId());
-	    profile.setShortIntro("This user is created to test pagination");
-	    profile.setAbout(
+	    ProfileRequest profileRequest = new ProfileRequest();
+	    profileRequest.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
+	    profileRequest.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	    profileRequest.setDisplayUsername(user.getUsername());
+	    profileRequest.setFirstName(utils.generatePublicId(10));
+	    profileRequest.setLastName(utils.generatePublicId(10));
+	    profileRequest.setContactEmail(user.getEmail());
+	    profileRequest.setUserId(user.getUserId());
+	    profileRequest.setShortIntro("This user is created to test pagination");
+	    profileRequest.setAbout(
 		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"");
-	    profile.setLocationCity(utils.generatePublicId(10));
-	    profile.setLocationCountry(utils.generatePublicId(10));
-	    profiles.add(profile);
+	    profileRequest.setLocationCity(utils.generatePublicId(10));
+	    profileRequest.setLocationCountry(utils.generatePublicId(10));
+	    profiles.add(profileRequest);
 	    counter++;
 	}
 
 	userRepository.saveAll(users);
-	profileRepository.saveAll(profiles);
+	profileClient.initialSeed(profiles);
     }
 }
