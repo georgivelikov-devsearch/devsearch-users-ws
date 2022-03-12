@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import devsearch.users.ws.ui.model.request.ProfileRequest;
 import devsearch.users.ws.ui.model.response.ProfilePrivateResponse;
 
-@FeignClient(name = "Profiles", url = "http://localhost:8080")
+@FeignClient("profiles-ws")
 public interface ProfileClient {
 
     @PostMapping("/profiles")

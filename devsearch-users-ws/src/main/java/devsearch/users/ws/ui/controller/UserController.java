@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import devsearch.users.ws.exception.RestApiUsersException;
 import devsearch.users.ws.io.client.ProfileClient;
 import devsearch.users.ws.service.UserService;
-import devsearch.users.ws.shared.dto.ProfileDto;
 import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.shared.utils.Mapper;
 import devsearch.users.ws.ui.model.request.ProfileRequest;
@@ -78,23 +77,24 @@ public class UserController {
     }
 
     @PostMapping
-    public RegisterResponse registerUser(@RequestBody RegisterRequest registerRequest) throws RestApiUsersException {
+    public RegisterResponse createUser(@RequestBody RegisterRequest registerRequest) throws RestApiUsersException {
 	UserDto userDto = modelMapper.map(registerRequest, UserDto.class);
 	UserDto createdUser = userService.createUser(userDto);
 
 	// Get firstName and lastName from request
-	ProfileDto profileDto = modelMapper.map(registerRequest, ProfileDto.class);
+	ProfileRequest profileRequest = modelMapper.map(registerRequest, ProfileRequest.class);
 	// Set userId to that profile
-	profileDto.setUserId(createdUser.getUserId());
-	profileDto.setDisplayUsername(createdUser.getUsername());
+	profileRequest.setUserId(createdUser.getUserId());
+	profileRequest.setDisplayUsername(createdUser.getUsername());
+
 	// Create new profile for the new user
+//	RestTemplate example	
 //	ProfileDto createdProfile = profileService.createProfile(profileDto);
 //	RestTemplate restTemplate = new RestTemplate();
 //	HttpEntity<ProfileDto> request = new HttpEntity<>(profileDto);
 //	ProfilePrivateResponse createdProfile = restTemplate.postForObject("http://localhost:8080/profiles", request,
 //		ProfilePrivateResponse.class);
 
-	ProfileRequest profileRequest = modelMapper.map(profileDto, ProfileRequest.class);
 	ProfilePrivateResponse createdProfile = profileClient.createProfile(profileRequest);
 
 	RegisterResponse response = new RegisterResponse();
