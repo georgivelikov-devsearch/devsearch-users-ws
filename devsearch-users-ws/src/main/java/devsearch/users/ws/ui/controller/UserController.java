@@ -96,7 +96,6 @@ public class UserController {
 //		ProfilePrivateResponse.class);
 
 	ResponseEntity<ProfilePrivateResponse> createdProfileResponse = profileClient.createProfile(profileRequest);
-	int code = createdProfileResponse.getStatusCodeValue();
 	ProfilePrivateResponse createdProfile = createdProfileResponse.getBody();
 
 	RegisterResponse response = new RegisterResponse();
