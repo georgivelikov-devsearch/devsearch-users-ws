@@ -17,7 +17,7 @@ public enum ExceptionMessages {
 	    "exc_008"),
     DELETE_RECORD_FAILED("Could not delete record", "exc_009"),
     EMAIL_ADDRESS_NOT_VERIFIED("Email address could not be verified", "exc_010"),
-    AUTHENTICATION_FAILED("Authentication failed. Wrong password or incorrect JWT", "exc_011"),
+    AUTHENTICATION_FAILED("Authentication failed. Wrong username or password", "exc_011"),
     ACCESS_FORBIDDEN("Access is forbidden. User does not have permissions to perform this oppearion", "exc_012"),
     NO_PFOFILE_FOUND_FOR_THIS_USER("No profile found for this user", "exc_013"),
     NO_USER_FOUND_FOR_THIS_USER_ID("No user found for the provided user id", "exc_014"),
