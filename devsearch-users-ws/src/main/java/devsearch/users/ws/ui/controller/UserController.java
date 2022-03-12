@@ -95,7 +95,9 @@ public class UserController {
 //	ProfilePrivateResponse createdProfile = restTemplate.postForObject("http://localhost:8080/profiles", request,
 //		ProfilePrivateResponse.class);
 
-	ProfilePrivateResponse createdProfile = profileClient.createProfile(profileRequest);
+	ResponseEntity<ProfilePrivateResponse> createdProfileResponse = profileClient.createProfile(profileRequest);
+	int code = createdProfileResponse.getStatusCodeValue();
+	ProfilePrivateResponse createdProfile = createdProfileResponse.getBody();
 
 	RegisterResponse response = new RegisterResponse();
 	response.setUsername(createdUser.getUsername());
