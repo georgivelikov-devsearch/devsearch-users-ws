@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import devsearch.users.ws.client.ProfileClient;
 import devsearch.users.ws.exception.RestApiUsersException;
-import devsearch.users.ws.io.client.ProfileClient;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.shared.utils.Mapper;

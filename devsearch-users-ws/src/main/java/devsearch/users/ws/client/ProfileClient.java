@@ -1,4 +1,4 @@
-package devsearch.users.ws.io.client;
+package devsearch.users.ws.client;
 
 import java.util.List;
 

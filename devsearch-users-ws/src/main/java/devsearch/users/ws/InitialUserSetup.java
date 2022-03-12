@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import devsearch.users.ws.io.client.ProfileClient;
+import devsearch.users.ws.client.ProfileClient;
 import devsearch.users.ws.io.entity.AuthorityEntity;
 import devsearch.users.ws.io.entity.ConfigEntity;
 import devsearch.users.ws.io.entity.RoleEntity;
