@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,9 +28,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    private final Environment env;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationFilter(AuthenticationManager authenticationManager) {
+    public AuthenticationFilter(Environment env, AuthenticationManager authenticationManager) {
+	this.env = env;
 	this.authenticationManager = authenticationManager;
     }
 
@@ -49,6 +52,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
 	    Authentication auth) throws IOException, ServletException {
+
+	String a = env.getProperty("token.secret");
+	String b = env.getProperty("token.test");
+	String c = env.getProperty("token.prop");
 
 	String username = ((UserPrincipal) auth.getPrincipal()).getUsername();
 	Date expirationDate = new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME);

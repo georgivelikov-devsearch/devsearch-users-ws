@@ -1,5 +1,7 @@
 package devsearch.users.ws.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,16 +17,26 @@ import devsearch.users.ws.service.UserService;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
-    private final UserService userDetailsService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final UserRepository userRepository;
 
-    public WebSecurity(UserService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder,
-	    UserRepository userRepository) {
-	this.userDetailsService = userDetailsService;
-	this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-	this.userRepository = userRepository;
-    }
+    @Autowired
+    private Environment env;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+//    public WebSecurity(UserService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder,
+//	    UserRepository userRepository, Environment env) {
+//	this.userDetailsService = userDetailsService;
+//	this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+//	this.userRepository = userRepository;
+//	this.env = env;
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -56,13 +68,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-	auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+	auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     // Spring default login url is '/login'. You could change it by adding custom
     // url - '/users/login'
     private AuthenticationFilter getAuthenticationFilter(String url) throws Exception {
-	final AuthenticationFilter filter = new AuthenticationFilter(authenticationManager());
+	final AuthenticationFilter filter = new AuthenticationFilter(env, authenticationManager());
 	if (url != null) {
 	    filter.setFilterProcessesUrl(url);
 	}
