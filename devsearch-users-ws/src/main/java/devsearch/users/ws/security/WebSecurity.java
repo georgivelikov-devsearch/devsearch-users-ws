@@ -85,7 +85,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     // Returns AuthorizationFilter. Both AuthenticationFilter and
     // AuthorizationFilter are needed for JWT authentication
     private AuthorizationFilter getAuthorizationFilter() throws Exception {
-	return new AuthorizationFilter(authenticationManager(), userRepository);
+	return new AuthorizationFilter(env, authenticationManager(), userRepository);
     }
 
     /*

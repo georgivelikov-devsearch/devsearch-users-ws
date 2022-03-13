@@ -2,6 +2,7 @@ package devsearch.users.ws.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.servlet.FilterChain;
@@ -10,10 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,12 +31,18 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final Environment env;
     private final AuthenticationManager authenticationManager;
+    private final String tokenSecret;
+    private final long tokenExpiration;
+    private final String tokenPrefix;
+    private final String userIdHeader;
 
     public AuthenticationFilter(Environment env, AuthenticationManager authenticationManager) {
-	this.env = env;
 	this.authenticationManager = authenticationManager;
+	this.tokenSecret = env.getProperty(SecurityConstants.TOKEN_SECRET_KEY);
+	this.tokenExpiration = Long.valueOf(env.getProperty(SecurityConstants.TOKEN_EXPIRATION_KEY));
+	this.tokenPrefix = env.getProperty(SecurityConstants.TOKEN_PREFIX_KEY);
+	this.userIdHeader = env.getProperty(SecurityConstants.USER_ID_HEADER_KEY);
     }
 
     @Override
@@ -53,16 +62,15 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
 	    Authentication auth) throws IOException, ServletException {
 
-	String a = env.getProperty("token.secret");
-	String b = env.getProperty("token.test");
-	String c = env.getProperty("token.prop");
-
 	String username = ((UserPrincipal) auth.getPrincipal()).getUsername();
-	Date expirationDate = new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME);
+	Date expirationDate = new Date(System.currentTimeMillis() + tokenExpiration);
+	Collection<? extends GrantedAuthority> roles = ((UserPrincipal) auth.getPrincipal()).getAuthorities();
+
 	String token = Jwts.builder()
 		.setSubject(username)
 		.setExpiration(expirationDate)
-		.signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret())
+		.claim("roles", roles)
+		.signWith(SignatureAlgorithm.HS512, tokenSecret)
 		.compact();
 
 	// User service can't be injected here because AuthenticationFilter is not a
@@ -75,7 +83,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	    throw new ServletException(ex);
 	}
 
-	res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKER_PREFIX + token);
-	res.addHeader(SecurityConstants.USER_ID, userDto.getUserId());
+	res.addHeader(HttpHeaders.AUTHORIZATION, tokenPrefix + token);
+	res.addHeader(userIdHeader, userDto.getUserId());
     }
 }
