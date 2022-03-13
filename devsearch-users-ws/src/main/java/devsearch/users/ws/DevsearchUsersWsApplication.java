@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableFeignClients
 public class DevsearchUsersWsApplication {
 
+    String x;
+
     public static void main(String[] args) {
 	SpringApplication.run(DevsearchUsersWsApplication.class, args);
     }
