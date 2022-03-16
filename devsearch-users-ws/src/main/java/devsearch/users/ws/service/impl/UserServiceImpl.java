@@ -39,6 +39,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private Utils utils;
 
+    /*
+     * This method comes from UserDetailsService interface and is used on Login
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 	UserEntity userEntity = userRepository.findByUsername(username);

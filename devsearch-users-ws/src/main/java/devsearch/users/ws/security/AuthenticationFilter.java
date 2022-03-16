@@ -2,7 +2,6 @@ package devsearch.users.ws.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 import javax.servlet.FilterChain;
@@ -16,7 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,12 +62,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	String username = ((UserPrincipal) auth.getPrincipal()).getUsername();
 	Date expirationDate = new Date(System.currentTimeMillis() + tokenExpiration);
-	Collection<? extends GrantedAuthority> roles = ((UserPrincipal) auth.getPrincipal()).getAuthorities();
+	// Collection<? extends GrantedAuthority> roles = ((UserPrincipal)
+	// auth.getPrincipal()).getAuthorities();
 
 	String token = Jwts.builder()
 		.setSubject(username)
 		.setExpiration(expirationDate)
-		.claim("roles", roles)
 		.signWith(SignatureAlgorithm.HS512, tokenSecret)
 		.compact();
 
