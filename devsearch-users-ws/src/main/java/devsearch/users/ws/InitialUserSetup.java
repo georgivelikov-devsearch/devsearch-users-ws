@@ -62,8 +62,8 @@ public class InitialUserSetup {
 
 	createAuthorities();
 	createRoles();
-	createAdmin();
-	createPersonalUser();
+	// createAdmin();
+	// createPersonalUser();
 	// createUsersForTesting();
 	createRandomUsers();
     }
@@ -142,11 +142,10 @@ public class InitialUserSetup {
 	UserEntity newUser = userRepository.save(personalUser);
 
 	ProfileRequest profileRequest = new ProfileRequest();
-	profileRequest.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
-	profileRequest.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	profileRequest.setProfileId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
 	profileRequest.setFirstName("Georgi");
 	profileRequest.setLastName("Velikov");
-	profileRequest.setDisplayUsername(personalUser.getUsername());
+	profileRequest.setUsername(personalUser.getUsername());
 	profileRequest.setContactEmail(newUser.getEmail());
 	profileRequest.setUserId(newUser.getUserId());
 	profileRequest.setShortIntro("Experienced FullStack Java and React Developer");
@@ -183,9 +182,8 @@ public class InitialUserSetup {
 	    users.add(user);
 
 	    ProfileRequest profileRequest = new ProfileRequest();
-	    profileRequest.setProfilePrivateId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
-	    profileRequest.setProfilePublicId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
-	    profileRequest.setDisplayUsername(user.getUsername());
+	    profileRequest.setProfileId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	    profileRequest.setUsername(user.getUsername());
 	    profileRequest.setFirstName(utils.generatePublicId(10));
 	    profileRequest.setLastName(utils.generatePublicId(10));
 	    profileRequest.setContactEmail(user.getEmail());
