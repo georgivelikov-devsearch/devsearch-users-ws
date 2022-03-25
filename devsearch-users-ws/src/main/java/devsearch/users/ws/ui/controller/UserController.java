@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import devsearch.users.ws.client.ProfileClient;
+import devsearch.users.ws.client.DeveloperClient;
 import devsearch.users.ws.exception.RestApiUsersException;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.UserDto;
@@ -29,7 +29,7 @@ import devsearch.users.ws.ui.model.response.UserResponse;
 public class UserController {
 
     @Autowired
-    private ProfileClient profileClient;
+    private DeveloperClient profileClient;
 
     @Autowired
     private UserService userService;

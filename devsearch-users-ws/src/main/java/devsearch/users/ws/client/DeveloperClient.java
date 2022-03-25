@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import devsearch.users.ws.ui.model.request.DeveloperRequest;
 
 @FeignClient("developers-ws")
-public interface ProfileClient {
+public interface DeveloperClient {
 
     @PostMapping("/developers/initial")
     public ResponseEntity<String> initialSeed(List<DeveloperRequest> request);
