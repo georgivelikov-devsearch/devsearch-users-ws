@@ -10,7 +10,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +21,7 @@ import devsearch.users.ws.exception.RestApiUsersException;
 import devsearch.users.ws.service.UserService;
 import devsearch.users.ws.shared.dto.UserDto;
 import devsearch.users.ws.shared.utils.Mapper;
-import devsearch.users.ws.ui.model.request.ProfileRequest;
-import devsearch.users.ws.ui.model.request.RegisterRequest;
 import devsearch.users.ws.ui.model.request.UserRequest;
-import devsearch.users.ws.ui.model.response.ProfilePrivateResponse;
-import devsearch.users.ws.ui.model.response.RegisterResponse;
 import devsearch.users.ws.ui.model.response.UserResponse;
 
 @RestController
@@ -76,37 +71,37 @@ public class UserController {
 	return returnValue;
     }
 
-    @PostMapping
-    public RegisterResponse createUser(@RequestBody RegisterRequest registerRequest) throws RestApiUsersException {
-	UserDto userDto = modelMapper.map(registerRequest, UserDto.class);
-	UserDto createdUser = userService.createUser(userDto);
-
-	// Get firstName and lastName from request
-	ProfileRequest profileRequest = modelMapper.map(registerRequest, ProfileRequest.class);
-	// Set userId to that profile
-	profileRequest.setUserId(createdUser.getUserId());
-	profileRequest.setUsername(createdUser.getUsername());
-
-	// Create new profile for the new user
-//	RestTemplate example	
-//	ProfileDto createdProfile = profileService.createProfile(profileDto);
-//	RestTemplate restTemplate = new RestTemplate();
-//	HttpEntity<ProfileDto> request = new HttpEntity<>(profileDto);
-//	ProfilePrivateResponse createdProfile = restTemplate.postForObject("http://localhost:8080/profiles", request,
-//		ProfilePrivateResponse.class);
-
-	ResponseEntity<ProfilePrivateResponse> createdProfileResponse = profileClient.createProfile(profileRequest);
-	ProfilePrivateResponse createdProfile = createdProfileResponse.getBody();
-
-	RegisterResponse response = new RegisterResponse();
-	response.setUsername(createdUser.getUsername());
-	response.setEmail(createdUser.getEmail());
-	response.setUserId(createdUser.getUserId());
-	response.setFirstName(createdProfile.getFirstName());
-	response.setLastName(createdProfile.getLastName());
-
-	return response;
-    }
+//    @PostMapping
+//    public RegisterResponse createUser(@RequestBody RegisterRequest registerRequest) throws RestApiUsersException {
+//	UserDto userDto = modelMapper.map(registerRequest, UserDto.class);
+//	UserDto createdUser = userService.createUser(userDto);
+//
+//	// Get firstName and lastName from request
+//	DeveloperRequest profileRequest = modelMapper.map(registerRequest, DeveloperRequest.class);
+//	// Set userId to that profile
+//	profileRequest.setUserId(createdUser.getUserId());
+//	profileRequest.setUsername(createdUser.getUsername());
+//
+//	// Create new profile for the new user
+////	RestTemplate example	
+////	ProfileDto createdProfile = profileService.createProfile(profileDto);
+////	RestTemplate restTemplate = new RestTemplate();
+////	HttpEntity<ProfileDto> request = new HttpEntity<>(profileDto);
+////	ProfilePrivateResponse createdProfile = restTemplate.postForObject("http://localhost:8080/profiles", request,
+////		ProfilePrivateResponse.class);
+//
+//	ResponseEntity<ProfilePrivateResponse> createdProfileResponse = profileClient.createProfile(profileRequest);
+//	ProfilePrivateResponse createdProfile = createdProfileResponse.getBody();
+//
+//	RegisterResponse response = new RegisterResponse();
+//	response.setUsername(createdUser.getUsername());
+//	response.setEmail(createdUser.getEmail());
+//	response.setUserId(createdUser.getUserId());
+//	response.setFirstName(createdProfile.getFirstName());
+//	response.setLastName(createdProfile.getLastName());
+//
+//	return response;
+//    }
 
     @PutMapping()
     public UserResponse updateUser(@RequestBody UserRequest userRequest) throws RestApiUsersException {

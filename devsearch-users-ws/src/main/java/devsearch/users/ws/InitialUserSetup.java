@@ -21,7 +21,7 @@ import devsearch.users.ws.io.repository.RoleRepository;
 import devsearch.users.ws.io.repository.UserRepository;
 import devsearch.users.ws.shared.utils.AppConstants;
 import devsearch.users.ws.shared.utils.Utils;
-import devsearch.users.ws.ui.model.request.ProfileRequest;
+import devsearch.users.ws.ui.model.request.DeveloperRequest;
 
 @Component
 public class InitialUserSetup {
@@ -36,7 +36,7 @@ public class InitialUserSetup {
     private UserRepository userRepository;
 
     @Autowired
-    private ProfileClient profileClient;
+    private ProfileClient developerClient;
 
     @Autowired
     private ConfigRepository configRepository;
@@ -121,46 +121,46 @@ public class InitialUserSetup {
 	userRepository.save(admin);
     }
 
-    @Transactional
-    private void createPersonalUser() {
-	UserEntity personalUser = new UserEntity();
-	personalUser.setUsername("georgivelikov");
-	personalUser.setEmail("gmvelikov@gmail.com");
-	personalUser.setUserId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
-	personalUser.setEncryptedPassword(bCryptPasswordEncoder.encode(InitialConstants.INITIAL_PASSWORD));
-
-	List<RoleEntity> roles = new ArrayList<>();
-	for (String roleName : InitialConstants.PERSONAL_USER_ROLES) {
-	    RoleEntity role = roleRepository.findByName(roleName);
-	    if (role != null) {
-		roles.add(role);
-	    }
-	}
-
-	personalUser.setRoles(roles);
-
-	UserEntity newUser = userRepository.save(personalUser);
-
-	ProfileRequest profileRequest = new ProfileRequest();
-	profileRequest.setProfileId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
-	profileRequest.setFirstName("Georgi");
-	profileRequest.setLastName("Velikov");
-	profileRequest.setUsername(personalUser.getUsername());
-	profileRequest.setContactEmail(newUser.getEmail());
-	profileRequest.setUserId(newUser.getUserId());
-	profileRequest.setShortIntro("Experienced FullStack Java and React Developer");
-	profileRequest.setAbout(
-		"Praesent sit amet dolor et urna consectetur pharetra. Vestibulum vel pellentesque ipsum. Morbi iaculis sit amet lorem nec blandit. Phasellus sed augue commodo, imperdiet purus ac, feugiat neque. Sed egestas non eros mollis mollis. Suspendisse felis massa, egestas laoreet eros id, lacinia consequat nisl. Pellentesque tincidunt odio nec purus dignissim facilisis. Nulla molestie pharetra risus eget molestie. Integer facilisis sit amet nisl at aliquet. Vestibulum consectetur nunc eu lorem mattis sagittis. Sed auctor tristique mollis. Nulla blandit neque vel iaculis tristique. Nulla feugiat pulvinar nisl et eleifend.");
-	profileRequest.setLocationCity("Sofia");
-	profileRequest.setLocationCountry("Bulgaria");
-
-	profileClient.createProfile(profileRequest);
-    }
+//    @Transactional
+//    private void createPersonalUser() {
+//	UserEntity personalUser = new UserEntity();
+//	personalUser.setUsername("georgivelikov");
+//	personalUser.setEmail("gmvelikov@gmail.com");
+//	personalUser.setUserId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+//	personalUser.setEncryptedPassword(bCryptPasswordEncoder.encode(InitialConstants.INITIAL_PASSWORD));
+//
+//	List<RoleEntity> roles = new ArrayList<>();
+//	for (String roleName : InitialConstants.PERSONAL_USER_ROLES) {
+//	    RoleEntity role = roleRepository.findByName(roleName);
+//	    if (role != null) {
+//		roles.add(role);
+//	    }
+//	}
+//
+//	personalUser.setRoles(roles);
+//
+//	UserEntity newUser = userRepository.save(personalUser);
+//
+//	DeveloperRequest developerRequest = new DeveloperRequest();
+//	developerRequest.setProfileId(utils.generatePublicId(AppConstants.PRIVATE_ID_LENGTH));
+//	developerRequest.setFirstName("Georgi");
+//	developerRequest.setLastName("Velikov");
+//	developerRequest.setUsername(personalUser.getUsername());
+//	developerRequest.setContactEmail(newUser.getEmail());
+//	developerRequest.setUserId(newUser.getUserId());
+//	developerRequest.setShortIntro("Experienced FullStack Java and React Developer");
+//	developerRequest.setAbout(
+//		"Praesent sit amet dolor et urna consectetur pharetra. Vestibulum vel pellentesque ipsum. Morbi iaculis sit amet lorem nec blandit. Phasellus sed augue commodo, imperdiet purus ac, feugiat neque. Sed egestas non eros mollis mollis. Suspendisse felis massa, egestas laoreet eros id, lacinia consequat nisl. Pellentesque tincidunt odio nec purus dignissim facilisis. Nulla molestie pharetra risus eget molestie. Integer facilisis sit amet nisl at aliquet. Vestibulum consectetur nunc eu lorem mattis sagittis. Sed auctor tristique mollis. Nulla blandit neque vel iaculis tristique. Nulla feugiat pulvinar nisl et eleifend.");
+//	developerRequest.setLocationCity("Sofia");
+//	developerRequest.setLocationCountry("Bulgaria");
+//
+//	developerClient.createProfile(developerRequest);
+//    }
 
     @Transactional
     private void createRandomUsers() {
 	List<UserEntity> users = new ArrayList<>();
-	List<ProfileRequest> profiles = new ArrayList<>();
+	List<DeveloperRequest> developers = new ArrayList<>();
 	int counter = 0;
 	while (counter < 100) {
 	    UserEntity user = new UserEntity();
@@ -181,23 +181,23 @@ public class InitialUserSetup {
 
 	    users.add(user);
 
-	    ProfileRequest profileRequest = new ProfileRequest();
-	    profileRequest.setProfileId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
-	    profileRequest.setUsername(user.getUsername());
-	    profileRequest.setFirstName(utils.generatePublicId(10));
-	    profileRequest.setLastName(utils.generatePublicId(10));
-	    profileRequest.setContactEmail(user.getEmail());
-	    profileRequest.setUserId(user.getUserId());
-	    profileRequest.setShortIntro("This user is created to test pagination");
-	    profileRequest.setAbout(
+	    DeveloperRequest developerRequest = new DeveloperRequest();
+	    developerRequest.setProfileId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	    developerRequest.setUsername(user.getUsername());
+	    developerRequest.setFirstName(utils.generatePublicId(10));
+	    developerRequest.setLastName(utils.generatePublicId(10));
+	    developerRequest.setContactEmail(user.getEmail());
+	    developerRequest.setUserId(user.getUserId());
+	    developerRequest.setShortIntro("This user is created to test pagination");
+	    developerRequest.setAbout(
 		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"");
-	    profileRequest.setLocationCity(utils.generatePublicId(10));
-	    profileRequest.setLocationCountry(utils.generatePublicId(10));
-	    profiles.add(profileRequest);
+	    developerRequest.setLocationCity(utils.generatePublicId(10));
+	    developerRequest.setLocationCountry(utils.generatePublicId(10));
+	    developers.add(developerRequest);
 	    counter++;
 	}
 
 	userRepository.saveAll(users);
-	profileClient.initialSeed(profiles);
+	developerClient.initialSeed(developers);
     }
 }

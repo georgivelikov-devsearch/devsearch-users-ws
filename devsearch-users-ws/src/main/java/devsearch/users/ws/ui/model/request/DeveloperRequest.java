@@ -1,11 +1,10 @@
-package devsearch.users.ws.ui.model.response;
+package devsearch.users.ws.ui.model.request;
 
-public class ProfilePrivateResponse {
+public class DeveloperRequest {
 
-    private String profilePrivateId;
-    private String profilePublicId;
+    private String profileId;
     private String userId;
-    private String displayUsername;
+    private String username;
     private String firstName;
     private String lastName;
     private String contactEmail;
@@ -18,22 +17,15 @@ public class ProfilePrivateResponse {
     private String socialWebsite;
     private String locationCity;
     private String locationCountry;
-    private String profilePictureUrl;
+    private String profilePictureBase64;
+    private boolean newProfilePictureUpload;
 
-    public String getProfilePrivateId() {
-	return profilePrivateId;
+    public String getProfileId() {
+	return profileId;
     }
 
-    public void setProfilePrivateId(String profilePrivateId) {
-	this.profilePrivateId = profilePrivateId;
-    }
-
-    public String getProfilePublicId() {
-	return profilePublicId;
-    }
-
-    public void setProfilePublicId(String profilePublicId) {
-	this.profilePublicId = profilePublicId;
+    public void setProfileId(String profileId) {
+	this.profileId = profileId;
     }
 
     public String getUserId() {
@@ -44,12 +36,12 @@ public class ProfilePrivateResponse {
 	this.userId = userId;
     }
 
-    public String getDisplayUsername() {
-	return displayUsername;
+    public String getUsername() {
+	return username;
     }
 
-    public void setDisplayUsername(String displayUsername) {
-	this.displayUsername = displayUsername;
+    public void setUsername(String username) {
+	this.username = username;
     }
 
     public String getFirstName() {
@@ -148,11 +140,19 @@ public class ProfilePrivateResponse {
 	this.locationCountry = locationCountry;
     }
 
-    public String getProfilePictureUrl() {
-	return profilePictureUrl;
+    public String getProfilePictureBase64() {
+	return profilePictureBase64;
     }
 
-    public void setProfilePictureUrl(String profilePictureUrl) {
-	this.profilePictureUrl = profilePictureUrl;
+    public void setProfilePictureBase64(String profilePictureBase64) {
+	this.profilePictureBase64 = profilePictureBase64;
+    }
+
+    public boolean getNewProfilePictureUpload() {
+	return newProfilePictureUpload;
+    }
+
+    public void setNewProfilePictureUpload(boolean newProfilePictureUpload) {
+	this.newProfilePictureUpload = newProfilePictureUpload;
     }
 }

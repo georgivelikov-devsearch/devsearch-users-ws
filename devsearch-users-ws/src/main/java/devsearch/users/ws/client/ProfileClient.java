@@ -6,15 +6,11 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import devsearch.users.ws.ui.model.request.ProfileRequest;
-import devsearch.users.ws.ui.model.response.ProfilePrivateResponse;
+import devsearch.users.ws.ui.model.request.DeveloperRequest;
 
-@FeignClient("profiles-ws")
+@FeignClient("developers-ws")
 public interface ProfileClient {
 
-    @PostMapping("/profiles")
-    public ResponseEntity<ProfilePrivateResponse> createProfile(ProfileRequest request);
-
-    @PostMapping("/profiles/initial")
-    public ResponseEntity<String> initialSeed(List<ProfileRequest> request);
+    @PostMapping("/developers/initial")
+    public ResponseEntity<String> initialSeed(List<DeveloperRequest> request);
 }
