@@ -85,7 +85,7 @@ public class UserController {
 	ProfileRequest profileRequest = modelMapper.map(registerRequest, ProfileRequest.class);
 	// Set userId to that profile
 	profileRequest.setUserId(createdUser.getUserId());
-	profileRequest.setDisplayUsername(createdUser.getUsername());
+	profileRequest.setUsername(createdUser.getUsername());
 
 	// Create new profile for the new user
 //	RestTemplate example	
