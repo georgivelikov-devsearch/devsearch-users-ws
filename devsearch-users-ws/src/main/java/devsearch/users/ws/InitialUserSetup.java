@@ -182,7 +182,7 @@ public class InitialUserSetup {
 	    users.add(user);
 
 	    DeveloperRequest developerRequest = new DeveloperRequest();
-	    developerRequest.setProfileId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
+	    developerRequest.setDeveloperId(utils.generatePublicId(AppConstants.PUBLIC_ID_LENGTH));
 	    developerRequest.setUsername(user.getUsername());
 	    developerRequest.setFirstName(utils.generatePublicId(10));
 	    developerRequest.setLastName(utils.generatePublicId(10));
