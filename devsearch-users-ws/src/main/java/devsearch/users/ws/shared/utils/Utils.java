@@ -31,6 +31,10 @@ public class Utils {
 	return AppConstants.DATE_FORMATTER.format(date);
     }
 
+    public String generatePublicKey(int length) {
+	return generateRandomString(length);
+    }
+
     private String generateRandomString(int length) {
 	StringBuilder returnValue = new StringBuilder();
 

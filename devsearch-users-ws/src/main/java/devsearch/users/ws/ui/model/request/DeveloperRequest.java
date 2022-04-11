@@ -3,7 +3,7 @@ package devsearch.users.ws.ui.model.request;
 public class DeveloperRequest {
 
     private String developerId;
-    private String userId;
+    private String publicKey;
     private String username;
     private String firstName;
     private String lastName;
@@ -28,12 +28,12 @@ public class DeveloperRequest {
 	this.developerId = developerId;
     }
 
-    public String getUserId() {
-	return userId;
+    public String getPublicKey() {
+	return publicKey;
     }
 
-    public void setUserId(String userId) {
-	this.userId = userId;
+    public void setPublicKey(String publicKey) {
+	this.publicKey = publicKey;
     }
 
     public String getUsername() {

@@ -187,7 +187,7 @@ public class InitialUserSetup {
 	    developerRequest.setFirstName(utils.generatePublicId(10));
 	    developerRequest.setLastName(utils.generatePublicId(10));
 	    developerRequest.setContactEmail(user.getEmail());
-	    developerRequest.setUserId(user.getUserId());
+	    developerRequest.setPublicKey(utils.generatePublicKey(30));
 	    developerRequest.setShortIntro("This user is created to test pagination");
 	    developerRequest.setAbout(
 		    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"");
