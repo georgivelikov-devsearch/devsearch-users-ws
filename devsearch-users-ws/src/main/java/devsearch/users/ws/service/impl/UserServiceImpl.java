@@ -61,7 +61,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	UserDto userDto = new UserDto();
-	// TODO Model Mapper is not initialized here, but BeanUtils is enough, check?
 	BeanUtils.copyProperties(userEntity, userDto);
 	return userDto;
     }
