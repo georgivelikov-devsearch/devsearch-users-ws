@@ -117,6 +117,6 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable String userId) throws RestApiUsersException {
 	userService.deleteUser(userId);
 
-	return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+	return new ResponseEntity<String>(userId, HttpStatus.OK);
     }
 }
