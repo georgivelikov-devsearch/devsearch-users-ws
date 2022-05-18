@@ -36,7 +36,7 @@ public class ApiExceptionHandler {
     }
 
     private String getPath(WebRequest request) {
-	// TODO must check when there is param in the path
+	// To get the params, use getQueryString
 	return ((ServletWebRequest) request).getRequest().getRequestURI().toString();
     }
 
